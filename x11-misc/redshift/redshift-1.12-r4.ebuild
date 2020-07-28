@@ -33,7 +33,7 @@ DEPEND="${COMMON_DEPEND}
 "
 REQUIRED_USE="gtk? ( ${PYTHON_REQUIRED_USE} )"
 
-PATCHES+=( ${FILESDIR}/redshift-wlroots-gamma.patch )
+PATCHES+=( "${FILESDIR}/redshift-wlroots-gamma.patch" )
 
 src_prepare() {
 	default
