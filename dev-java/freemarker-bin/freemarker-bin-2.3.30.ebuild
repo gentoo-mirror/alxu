@@ -12,8 +12,10 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-RDEPEND="${CP_DEPEND}
-	>=virtual/jre-1.7"
+RDEPEND="
+	!dev-java/freemarker
+	>=virtual/jre-1.7
+"
 
 S="${WORKDIR}/apache-freemarker-${PV}-bin"
 
