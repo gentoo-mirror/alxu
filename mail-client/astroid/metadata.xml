@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<upstream>
+<remote-id type="github">astroidmail/astroid</remote-id>
+</upstream>
+<maintainer type="person">
+<email>alex_y_xu@yahoo.ca</email>
+<name>Alex Xu (Hello71)</name>
+</maintainer>
+<maintainer type="project">
+<email>proxy-maint@gentoo.org</email>
+<name>Proxy Maintainers</name>
+</maintainer>
+<longdescription lang="en">
+Astroid is a lightweight and fast Mail User Agent that provides a graphical interface to searching, displaying and composing email, organized in threads and tags. Astroid uses the notmuch backend for blazingly fast searches through tons of email. Astroid searches, displays and composes emails - and rely on other programs for fetching, syncing and sending email.
+</longdescription>
+<use>
+<flag name="embedded-editor">Embedded editor</flag>
+<flag name="plugins">Plugins</flag>
+<flag name="terminal">Embedded terminal</flag>
+</use>
+</pkgmetadata>

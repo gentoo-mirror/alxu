@@ -1,0 +1,12 @@
+# Depends on vulnerable old version of icedtea-web #711392
+# new version is not packaged yet
+# package/useflag is not going away anytime soon,
+# just masked. unmask as needed.
+dev-java/openj9-openjdk nsplugin webstart
+dev-java/openj9-openjdk-bin nsplugin webstart
+dev-java/openj9-openjdk-jre-bin nsplugin webstart
+
+# openjfx 14 is not implemented yet
+dev-java/openj9-openjdk javafx
+dev-java/openjdk javafx
+dev-java/openjdk-bin javafx
