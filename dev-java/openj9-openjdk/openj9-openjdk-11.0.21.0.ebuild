@@ -23,7 +23,7 @@ SRC_URI="
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa custom-cflags custom-optimization cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap nsplugin +pch selinux source systemtap webstart"
+IUSE="alsa custom-cflags custom-optimization cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap large-heap nsplugin +pch selinux source systemtap webstart"
 
 COMMON_DEPEND="
 	media-libs/freetype:2=
@@ -152,6 +152,7 @@ src_prepare() {
 	ln -s ../openj9-${OPENJ9_P} openj9 || die
 	ln -s ../openj9-omr-${OPENJ9_P} omr || die
 	default
+	eapply "${FILESDIR}/openjdk-8238380-childproc-fcommon.patch"
 	(
 		cd openj9 || die
 		#eapply "${FILESDIR}/openj9-j9utf8-fam.patch"
@@ -212,6 +213,7 @@ src_configure() {
 		--with-vendor-vm-bug-url="https://bugs.openjdk.java.net"
 		--with-vendor-version-string="${PVR}"
 		--with-version-pre=""
+		--with-version-opt=""
 		--with-zlib=system
 		--enable-dtrace=$(usex systemtap yes no)
 		--enable-headless-only=$(usex headless-awt yes no)
@@ -219,6 +221,7 @@ src_configure() {
 		--with-freemarker-jar=$(java-pkg_getjar --build-only $freemarker freemarker.jar)
 		--disable-warnings-as-errors{,-omr,-openj9}
 		$(use_enable ddr)
+		$(use_with large-heap noncompressedrefs)
 	)
 
 	if use javafx; then
