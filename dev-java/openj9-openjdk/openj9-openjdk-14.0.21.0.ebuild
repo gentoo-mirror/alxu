@@ -72,10 +72,7 @@ DEPEND="
 	x11-libs/libXt
 	x11-libs/libXtst
 	javafx? ( dev-java/openjfx:${SLOT}= )
-	|| (
-		dev-java/openjdk-bin:${SLOT}
-		dev-java/openjdk:${SLOT}
-	)
+	virtual/jdk:${SLOT}
 	|| (
 		dev-java/freemarker-bin
 		dev-java/freemarker
