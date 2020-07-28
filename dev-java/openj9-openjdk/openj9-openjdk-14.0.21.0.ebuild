@@ -23,7 +23,7 @@ SRC_URI="
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa custom-cflags custom-optimization cups ddr debug doc gentoo-vm headless-awt javafx +jbootstrap nsplugin +pch selinux systemtap webstart"
+IUSE="alsa custom-cflags custom-optimization cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap nsplugin +pch selinux source systemtap webstart"
 
 COMMON_DEPEND="
 	media-libs/freetype:2=
@@ -92,14 +92,14 @@ REQUIRED_USE="javafx? ( alsa !headless-awt )"
 S=${WORKDIR}/openj9-openjdk-jdk${SLOT}-${OPENJ9_P}
 
 # The space required to build varies wildly depending on USE flags,
-# ranging from 2GB to 16GB. This function is certainly not exact but
+# ranging from 3GB to 16GB. This function is certainly not exact but
 # should be close enough to be useful.
 openjdk_check_requirements() {
 	local M
-	M=2048
+	M=3192
 	M=$(( $(usex jbootstrap 2 1) * $M ))
 	M=$(( $(usex debug 3 1) * $M ))
-	M=$(( $(usex doc 320 0) + + 192 + $M ))
+	M=$(( $(usex doc 320 0) + $(usex source 128 0) + 192 + $M ))
 
 	CHECKREQS_DISK_BUILD=${M}M check-reqs_pkg_${EBUILD_PHASE}
 }
@@ -184,14 +184,10 @@ src_configure() {
 		filter-flags '-O*'
 	fi
 
-	local freemarker_jar
-	local diefunc=$(declare -f die)
-	die() { :; }
-	freemarker_jar=$(java-pkg_getjar --build-only freemarker freemarker.jar)
-	local r=$?
-	eval "$diefunc"
-	if [[ $r != 0 ]]; then
-		freemarker_jar=$(java-pkg_getjar --build-only freemarker-bin freemarker.jar)
+	if has_version dev-java/freemarker; then
+		local freemarker=freemarker
+	else
+		local freemarker=freemarker-bin
 	fi
 
 	# Enabling full docs appears to break doc building. If not
@@ -214,13 +210,13 @@ src_configure() {
 		--with-vendor-url="https://gentoo.org"
 		--with-vendor-bug-url="https://bugs.gentoo.org"
 		--with-vendor-vm-bug-url="https://bugs.openjdk.java.net"
+		--with-vendor-version-string="${PVR}"
+		--with-version-pre=""
 		--with-zlib=system
 		--enable-dtrace=$(usex systemtap yes no)
 		--enable-headless-only=$(usex headless-awt yes no)
-		--with-vendor-version-string="${PVR}"
-		--with-version-pre=""
 
-		--with-freemarker-jar=${freemarker_jar}
+		--with-freemarker-jar=$(java-pkg_getjar --build-only $freemarker freemarker.jar)
 		--disable-warnings-as-errors{,-omr,-openj9}
 		$(use_enable ddr)
 	)
@@ -264,7 +260,7 @@ src_install() {
 	local dest="/usr/$(get_libdir)/${PN}-${SLOT}"
 	local ddest="${ED}${dest#/}"
 
-	cd "${S}"/build/*-release/jdk || die
+	cd "${S}"/build/*-release/images/jdk || die
 
 	# Create files used as storage for system preferences.
 	mkdir .systemPrefs || die
@@ -277,6 +273,14 @@ src_install() {
 		rm -v lib/libjsound.* || die
 	fi
 
+	if ! use examples ; then
+		rm -vr demo/ || die
+	fi
+
+	if ! use source ; then
+		rm -v lib/src.zip || die
+	fi
+
 	rm -v lib/security/cacerts || die
 
 	dodir "${dest}"
@@ -286,9 +290,6 @@ src_install() {
 
 	# must be done before running itself
 	java-vm_set-pax-markings "${ddest}"
-
-	einfo "Creating the Class Data Sharing archives and disabling usage tracking"
-	"${ddest}/bin/java" -server -Xshare:dump -Djdk.disableLastUsageTracking || die
 
 	use gentoo-vm && java-vm_install-env "${FILESDIR}"/${PN}-${SLOT}.env.sh
 	java-vm_revdep-mask
