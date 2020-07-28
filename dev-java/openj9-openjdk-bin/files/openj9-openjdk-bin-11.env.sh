@@ -1,15 +1,15 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-VERSION="AdoptOpenJDK JRE ${PV}"
+VERSION="AdoptOpenJDK ${DL_PV}"
 JAVA_HOME="${EPREFIX}/opt/${P}"
 JDK_HOME="${EPREFIX}/opt/${P}"
 JAVAC="\${JAVA_HOME}/bin/javac"
 PATH="\${JAVA_HOME}/bin"
 ROOTPATH="\${JAVA_HOME}/bin"
 LDPATH="\${JAVA_HOME}/lib/:\${JAVA_HOME}/lib/server/"
-MANPATH="\${JAVA_HOME}/man"
-PROVIDES_TYPE="JRE"
+MANPATH=""
+PROVIDES_TYPE="JDK JRE"
 PROVIDES_VERSION="${SLOT}"
 BOOTCLASSPATH=""
 GENERATION="2"
