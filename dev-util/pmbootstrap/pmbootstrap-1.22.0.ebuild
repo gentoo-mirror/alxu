@@ -13,7 +13,7 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
+IUSE="test"
 
-DEPEND=""
-RDEPEND="${DEPEND}"
-BDEPEND=""
+# https://gitlab.com/postmarketOS/pmbootstrap/-/issues/1951
+#distutils_enable_tests pytest
