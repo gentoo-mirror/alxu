@@ -132,16 +132,23 @@ pkg_setup() {
 		fi
 	done
 
-	if has_version --host-root dev-java/openjdk:${SLOT}; then
-		export JDK_HOME=${EPREFIX}/usr/$(get_libdir)/openjdk-${SLOT}
-	else
-		if [[ ${MERGE_TYPE} != "binary" ]]; then
-			JDK_HOME=$(best_version --host-root dev-java/openjdk-bin:${SLOT})
-			[[ -n ${JDK_HOME} ]] || die "Build VM not found!"
+	if [[ ${MERGE_TYPE} != binary ]]; then
+		if has_version --host-root dev-java/openj9-openjdk:${SLOT}; then
+			JDK_HOME=${EPREFIX}/usr/$(get_libdir)/openj9-openjdk-${SLOT}
+		elif has_version --host-root dev-java/openjdk:${SLOT}; then
+			JDK_HOME=${EPREFIX}/usr/$(get_libdir)/openjdk-${SLOT}
+		elif has_version --host-root dev-java/openj9-openjdk-bin:${SLOT}; then
+			JDK_HOME=$(best_version --host-root dev-java/openj9-openjdk-bin:${SLOT})
 			JDK_HOME=${JDK_HOME#*/}
 			JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
-			export JDK_HOME
+		elif has_version --host-root dev-java/openjdk-bin:${SLOT}; then
+			JDK_HOME=$(best_version --host-root dev-java/openjdk-bin:${SLOT})
+			JDK_HOME=${JDK_HOME#*/}
+			JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
+		else
+			die "Build VM not found!"
 		fi
+		export JDK_HOME
 	fi
 }
 
@@ -247,7 +254,8 @@ src_configure() {
 src_compile() {
 	local myemakeargs=(
 		JOBS=$(makeopts_jobs)
-		LOG=debug
+		# https://github.com/ibmruntimes/openj9-openjdk-jdk14/issues/72
+		#LOG=debug
 		CFLAGS_WARNINGS_ARE_ERRORS= # No -Werror
 		$(usex doc docs '')
 		$(usex jbootstrap bootcycle-images product-images)
