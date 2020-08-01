@@ -155,21 +155,19 @@ pkg_setup() {
 src_prepare() {
 	ln -s ../openj9-${OPENJ9_P} openj9 || die
 	ln -s ../openj9-omr-${OPENJ9_P} omr || die
+
 	default
-	(
-		cd openj9 || die
-		#eapply "${FILESDIR}/openj9-j9utf8-fam.patch"
-		eapply "${FILESDIR}/openj9-make-jvmti-test-variables-static.patch"
-	)
-	(
-		cd omr || die
-		eapply "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
-		#eapply "${FILESDIR}/omr-fam.patch"
-	)
+
+	eapply -d openj9 -- "${FILESDIR}/openj9-make-jvmti-test-variables-static.patch"
+	#eapply -d openj9 -- "${FILESDIR}/openj9-j9utf8-fam.patch"
+	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
+	#eapply -d omr -- "${FILESDIR}/omr-fam.patch"
+
 	sed -i -e '/^OPENJ9_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
-		   -e '/^OPENJ9_TAG :=/s/:=.*/:= '${OPENJ9_P}/ \
-		   -e '/^OPENJ9OMR_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
-		   closed/OpenJ9.gmk
+	       -e '/^OPENJ9_TAG :=/s/:=.*/:= '${OPENJ9_P}/ \
+	       -e '/^OPENJ9OMR_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
+	       closed/OpenJ9.gmk
+
 	chmod +x configure || die
 }
 
