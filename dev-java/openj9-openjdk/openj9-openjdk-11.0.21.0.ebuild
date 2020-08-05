@@ -158,7 +158,6 @@ src_prepare() {
 
 	default
 
-	eapply "${FILESDIR}/openjdk-8238380-childproc-fcommon.patch"
 	eapply -d openj9 -- "${FILESDIR}/openj9-make-jvmti-test-variables-static.patch"
 	#eapply -d openj9 -- "${FILESDIR}/openj9-j9utf8-fam.patch"
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
@@ -202,6 +201,7 @@ src_configure() {
 		--with-extra-cflags="${CFLAGS}"
 		--with-extra-cxxflags="${CXXFLAGS}"
 		--with-extra-ldflags="${LDFLAGS}"
+		--with-stdc++lib=dynamic
 		--with-giflib=system
 		--with-lcms=system
 		--with-libjpeg=system

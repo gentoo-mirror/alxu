@@ -203,6 +203,7 @@ src_configure() {
 		--with-extra-cflags="${CFLAGS}"
 		--with-extra-cxxflags="${CXXFLAGS}"
 		--with-extra-ldflags="${LDFLAGS}"
+		--with-stdc++lib=dynamic
 		--with-giflib=system
 		--with-lcms=system
 		--with-libjpeg=system
