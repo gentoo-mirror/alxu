@@ -7,7 +7,7 @@ inherit unpacker
 
 DESCRIPTION="Official RuneScape NXT client launcher"
 HOMEPAGE="http://www.runescape.com"
-SRC_URI="http://content.runescape.com/downloads/ubuntu/pool/non-free/${PN:0:1}/${PN}/${PN}_${PV}_amd64.deb"
+SRC_URI="https://content.runescape.com/downloads/ubuntu/pool/non-free/${PN:0:1}/${PN}/${PN}_${PV}_amd64.deb"
 
 LICENSE="RuneScape-EULA"
 SLOT="0"
@@ -28,7 +28,7 @@ RDEPEND="
 BDEPEND=""
 
 RESTRICT="bindist mirror strip"
-QA_PREBUILT="/opt/runescape-launcher/runescape"
+QA_PREBUILT="/usr/share/games/runescape-launcher/runescape"
 
 S="${WORKDIR}"
 
