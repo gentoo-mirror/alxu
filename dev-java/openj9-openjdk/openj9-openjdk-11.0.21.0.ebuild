@@ -162,7 +162,7 @@ src_prepare() {
 	eapply -d openj9 -- "${FILESDIR}/openj9-make-jvmti-test-variables-static.patch"
 	#eapply -d openj9 -- "${FILESDIR}/openj9-j9utf8-fam.patch"
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
-	#eapply -d omr -- "${FILESDIR}/omr-fam.patch"
+	eapply -d omr -- "${FILESDIR}/omr-fam.patch"
 	sed -i -e '/^OPENJ9_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
 	       -e '/^OPENJ9_TAG :=/s/:=.*/:= '${OPENJ9_P}/ \
 	       -e '/^OPENJ9OMR_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
