@@ -10,5 +10,6 @@ KEYWORDS="~amd64 ~arm64 ~ppc64"
 RDEPEND="|| (
 		dev-java/openjdk-bin:${SLOT}[gentoo-vm(+)]
 		dev-java/openjdk:${SLOT}[gentoo-vm(+)]
+		dev-java/openj9-openjdk-bin:${SLOT}[gentoo-vm(+)]
 		dev-java/openj9-openjdk:${SLOT}[gentoo-vm(+)]
 	)"
