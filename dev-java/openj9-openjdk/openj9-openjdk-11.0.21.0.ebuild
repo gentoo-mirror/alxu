@@ -5,8 +5,6 @@ EAPI=6
 
 inherit autotools check-reqs flag-o-matic java-pkg-2 java-vm-2 multiprocessing pax-utils toolchain-funcs
 
-# we need -ga tag to fetch tarball and unpack it, but exact number everywhere else to
-# set build version properly
 SLOT="$(get_major_version)"
 OPENJ9_PV="$(get_version_component_range 2-4)"
 OPENJ9_P=openj9-${OPENJ9_PV}
@@ -23,7 +21,7 @@ SRC_URI="
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa custom-cflags custom-optimization cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap large-heap nsplugin +pch selinux source systemtap webstart"
+IUSE="alsa cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap large-heap nsplugin +pch selinux source systemtap webstart"
 
 COMMON_DEPEND="
 	media-libs/freetype:2=
@@ -72,7 +70,13 @@ DEPEND="
 	x11-libs/libXt
 	x11-libs/libXtst
 	javafx? ( dev-java/openjfx:${SLOT}= )
-	virtual/jdk:${SLOT}
+	|| (
+		virtual/jdk:${SLOT}
+		dev-java/openj9-openjdk-bin:${SLOT}
+		dev-java/openj9-openjdk:${SLOT}
+		dev-java/openjdk-bin:${SLOT}
+		dev-java/openjdk:${SLOT}
+	)
 	|| (
 		dev-java/freemarker-bin
 		dev-java/freemarker
@@ -86,7 +90,7 @@ PDEPEND="
 
 REQUIRED_USE="javafx? ( alsa !headless-awt )"
 
-S=${WORKDIR}/openj9-openjdk-jdk${SLOT}-${OPENJ9_P}
+S="${WORKDIR}/openj9-openjdk-jdk${SLOT}-${OPENJ9_P}"
 
 # The space required to build varies wildly depending on USE flags,
 # ranging from 3GB to 16GB. This function is certainly not exact but
@@ -132,15 +136,15 @@ pkg_setup() {
 		fi
 	done
 
-	if [[ ${MERGE_TYPE} != binary ]]; then
+	if [[ ${MERGE_TYPE} != binary ]] && [[ -z ${JDK_HOME} ]]; then
 		if has_version --host-root dev-java/openj9-openjdk:${SLOT}; then
 			JDK_HOME=${EPREFIX}/usr/$(get_libdir)/openj9-openjdk-${SLOT}
-		elif has_version --host-root dev-java/openjdk:${SLOT}; then
-			JDK_HOME=${EPREFIX}/usr/$(get_libdir)/openjdk-${SLOT}
 		elif has_version --host-root dev-java/openj9-openjdk-bin:${SLOT}; then
 			JDK_HOME=$(best_version --host-root dev-java/openj9-openjdk-bin:${SLOT})
 			JDK_HOME=${JDK_HOME#*/}
 			JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
+		elif has_version --host-root dev-java/openjdk:${SLOT}; then
+			JDK_HOME=${EPREFIX}/usr/$(get_libdir)/openjdk-${SLOT}
 		elif has_version --host-root dev-java/openjdk-bin:${SLOT}; then
 			JDK_HOME=$(best_version --host-root dev-java/openjdk-bin:${SLOT})
 			JDK_HOME=${JDK_HOME#*/}
@@ -159,30 +163,25 @@ src_prepare() {
 	default
 
 	eapply -d openj9 -- "${FILESDIR}/openj9-make-jvmti-test-variables-static.patch"
+	# broken verifier
 	#eapply -d openj9 -- "${FILESDIR}/openj9-j9utf8-fam.patch"
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
 	eapply -d omr -- "${FILESDIR}/omr-fam.patch"
+
 	sed -i -e '/^OPENJ9_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
 	       -e '/^OPENJ9_TAG :=/s/:=.*/:= '${OPENJ9_P}/ \
 	       -e '/^OPENJ9OMR_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
 	       closed/OpenJ9.gmk
+
 	chmod +x configure || die
 }
 
 src_configure() {
-	if ! use custom-cflags; then
-		strip-flags
+	# Work around stack alignment issue, bug #647954. in case we ever have x86
+	use x86 && append-flags -mincoming-stack-boundary=2
 
-		# Work around stack alignment issue, bug #647954. in case we ever have x86
-		use x86 && append-flags -mincoming-stack-boundary=2
-
-		# Work around -fno-common ( GCC10 default ), bug #713180
-		append-flags -fcommon
-	fi
-
-	if ! use custom-optimization; then
-		filter-flags '-O*'
-	fi
+	# Work around -fno-common ( GCC10 default ), bug #713180
+	append-flags -fcommon
 
 	if has_version dev-java/freemarker; then
 		local freemarker=freemarker
