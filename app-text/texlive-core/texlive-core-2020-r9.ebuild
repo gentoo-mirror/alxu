@@ -9,7 +9,7 @@ inherit flag-o-matic toolchain-funcs libtool texlive-common
 
 MY_P=${PN%-core}-${TL_SOURCE_VERSION}-source
 
-PATCHLEVEL=4
+PATCHLEVEL=5
 
 DESCRIPTION="A complete TeX distribution"
 HOMEPAGE="https://tug.org/texlive/"
@@ -75,7 +75,7 @@ for i in ${TL_CORE_EXTRA_SRC_MODULES}; do
 done
 SRC_URI="${SRC_URI} )"
 
-KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~mips ppc ppc64 ~s390 sparc x86 ~amd64-linux ~x86-linux ~x86-macos ~sparc-solaris ~sparc64-solaris"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~x86-macos ~sparc-solaris ~sparc64-solaris"
 IUSE="cjk X doc source tk +luajittex xetex xindy"
 
 TEXMF_PATH=/usr/share/texmf-dist
@@ -86,6 +86,8 @@ MODULAR_X_DEPEND="X? (
 	)"
 
 COMMON_DEPEND="${MODULAR_X_DEPEND}
+	!app-eselect/eselect-mpost
+	!app-eselect/eselect-pdftex
 	!app-text/xindy
 	!~dev-texlive/texlive-basic-2019
 	!~dev-texlive/texlive-fontutils-2019
@@ -121,6 +123,11 @@ RDEPEND="${COMMON_DEPEND}
 	>=app-text/ps2pkm-1.8_p20170524
 	>=app-text/dvipsk-5.997
 	>=dev-tex/bibtexu-3.71_p20170524
+	virtual/perl-Getopt-Long
+	dev-perl/File-HomeDir
+	dev-perl/Log-Dispatch
+	dev-perl/Unicode-LineBreak
+	dev-perl/YAML-Tiny
 	tk? ( dev-perl/Tk )"
 
 S="${WORKDIR}/${P}_build"
@@ -152,13 +159,13 @@ src_prepare() {
 
 	cd "${B}" || die
 
-	default
-
-	eapply "${WORKDIR}"/patches
-
 	sed -i \
 		-e "s,/usr/include /usr/local/include.*echo \$KPATHSEA_INCLUDES.*,${EPREFIX}/usr/include\"," \
 		texk/web2c/configure || die
+
+	eapply "${WORKDIR}"/patches
+
+	default
 
 	for dir in libs/*/; do
 		case "$dir" in
@@ -217,6 +224,7 @@ src_configure() {
 		--enable-regiswin \
 		--enable-tektronixwin \
 		--enable-unitermwin \
+		--enable-vlna \
 		--with-ps=gs \
 		--disable-psutils \
 		--disable-t1utils \
@@ -238,7 +246,6 @@ src_configure() {
 		--enable-luatex \
 		--disable-dvi2tty \
 		--disable-dvisvgm \
-		--disable-vlna \
 		--enable-shared \
 		--disable-native-texlive-build \
 		--disable-largefile \
@@ -340,14 +347,6 @@ src_install() {
 	# like non-existing targets
 	dosym tex /usr/bin/virtex
 	dosym pdftex /usr/bin/pdfvirtex
-
-	# Rename mpost to leave room for mplib
-	mv "${ED}/usr/bin/mpost" "${ED}/usr/bin/mpost-${P}" || die
-	dosym "mpost-${P}" /usr/bin/mpost
-
-	# Ditto for pdftex
-	mv "${ED}/usr/bin/pdftex" "${ED}/usr/bin/pdftex-${P}" || die
-	dosym "pdftex-${P}" /usr/bin/pdftex
 }
 
 pkg_postinst() {
