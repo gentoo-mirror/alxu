@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+
+from collections import ChainMap
+from pathlib import Path
+import os
+import re
+
+import asyncio
+import httpx
+import portage
+
+async def do_manifest(client, filename, size, url):
+    resp = await client.get(f'{url}.sha256.txt')
+    sha256 = resp.text.split(' ')[0]
+    return (filename, size, sha256)
+
+async def do_api(client, ghauth, tagl):
+    owner, repo, tag = tagl
+    apiurl = f'https://api.github.com/repos/{owner}/{repo}/releases/tags/{tag}'
+    resp = await client.get(apiurl, auth=ghauth)
+    return {asset['browser_download_url']: asset['size']
+            for asset in resp.json()['assets']}
+
+async def handle(fm):
+    tags = set()
+    res = r'^https://github.com/([^/]*)/([^/]*)/releases/download/([^/]*)/([^/]*)$'
+    rec = re.compile(res)
+    for _, urls in fm.items():
+        m = re.match(rec, urls[0])
+        if m:
+            tags.add(m.group(1, 2, 3))
+
+    headers = {'User-Agent': 'gentoo-adoptopenjdk-manifest'}
+    async with httpx.AsyncClient(headers=headers) as client:
+        if 'GITHUB_USER' in os.environ and 'GITHUB_PASS' in os.environ:
+            ghauth = (os.environ['GITHUB_USER'], os.environ['GITHUB_PASS'])
+        else:
+            ghauth = None
+
+        apijobs = (do_api(client, ghauth, tagl) for tagl in tags)
+        assetsizes = ChainMap(*await asyncio.gather(*apijobs))
+
+        manifestjobs = (do_manifest(client, filename, assetsizes[urls[0]], urls[0])
+                for filename, urls in fm.items())
+        return sorted(await asyncio.gather(*manifestjobs))
+
+def main(pkgdir):
+    p = portage.db['/']['porttree'].dbapi
+    pkgdir = Path(pkgdir).resolve()
+    mytree = str(pkgdir.parents[1])
+    cp = str(pkgdir.relative_to(pkgdir.parents[1]))
+    cpvs = p.cp_list(cp, mytree=mytree)
+    fms = (p.getFetchMap(cpv, mytree=mytree) for cpv in cpvs)
+    for filename, size, sha256 in asyncio.run(handle(ChainMap(*fms))):
+        print(f'DIST {filename} {size} SHA256 {sha256}')
+
+if __name__ == '__main__':
+    main('.')
