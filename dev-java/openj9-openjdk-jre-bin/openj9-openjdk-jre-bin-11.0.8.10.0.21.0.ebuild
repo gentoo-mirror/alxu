@@ -8,10 +8,10 @@ inherit java-vm-2 toolchain-funcs versionator
 abi_uri() {
 	echo "${2-$1}? (
 		large-heap? (
-			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV}/OpenJDK${SLOT}U-jre_${1}_linux_openj9_linuxXL_${DL_PV//+/_}.tar.gz
+			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV/+/%2B}/OpenJDK${SLOT}U-jre_${1}_linux_openj9_linuxXL_${DL_PV/+/_}.tar.gz
 		)
 		!large-heap? (
-			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV}/OpenJDK${SLOT}U-jre_${1}_linux_openj9_${DL_PV//+/_}.tar.gz
+			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV/+/%2B}/OpenJDK${SLOT}U-jre_${1}_linux_openj9_${DL_PV/+/_}.tar.gz
 		)
 	)"
 }

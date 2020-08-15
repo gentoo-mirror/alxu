@@ -7,7 +7,7 @@ inherit java-vm-2 toolchain-funcs
 
 abi_uri() {
 	echo "${2-$1}? (
-			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${MY_PV}/OpenJDK${SLOT}U-jdk_${1}_linux_hotspot_${MY_PV//+/_}.tar.gz
+			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${MY_PV/+/%2B}/OpenJDK${SLOT}U-jdk_${1}_linux_hotspot_${MY_PV/+/_}.tar.gz
 		)"
 }
 
