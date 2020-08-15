@@ -9,15 +9,15 @@ abi_uri() {
 	echo "${2-$1}? (
 		large-heap? (
 			debug? (
-				https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV}/OpenJDK${SLOT}U-debugimage_${1}_linux_openj9_linuxXL_${DL_PV//+/_}.tar.gz
+				https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV/+/%2B}/OpenJDK${SLOT}U-debugimage_${1}_linux_openj9_linuxXL_${DL_PV/+/_}.tar.gz
 			)
-			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV}/OpenJDK${SLOT}U-jdk_${1}_linux_openj9_linuxXL_${DL_PV//+/_}.tar.gz
+			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV/+/%2B}/OpenJDK${SLOT}U-jdk_${1}_linux_openj9_linuxXL_${DL_PV/+/_}.tar.gz
 		)
 		!large-heap? (
 			debug? (
-				https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV}/OpenJDK${SLOT}U-debugimage_${1}_linux_openj9_${DL_PV//+/_}.tar.gz
+				https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV/+/%2B}/OpenJDK${SLOT}U-debugimage_${1}_linux_openj9_${DL_PV/+/_}.tar.gz
 			)
-			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV}/OpenJDK${SLOT}U-jdk_${1}_linux_openj9_${DL_PV//+/_}.tar.gz
+			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV/+/%2B}/OpenJDK${SLOT}U-jdk_${1}_linux_openj9_${DL_PV/+/_}.tar.gz
 		)
 	)"
 }

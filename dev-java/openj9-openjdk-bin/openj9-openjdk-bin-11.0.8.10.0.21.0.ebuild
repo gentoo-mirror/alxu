@@ -8,10 +8,16 @@ inherit java-vm-2 toolchain-funcs versionator
 abi_uri() {
 	echo "${2-$1}? (
 		large-heap? (
-			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV}/OpenJDK${SLOT}U-jdk_${1}_linux_openj9_linuxXL_${DL_PV//+/_}.tar.gz
+			debug? (
+				https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV//+/%2B}/OpenJDK${SLOT}U-debugimage_${1}_linux_openj9_linuxXL_${DL_PV//+/_}.tar.gz
+			)
+			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV//+/%2B}/OpenJDK${SLOT}U-jdk_${1}_linux_openj9_linuxXL_${DL_PV//+/_}.tar.gz
 		)
 		!large-heap? (
-			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV}/OpenJDK${SLOT}U-jdk_${1}_linux_openj9_${DL_PV//+/_}.tar.gz
+			debug? (
+				https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV//+/%2B}/OpenJDK${SLOT}U-debugimage_${1}_linux_openj9_${DL_PV//+/_}.tar.gz
+			)
+			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV//+/%2B}/OpenJDK${SLOT}U-jdk_${1}_linux_openj9_${DL_PV//+/_}.tar.gz
 		)
 	)"
 }
@@ -29,7 +35,7 @@ DESCRIPTION="Prebuilt Java JDK binaries provided by AdoptOpenJDK"
 HOMEPAGE="https://adoptopenjdk.net"
 LICENSE="GPL-2-with-classpath-exception"
 KEYWORDS="~amd64 ~ppc64"
-IUSE="alsa cups doc +gentoo-vm headless-awt large-heap nsplugin selinux source webstart"
+IUSE="alsa cups debug doc +gentoo-vm headless-awt large-heap nsplugin selinux source webstart"
 
 RDEPEND="
 	media-libs/fontconfig:1.0
@@ -63,6 +69,13 @@ pkg_pretend() {
 	fi
 }
 
+do_rm() {
+	rm -v $* || die
+	if use debug ; then
+		rm -v ${S}-debug-image/$* || die
+	fi
+}
+
 src_install() {
 	local dest="/opt/${P}"
 	local ddest="${ED%/}/${dest#/}"
@@ -70,16 +83,16 @@ src_install() {
 	# Not sure why they bundle this as it's commonly available and they
 	# only do so on x86_64. It's needed by libfontmanager.so. IcedTea
 	# also has an explicit dependency while Oracle seemingly dlopens it.
-	rm -vf lib/libfreetype.so || die
+	do_rm 'lib/libfreetype.*'
 
 	# Oracle and IcedTea have libjsoundalsa.so depending on
 	# libasound.so.2 but AdoptOpenJDK only has libjsound.so. Weird.
 	if ! use alsa ; then
-		rm -v lib/libjsound.* || die
+		do_rm 'lib/libjsound.*'
 	fi
 
 	if use headless-awt ; then
-		rm -v lib/lib*{[jx]awt,splashscreen}* || die
+		do_rm 'lib/lib*{[jx]awt,splashscreen}*'
 	fi
 
 	if ! use source ; then
