@@ -26,7 +26,7 @@ else
 fi
 
 LICENSE="GPL-2"
-KEYWORDS="~amd64"
+KEYWORDS=""
 
 IUSE="alsa cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap large-heap nsplugin +pch selinux source systemtap webstart"
 
@@ -186,7 +186,6 @@ src_prepare() {
 
 	default
 
-	eapply -d openj9 -- "${FILESDIR}/openj9-make-jvmti-test-variables-static.patch"
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
 	eapply -d omr -- "${FILESDIR}/omr-fam.patch"
 
@@ -203,10 +202,6 @@ src_prepare() {
 src_configure() {
 	# Work around stack alignment issue, bug #647954. in case we ever have x86
 	use x86 && append-flags -mincoming-stack-boundary=2
-
-	# https://bugs.openjdk.java.net/browse/JDK-8249792
-	# not backported to 14?
-	append-flags -fcommon
 
 	if has_version dev-java/freemarker; then
 		local freemarker=freemarker
@@ -243,7 +238,7 @@ src_configure() {
 		--enable-headless-only=$(usex headless-awt yes no)
 
 		--with-freemarker-jar=$(java-pkg_getjar --build-only $freemarker freemarker.jar)
-		--disable-warnings-as-errors{,-omr,-openj9}
+		#--disable-warnings-as-errors{,-omr,-openj9}
 		$(use_enable ddr)
 		$(use_with large-heap noncompressedrefs)
 	)

@@ -12,11 +12,18 @@ FREEMARKER_PV=2.3.30
 
 DESCRIPTION="Open source implementation of the Java programming language"
 HOMEPAGE="https://openjdk.java.net"
-SRC_URI="
-	https://github.com/ibmruntimes/openj9-openjdk-jdk${SLOT}/archive/${OPENJ9_P}.tar.gz -> openj9-openjdk-jdk${SLOT}-${OPENJ9_P}.tar.gz
-	https://github.com/eclipse/openj9/archive/${OPENJ9_P}.tar.gz -> ${OPENJ9_P}.tar.gz
-	https://github.com/eclipse/openj9-omr/archive/${OPENJ9_P}.tar.gz -> openj9-omr-${OPENJ9_PV}.tar.gz
+if [[ ${OPENJ9_PV} == 9999 ]]; then
+	inherit git-r3
+	EGIT_REPO_URI="https://github.com/ibmruntimes/openj9-openjdk-jdk${SLOT}.git"
+	OPENJ9_EGIT_REPO_URI="https://github.com/eclipse/openj9.git"
+	OPENJ9_OMR_EGIT_REPO_URI="https://github.com/eclipse/openj9-omr.git"
+else
+	SRC_URI="
+		https://github.com/ibmruntimes/openj9-openjdk-jdk${SLOT}/archive/${OPENJ9_P}.tar.gz -> openj9-openjdk-jdk${SLOT}-${OPENJ9_P}.tar.gz
+		https://github.com/eclipse/openj9/archive/${OPENJ9_P}.tar.gz -> ${OPENJ9_P}.tar.gz
+		https://github.com/eclipse/openj9-omr/archive/${OPENJ9_P}.tar.gz -> openj9-omr-${OPENJ9_PV}.tar.gz
 	"
+fi
 
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
@@ -72,10 +79,7 @@ DEPEND="
 	javafx? ( dev-java/openjfx:${SLOT}= )
 	|| (
 		virtual/jdk:${SLOT}
-		dev-java/openj9-openjdk-bin:${SLOT}
-		dev-java/openj9-openjdk:${SLOT}
-		dev-java/openjdk-bin:${SLOT}
-		dev-java/openjdk:${SLOT}
+		virtual/jdk:$((SLOT-1))
 	)
 	|| (
 		dev-java/freemarker-bin
@@ -90,7 +94,11 @@ PDEPEND="
 
 REQUIRED_USE="javafx? ( alsa !headless-awt )"
 
-S="${WORKDIR}/openj9-openjdk-jdk${SLOT}-${OPENJ9_P}"
+if [[ ${OPENJ9_PV} == 9999 ]]; then
+	S="${WORKDIR}/openj9-openjdk-jdk${SLOT}"
+else
+	S="${WORKDIR}/openj9-openjdk-jdk${SLOT}-${OPENJ9_P}"
+fi
 
 # The space required to build varies wildly depending on USE flags,
 # ranging from 3GB to 16GB. This function is certainly not exact but
@@ -136,42 +144,58 @@ pkg_setup() {
 		fi
 	done
 
-	if [[ ${MERGE_TYPE} != binary ]] && [[ -z ${JDK_HOME} ]]; then
-		if has_version --host-root dev-java/openj9-openjdk:${SLOT}; then
-			JDK_HOME=${EPREFIX}/usr/$(get_libdir)/openj9-openjdk-${SLOT}
-		elif has_version --host-root dev-java/openj9-openjdk-bin:${SLOT}; then
-			JDK_HOME=$(best_version --host-root dev-java/openj9-openjdk-bin:${SLOT})
-			JDK_HOME=${JDK_HOME#*/}
-			JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
-		elif has_version --host-root dev-java/openjdk:${SLOT}; then
-			JDK_HOME=${EPREFIX}/usr/$(get_libdir)/openjdk-${SLOT}
-		elif has_version --host-root dev-java/openjdk-bin:${SLOT}; then
-			JDK_HOME=$(best_version --host-root dev-java/openjdk-bin:${SLOT})
-			JDK_HOME=${JDK_HOME#*/}
-			JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
-		else
-			die "Build VM not found!"
+	if [[ ${MERGE_TYPE} != binary ]]; then
+		if [[ -z ${JDK_HOME} ]]; then
+			for slot in ${SLOT} $((SLOT-1)); do
+				for variant in openj9- ''; do
+					if has_version --host-root dev-java/${variant}openjdk:${slot}; then
+						JDK_HOME=${EPREFIX}/usr/$(get_libdir)/${variant}openjdk-${slot}
+						break
+					elif has_version --host-root dev-java/${variant}openjdk-bin:${slot}; then
+						JDK_HOME=$(best_version --host-root dev-java/${variant}openjdk-bin:${slot})
+						JDK_HOME=${JDK_HOME#*/}
+						JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
+						break
+					fi
+				done
+			done
 		fi
+		[[ -n ${JDK_HOME} ]] || die "Build VM not found!"
 		export JDK_HOME
 	fi
 }
 
+src_unpack() {
+	if [[ ${OPENJ9_PV} == 9999 ]]; then
+		EGIT_CHECKOUT_DIR=${S} git-r3_src_unpack
+		EGIT_CHECKOUT_DIR=openj9 EGIT_REPO_URI=${OPENJ9_EGIT_REPO_URI} git-r3_src_unpack
+		EGIT_CHECKOUT_DIR=openj9-omr EGIT_REPO_URI=${OPENJ9_OMR_EGIT_REPO_URI} git-r3_src_unpack
+	else
+		default
+	fi
+}
+
 src_prepare() {
-	ln -s ../openj9-${OPENJ9_P} openj9 || die
-	ln -s ../openj9-omr-${OPENJ9_P} omr || die
+	if [[ ${OPENJ9_PV} == 9999 ]]; then
+		ln -s ../openj9 openj9 || die
+		ln -s ../openj9-omr omr || die
+	else
+		ln -s ../openj9-${OPENJ9_P} openj9 || die
+		ln -s ../openj9-omr-${OPENJ9_P} omr || die
+	fi
 
 	default
 
 	eapply -d openj9 -- "${FILESDIR}/openj9-make-jvmti-test-variables-static.patch"
-	# broken verifier
-	#eapply -d openj9 -- "${FILESDIR}/openj9-j9utf8-fam.patch"
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
 	eapply -d omr -- "${FILESDIR}/omr-fam.patch"
 
-	sed -i -e '/^OPENJ9_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
-	       -e '/^OPENJ9_TAG :=/s/:=.*/:= '${OPENJ9_P}/ \
-	       -e '/^OPENJ9OMR_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
-	       closed/OpenJ9.gmk
+	if [[ ${OPENJ9_PV} != 9999 ]]; then
+		sed -i -e '/^OPENJ9_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
+			   -e '/^OPENJ9_TAG :=/s/:=.*/:= '${OPENJ9_P}/ \
+			   -e '/^OPENJ9OMR_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
+			   closed/OpenJ9.gmk
+	fi
 
 	chmod +x configure || die
 }
@@ -180,7 +204,8 @@ src_configure() {
 	# Work around stack alignment issue, bug #647954. in case we ever have x86
 	use x86 && append-flags -mincoming-stack-boundary=2
 
-	# Work around -fno-common ( GCC10 default ), bug #713180
+	# https://bugs.openjdk.java.net/browse/JDK-8249792
+	# backported to 11.0.9
 	append-flags -fcommon
 
 	if has_version dev-java/freemarker; then
@@ -252,7 +277,6 @@ src_compile() {
 		JOBS=$(makeopts_jobs)
 		# https://github.com/ibmruntimes/openj9-openjdk-jdk14/issues/72
 		#LOG=debug
-		CFLAGS_WARNINGS_ARE_ERRORS= # No -Werror
 		$(usex doc docs '')
 		$(usex jbootstrap bootcycle-images product-images)
 	)
@@ -294,7 +318,7 @@ src_install() {
 	# must be done before running itself
 	java-vm_set-pax-markings "${ddest}"
 
-	use gentoo-vm && java-vm_install-env "${FILESDIR}"/${PN}-${SLOT}.env.sh
+	use gentoo-vm && java-vm_install-env "${FILESDIR}"/${PN}.env.sh
 	java-vm_revdep-mask
 	java-vm_sandbox-predict /dev/random /proc/self/coredump_filter
 
