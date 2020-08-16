@@ -1,9 +1,9 @@
 # Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="7"
+EAPI=7
 
-PYTHON_COMPAT=(python{3_6,3_7,3_8})
+PYTHON_COMPAT=(python{3_6,3_7,3_8,3_9})
 PYTHON_REQ_USE=(sqlite)
 
 inherit distutils-r1
@@ -15,14 +15,34 @@ SRC_URI="mirror://pypi/g/gallery_dl/gallery_dl-${PV}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x86-solaris"
-IUSE=""
+IUSE="test"
 
 RDEPEND="
 	dev-python/requests[${PYTHON_USEDEP}]
 "
-DEPEND="${RDEPEND}"
+BDEPEND="
+	test? (
+		${RDEPEND}
+		dev-python/nose
+	)
+"
 
 S="${WORKDIR}/gallery_dl-${PV}"
+
+python_test() {
+	local noseargs=(
+		-v
+
+		# requires network access
+		-I 'test_results\.py'
+
+		# AssertionErrors?
+		-e test_expires_db
+		-e test_invalidate_db
+		-e test_update_db
+	)
+	nosetests "${noseargs[@]}" || die
+}
 
 python_install_all() {
 	dodoc README.rst
