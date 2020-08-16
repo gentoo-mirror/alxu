@@ -70,9 +70,9 @@ pkg_pretend() {
 }
 
 do_rm() {
-	rm -v $* || die
+	rm -v $1 || die
 	if use debug ; then
-		rm -v ${S}-debug-image/$* || die
+		rm -v "${S}-debug-image"/$1 || die
 	fi
 }
 
