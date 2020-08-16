@@ -79,7 +79,10 @@ DEPEND="
 	javafx? ( dev-java/openjfx:${SLOT}= )
 	|| (
 		virtual/jdk:${SLOT}
-		virtual/jdk:$((SLOT-1))
+		dev-java/openj9-openjdk-bin:${SLOT}
+		dev-java/openj9-openjdk:${SLOT}
+		dev-java/openjdk-bin:${SLOT}
+		dev-java/openjdk:${SLOT}
 	)
 	|| (
 		dev-java/freemarker-bin
