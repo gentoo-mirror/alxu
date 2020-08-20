@@ -186,8 +186,6 @@ src_prepare() {
 
 	default
 
-	#einfo "Applying openj9-utf.patch"
-	#git -C openj9 apply -3 "${FILESDIR}/openj9-utf.patch" || die
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
 	eapply -d omr -- "${FILESDIR}/omr-fam.patch"
 
