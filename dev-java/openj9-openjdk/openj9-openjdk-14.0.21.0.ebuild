@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit autotools check-reqs flag-o-matic java-pkg-2 java-vm-2 multiprocessing pax-utils toolchain-funcs
+inherit autotools check-reqs flag-o-matic java-pkg-2 java-vm-2 multiprocessing pax-utils toolchain-funcs versionator
 
 SLOT="$(get_major_version)"
 OPENJ9_PV="$(get_version_component_range 2-4)"
