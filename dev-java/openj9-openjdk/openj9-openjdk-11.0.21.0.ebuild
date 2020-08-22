@@ -127,7 +127,7 @@ pkg_setup() {
 	openjdk_check_requirements
 	java-vm-2_pkg_setup
 
-	JAVA_PKG_WANT_BUILD_VM="openjdk-${SLOT} openjdk-bin-${SLOT}"
+	JAVA_PKG_WANT_BUILD_VM="openj9-openjdk-${SLOT} openj9-openjdk-bin-${SLOT} openjdk-${SLOT} openjdk-bin-${SLOT}"
 	JAVA_PKG_WANT_SOURCE="${SLOT}"
 	JAVA_PKG_WANT_TARGET="${SLOT}"
 
@@ -170,9 +170,10 @@ pkg_setup() {
 
 src_unpack() {
 	if [[ ${OPENJ9_PV} == 9999 ]]; then
-		EGIT_CHECKOUT_DIR=${S} git-r3_src_unpack
 		EGIT_CHECKOUT_DIR=openj9 EGIT_REPO_URI=${OPENJ9_EGIT_REPO_URI} git-r3_src_unpack
 		EGIT_CHECKOUT_DIR=openj9-omr EGIT_REPO_URI=${OPENJ9_OMR_EGIT_REPO_URI} git-r3_src_unpack
+		# unpack openjdk last to save correct EGIT_VERSION
+		EGIT_CHECKOUT_DIR=${S} git-r3_src_unpack
 	else
 		default
 	fi

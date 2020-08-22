@@ -123,53 +123,14 @@ pkg_pretend() {
 pkg_setup() {
 	openjdk_check_requirements
 	java-vm-2_pkg_setup
-
-	JAVA_PKG_WANT_BUILD_VM="openjdk-${SLOT} openjdk-bin-${SLOT}"
-	JAVA_PKG_WANT_SOURCE="${SLOT}"
-	JAVA_PKG_WANT_TARGET="${SLOT}"
-
-	# The nastiness below is necessary while the gentoo-vm USE flag is
-	# masked. First we call java-pkg-2_pkg_setup if it looks like the
-	# flag was unmasked against one of the possible build VMs. If not,
-	# we try finding one of them in their expected locations. This would
-	# have been slightly less messy if openjdk-bin had been installed to
-	# /opt/${PN}-${SLOT} or if there was a mechanism to install a VM env
-	# file but disable it so that it would not normally be selectable.
-
-	local vm
-	for vm in ${JAVA_PKG_WANT_BUILD_VM}; do
-		if [[ -d ${EPREFIX}/usr/lib/jvm/${vm} ]]; then
-			java-pkg-2_pkg_setup
-			return
-		fi
-	done
-
-	if [[ ${MERGE_TYPE} != binary ]]; then
-		if [[ -z ${JDK_HOME} ]]; then
-			for slot in ${SLOT} $((SLOT-1)); do
-				for variant in openj9- ''; do
-					if has_version --host-root dev-java/${variant}openjdk:${slot}; then
-						JDK_HOME=${EPREFIX}/usr/$(get_libdir)/${variant}openjdk-${slot}
-						break
-					elif has_version --host-root dev-java/${variant}openjdk-bin:${slot}; then
-						JDK_HOME=$(best_version --host-root dev-java/${variant}openjdk-bin:${slot})
-						JDK_HOME=${JDK_HOME#*/}
-						JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
-						break
-					fi
-				done
-			done
-		fi
-		[[ -n ${JDK_HOME} ]] || die "Build VM not found!"
-		export JDK_HOME
-	fi
 }
 
 src_unpack() {
 	if [[ ${OPENJ9_PV} == 9999 ]]; then
-		EGIT_CHECKOUT_DIR=${S} git-r3_src_unpack
 		EGIT_CHECKOUT_DIR=openj9 EGIT_REPO_URI=${OPENJ9_EGIT_REPO_URI} git-r3_src_unpack
 		EGIT_CHECKOUT_DIR=openj9-omr EGIT_REPO_URI=${OPENJ9_OMR_EGIT_REPO_URI} git-r3_src_unpack
+		# unpack openjdk last to save correct EGIT_VERSION
+		EGIT_CHECKOUT_DIR=${S} git-r3_src_unpack
 	else
 		default
 	fi
@@ -202,6 +163,10 @@ src_prepare() {
 src_configure() {
 	# Work around stack alignment issue, bug #647954. in case we ever have x86
 	use x86 && append-flags -mincoming-stack-boundary=2
+
+	# https://bugs.openjdk.java.net/browse/JDK-8249792
+	# not backported to 14
+	append-flags -fcommon
 
 	if has_version dev-java/freemarker; then
 		local freemarker=freemarker
