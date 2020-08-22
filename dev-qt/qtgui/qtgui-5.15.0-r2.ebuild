@@ -33,7 +33,6 @@ RDEPEND="
 	>=media-libs/freetype-2.6.1:2
 	>=media-libs/harfbuzz-1.6.0:=
 	sys-libs/zlib:=
-	virtual/opengl
 	dbus? ( ~dev-qt/qtdbus-${PV} )
 	egl? ( media-libs/mesa[egl] )
 	eglfs? (
@@ -42,6 +41,7 @@ RDEPEND="
 	)
 	evdev? ( sys-libs/mtdev )
 	gles2-only? ( media-libs/mesa[gles2] )
+	!gles2-only? ( virtual/opengl )
 	jpeg? ( virtual/jpeg:0 )
 	libinput? (
 		dev-libs/libinput:=
@@ -130,6 +130,7 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 PATCHES=(
 	"${FILESDIR}/qt-5.12-gcc-avx2.patch" # bug 672946
 	"${FILESDIR}/${PN}-5.14.1-cmake-macro-backward-compat.patch" # bug 703306
+	"${FILESDIR}/${PN}-5.14.2-CVE-2020-17507.patch" # bug 736924
 )
 
 src_prepare() {

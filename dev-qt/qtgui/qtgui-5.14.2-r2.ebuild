@@ -10,7 +10,7 @@ DESCRIPTION="The GUI module and platform plugins for the Qt5 framework"
 SLOT=5/$(ver_cut 1-3) # bug 707658
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	KEYWORDS="amd64 arm arm64 ~hppa ppc ppc64 ~sparc x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~sparc ~x86"
 fi
 
 # TODO: linuxfb
@@ -130,6 +130,7 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 PATCHES=(
 	"${FILESDIR}/qt-5.12-gcc-avx2.patch" # bug 672946
 	"${FILESDIR}/${PN}-5.14.1-cmake-macro-backward-compat.patch" # bug 703306
+	"${FILESDIR}/${PN}-5.14.2-CVE-2020-17507.patch" # bug 736924
 )
 
 src_prepare() {
