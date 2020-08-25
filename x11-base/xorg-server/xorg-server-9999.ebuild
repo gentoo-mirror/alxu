@@ -78,6 +78,7 @@ CDEPEND="libglvnd? (
 		>=media-libs/libepoxy-1.5.4[egl(+)]
 		>=dev-libs/wayland-protocols-1.18
 	)
+	>=x11-apps/xinit-1.3.3-r1
 	systemd? (
 		sys-apps/dbus
 		sys-apps/systemd
