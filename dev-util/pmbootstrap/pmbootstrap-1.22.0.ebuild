@@ -16,4 +16,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 
 # https://gitlab.com/postmarketOS/pmbootstrap/-/issues/1951
-#distutils_enable_tests pytest
+RESTRICT="test"
+
+distutils_enable_tests pytest
