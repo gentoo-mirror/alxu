@@ -5,4 +5,7 @@
 		<email>alex_y_xu@yahoo.ca</email>
 		<name>Alex Xu (Hello71)</name>
 	</maintainer>
+	<use>
+		<flag name="benchmarks">Build and install benchmarks.</flag>
+	</use>
 </pkgmetadata>
