@@ -17,7 +17,7 @@ fi
 LICENSE="ISC"
 SLOT="0"
 KEYWORDS=""
-IUSE="benchmarks examples +jpeg ssl"
+IUSE="examples +jpeg ssl"
 
 DEPEND="
 	jpeg? ( media-libs/libjpeg-turbo )
@@ -31,7 +31,6 @@ BDEPEND=""
 
 src_configure() {
 	local emesonargs=(
-		$(meson_use benchmarks)
 		$(meson_use examples)
 		$(meson_feature jpeg)
 		$(meson_feature ssl tls)
