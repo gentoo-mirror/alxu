@@ -33,7 +33,7 @@ BDEPEND="dev-libs/wayland"
 
 src_configure() {
 	local emesonargs=(
-		$(meson_features gbm screencopy-dmabuf)
+		$(meson_feature gbm screencopy-dmabuf)
 	)
 
 	meson_src_configure
