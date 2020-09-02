@@ -66,6 +66,7 @@ RDEPEND="
 DEPEND="
 	${COMMON_DEPEND}
 	app-arch/zip
+	dev-lang/nasm
 	media-libs/alsa-lib
 	net-print/cups
 	x11-base/xorg-proto

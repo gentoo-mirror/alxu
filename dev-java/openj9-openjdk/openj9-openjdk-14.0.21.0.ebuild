@@ -66,6 +66,7 @@ RDEPEND="
 DEPEND="
 	${COMMON_DEPEND}
 	app-arch/zip
+	dev-lang/nasm
 	media-libs/alsa-lib
 	net-print/cups
 	x11-base/xorg-proto
@@ -123,6 +124,7 @@ pkg_pretend() {
 pkg_setup() {
 	openjdk_check_requirements
 	java-vm-2_pkg_setup
+	java-pkg-2_pkg_setup
 }
 
 src_unpack() {
