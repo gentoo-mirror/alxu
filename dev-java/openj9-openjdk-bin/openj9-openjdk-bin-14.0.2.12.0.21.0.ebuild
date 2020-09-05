@@ -35,7 +35,7 @@ DESCRIPTION="Prebuilt Java JDK binaries provided by AdoptOpenJDK"
 HOMEPAGE="https://adoptopenjdk.net"
 LICENSE="GPL-2-with-classpath-exception"
 KEYWORDS="~amd64 ~ppc64"
-IUSE="alsa cups debug doc +gentoo-vm headless-awt large-heap nsplugin selinux source webstart"
+IUSE="alsa cups debug doc +gentoo-vm headless-awt large-heap selinux source"
 
 RDEPEND="
 	media-libs/fontconfig:1.0
@@ -54,9 +54,6 @@ RDEPEND="
 		x11-libs/libXrender
 		x11-libs/libXtst
 	)"
-
-PDEPEND="webstart? ( >=dev-java/icedtea-web-1.6.1:0 )
-	nsplugin? ( >=dev-java/icedtea-web-1.6.1:0[nsplugin] )"
 
 RESTRICT="preserve-libs splitdebug"
 QA_PREBUILT="*"
