@@ -28,7 +28,7 @@ fi
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap large-heap nsplugin +pch selinux source systemtap webstart"
+IUSE="alsa cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap large-heap +pch selinux source systemtap"
 
 COMMON_DEPEND="
 	media-libs/freetype:2=
@@ -89,11 +89,6 @@ DEPEND="
 		dev-java/freemarker-bin
 		dev-java/freemarker
 	)
-"
-
-PDEPEND="
-	webstart? ( >=dev-java/icedtea-web-1.6.1:0 )
-	nsplugin? ( >=dev-java/icedtea-web-1.6.1:0[nsplugin] )
 "
 
 REQUIRED_USE="javafx? ( alsa !headless-awt )"
