@@ -35,11 +35,6 @@ python_test() {
 
 		# requires network access
 		-I 'test_results\.py'
-
-		# AssertionErrors?
-		-e test_expires_db
-		-e test_invalidate_db
-		-e test_update_db
 	)
 	nosetests "${noseargs[@]}" || die
 }
