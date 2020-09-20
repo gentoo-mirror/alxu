@@ -35,7 +35,7 @@ DESCRIPTION="Prebuilt Java JDK binaries provided by AdoptOpenJDK"
 HOMEPAGE="https://adoptopenjdk.net"
 LICENSE="GPL-2-with-classpath-exception"
 KEYWORDS="~amd64 ~ppc64"
-IUSE="alsa cups debug doc +gentoo-vm headless-awt large-heap selinux source"
+IUSE="alsa cups debug +gentoo-vm headless-awt large-heap selinux source"
 
 RDEPEND="
 	media-libs/fontconfig:1.0
@@ -45,7 +45,6 @@ RDEPEND="
 	sys-libs/zlib
 	alsa? ( media-libs/alsa-lib )
 	cups? ( net-print/cups )
-	doc? ( dev-java/java-sdk-docs:${SLOT} )
 	selinux? ( sec-policy/selinux-java )
 	!headless-awt? (
 		x11-libs/libX11
