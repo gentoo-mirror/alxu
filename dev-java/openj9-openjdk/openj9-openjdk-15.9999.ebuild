@@ -233,7 +233,10 @@ src_compile() {
 		$(usex doc docs '')
 		$(usex jbootstrap bootcycle-images product-images)
 	)
-	emake "${myemakeargs[@]}" -j1 #nowarn
+	(
+		unset A
+		emake "${myemakeargs[@]}" -j1 #nowarn
+	)
 }
 
 src_install() {

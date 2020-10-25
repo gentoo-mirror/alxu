@@ -26,7 +26,7 @@ else
 fi
 
 LICENSE="GPL-2"
-KEYWORDS="~amd64"
+KEYWORDS=""
 
 IUSE="alsa cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap large-heap +pch selinux source systemtap"
 
