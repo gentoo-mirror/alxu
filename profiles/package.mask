@@ -1,4 +1,0 @@
-# no keyworded implementations
-# --- Invalid atom in profiles/package.mask: Slot deps are not allowed in EAPI 0: 'virtual/jdk:15'
-=virtual/jdk-15*
-=virtual/jre-15*
