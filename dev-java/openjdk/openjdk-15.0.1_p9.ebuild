@@ -61,7 +61,7 @@ DEPEND="
 	x11-libs/libXrender
 	x11-libs/libXt
 	x11-libs/libXtst
-	virtual/jdk:14
+	virtual/jdk:15
 	javafx? ( dev-java/openjfx:${SLOT}= )
 "
 

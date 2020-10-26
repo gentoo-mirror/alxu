@@ -6,6 +6,7 @@
 		<name>Alex Xu (Hello71)</name>
 	</maintainer>
 	<use>
-		<flag name="gbm">Enable zero-copy screencast support.</flag>
+		<flag name="gbm">Enable zero-copy screencast support</flag>
+		<flag name="man">Build and install man pages</flag>
 	</use>
 </pkgmetadata>

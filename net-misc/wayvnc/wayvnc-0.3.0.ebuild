@@ -17,7 +17,7 @@ fi
 LICENSE="ISC"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="gbm"
+IUSE="gbm +man"
 
 DEPEND="
 	dev-libs/aml
@@ -27,6 +27,7 @@ DEPEND="
 	x11-libs/libxkbcommon
 	x11-libs/pixman
 	gbm? ( media-libs/mesa )
+	man? ( app-text/scdoc )
 "
 RDEPEND="${DEPEND}"
 BDEPEND="dev-libs/wayland"
@@ -34,6 +35,7 @@ BDEPEND="dev-libs/wayland"
 src_configure() {
 	local emesonargs=(
 		$(meson_feature gbm screencopy-dmabuf)
+		$(meson_feature man man-pages)
 	)
 
 	meson_src_configure

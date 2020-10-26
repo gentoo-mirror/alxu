@@ -3,13 +3,13 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7,8} )
+PYTHON_COMPAT=( python3_{6,7,8,9} )
 
 inherit meson python-any-r1
 
 DESCRIPTION="proxy for Wayland clients"
 HOMEPAGE="https://gitlab.freedesktop.org/mstoeckl/waypipe"
-SRC_URI="https://gitlab.freedesktop.org/mstoeckl/waypipe/-/archive/v0.6.1/waypipe-v0.6.1.tar.bz2"
+SRC_URI="https://gitlab.freedesktop.org/mstoeckl/waypipe/-/archive/v${PV}/waypipe-v${PV}.tar.bz2"
 
 LICENSE="MIT"
 SLOT="0"
@@ -21,7 +21,7 @@ REQUIRED_USE="vaapi? ( ffmpeg )"
 DEPEND="
 	dev-libs/wayland
 	drm? ( x11-libs/libdrm )
-	ffmpeg? ( virtual/ffmpeg )
+	ffmpeg? ( media-video/ffmpeg )
 	lz4? ( app-arch/lz4:= )
 	vaapi? ( x11-libs/libva )
 	zstd? ( app-arch/zstd:= )

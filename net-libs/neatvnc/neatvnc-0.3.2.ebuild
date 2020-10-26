@@ -17,11 +17,12 @@ fi
 LICENSE="ISC"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="examples +jpeg ssl"
+IUSE="benchmarks examples +jpeg ssl systemtap"
 
 DEPEND="
 	jpeg? ( media-libs/libjpeg-turbo )
 	ssl? ( net-libs/gnutls:= )
+	systemtap? ( dev-util/systemtap )
 	dev-libs/aml
 	sys-libs/zlib
 	x11-libs/pixman
@@ -31,9 +32,11 @@ BDEPEND=""
 
 src_configure() {
 	local emesonargs=(
+		$(meson_use benchmarks)
 		$(meson_use examples)
 		$(meson_feature jpeg)
 		$(meson_feature ssl tls)
+		$(meson_feature systemtap)
 	)
 
 	meson_src_configure
