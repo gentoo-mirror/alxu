@@ -101,6 +101,7 @@ pkg_setup() {
 }
 
 src_prepare() {
+	eapply "${FILESDIR}/openjdk-src-doubledollar.patch"
 	default
 	chmod +x configure || die
 }
@@ -173,10 +174,7 @@ src_compile() {
 		$(usex doc docs '')
 		$(usex jbootstrap bootcycle-images product-images)
 	)
-	(
-		unset A
-		emake "${myemakeargs[@]}" -j1 #nowarn
-	)
+	emake "${myemakeargs[@]}" -j1 #nowarn
 }
 
 src_install() {

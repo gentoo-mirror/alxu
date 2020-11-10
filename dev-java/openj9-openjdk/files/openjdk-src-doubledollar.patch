@@ -1,0 +1,28 @@
+From 0601ac847afc86e9010685bb85d82a00a33355b5 Mon Sep 17 00:00:00 2001
+From: erikj <erik.joelsson@oracle.com>
+Date: Mon, 2 Nov 2020 06:18:08 -0800
+Subject: [PATCH] Add DoubleDollar call to protect java class file names with
+ dollar in them
+
+---
+ make/common/JavaCompilation.gmk | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/make/common/JavaCompilation.gmk b/make/common/JavaCompilation.gmk
+index 444ded0fc06..bedb971115b 100644
+--- a/make/common/JavaCompilation.gmk
++++ b/make/common/JavaCompilation.gmk
+@@ -311,9 +311,11 @@ define SetupJavaCompilationBody
+   ifneq ($$($1_KEEP_DUPS), true)
+     # Remove duplicate source files by keeping the first found of each duplicate.
+     # This allows for automatic overrides with custom or platform specific versions
+-    # source files.
++    # source files. Need to call DoubleDollar as we have java classes with '$' in
++    # their names.
+     $1_SRCS := $$(strip $$(foreach s, $$($1_SRCS), \
+-        $$(eval relative_src := $$(call remove-prefixes, $$($1_SRC), $$(s))) \
++        $$(eval relative_src := $$(call remove-prefixes, $$($1_SRC), \
++            $$(call DoubleDollar, $$(s)))) \
+         $$(if $$($1_$$(relative_src)), \
+           , \
+           $$(eval $1_$$(relative_src) := 1) $$(s))))

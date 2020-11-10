@@ -144,6 +144,7 @@ src_prepare() {
 
 	default
 
+	eapply "${FILESDIR}/openjdk-src-doubledollar.patch"
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
 	eapply -d omr -- "${FILESDIR}/omr-fam.patch"
 
@@ -233,10 +234,7 @@ src_compile() {
 		$(usex doc docs '')
 		$(usex jbootstrap bootcycle-images product-images)
 	)
-	(
-		unset A
-		emake "${myemakeargs[@]}" -j1 #nowarn
-	)
+	emake "${myemakeargs[@]}" -j1 #nowarn
 }
 
 src_install() {
