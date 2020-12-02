@@ -33,7 +33,7 @@ RDEPEND="
 		>=dev-libs/gmime-2.6.21:2.6
 	)
 	dev-cpp/glibmm:2
-	>=dev-cpp/gtkmm-3.10:3.0[X]
+	>=dev-cpp/gtkmm-3.10:3.0
 	dev-libs/boost[nls]
 	dev-libs/libsass
 	>=dev-libs/protobuf-3.6.0:=
