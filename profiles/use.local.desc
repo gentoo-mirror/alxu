@@ -1,0 +1,72 @@
+# This file is deprecated as per GLEP 56 in favor of metadata.xml.
+# Please add your descriptions to your package's metadata.xml ONLY.
+# * generated automatically using pmaint *
+
+dev-java/openj9-openjdk:ddr - Enable Direct Dump Reader
+dev-java/openj9-openjdk:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
+dev-java/openj9-openjdk:headless-awt - Don't install the X backend for AWT, needed by some GUIs
+dev-java/openj9-openjdk:javafx - Import OpenJFX modules at build time, via dev-java/openjfx
+dev-java/openj9-openjdk:jbootstrap - Build OpenJDK twice, the second time using the result of the first
+dev-java/openj9-openjdk:large-heap - Support Java heap sizes greater than 57Gb
+dev-java/openj9-openjdk:systemtap - Enable SystemTAP/DTrace tracing
+dev-java/openj9-openjdk-bin:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
+dev-java/openj9-openjdk-bin:headless-awt - Don't install the X backend for AWT, needed by some GUIs (used to be X flag)
+dev-java/openj9-openjdk-bin:large-heap - Support Java heap sizes greater than 57Gb
+dev-java/openj9-openjdk-bin:source - Install JVM sources
+dev-java/openj9-openjdk-jre-bin:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
+dev-java/openj9-openjdk-jre-bin:headless-awt - Don't install the X backend for AWT, needed by some GUIs (used to be X flag)
+dev-java/openj9-openjdk-jre-bin:large-heap - Support Java heap sizes greater than 57Gb
+dev-java/openjdk:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
+dev-java/openjdk:headless-awt - Don't install the X backend for AWT, needed by some GUIs
+dev-java/openjdk:javafx - Import OpenJFX modules at build time, via dev-java/openjfx
+dev-java/openjdk:jbootstrap - Build OpenJDK twice, the second time using the result of the first
+dev-java/openjdk:source - Install JVM sources
+dev-java/openjdk:systemtap - Enable SystemTAP/DTrace tracing
+dev-java/openjdk-bin:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
+dev-java/openjdk-bin:headless-awt - Don't install the X backend for AWT, needed by some GUIs (used to be X flag)
+dev-java/openjdk-bin:source - Install JVM sources
+dev-java/openjdk-jre-bin:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
+dev-java/openjdk-jre-bin:headless-awt - Don't install the X backend for AWT, needed by some GUIs (used to be X flag)
+dev-libs/openssl:asm - Support assembly hand optimized crypto functions (i.e. faster run time)
+dev-libs/openssl:bindist - Disable/Restrict EC algorithms (as they seem to be patented) -- note: changes the ABI
+dev-libs/openssl:rfc3779 - Enable support for RFC 3779 (X.509 Extensions for IP Addresses and AS Identifiers)
+dev-libs/openssl:sslv2 - Support for the old/insecure SSLv2 protocol -- note: not required for TLS/https
+dev-libs/openssl:sslv3 - Support for the old/insecure SSLv3 protocol -- note: not required for TLS/https
+dev-libs/openssl:tls-heartbeat - Enable the Heartbeat Extension in TLS and DTLS
+dev-qt/qtgui:X - Build the XCB platform plugin and enable X11 integration
+dev-qt/qtgui:egl - Enable EGL integration
+dev-qt/qtgui:eglfs - Build the EGL Full Screen/Single Surface platform plugin
+dev-qt/qtgui:evdev - Enable support for input devices via evdev
+dev-qt/qtgui:ibus - Build the IBus input method plugin
+dev-qt/qtgui:libinput - Enable support for input devices via dev-libs/libinput
+dev-qt/qtgui:tslib - Enable support for touchscreen devices via x11-libs/tslib
+dev-qt/qtgui:tuio - Build plugin to receive touch events over the TUIO protocol
+dev-qt/qtgui:vulkan - Enable support for Vulkan
+dev-qt/qtgui:wayland - Provide dev-qt/qtwayland to ensure Qt applications can be run as Wayland clients
+gui-apps/gammastep:geoclue - Enable geolocation support.
+gui-apps/waypipe:drm - Direct Rendering Manager support
+gui-apps/waypipe:man - Install man pages
+mail-client/astroid:embedded-editor - Embedded editor
+mail-client/astroid:plugins - Plugins
+mail-client/astroid:terminal - Embedded terminal
+net-libs/neatvnc:benchmarks - Build and install benchmarks
+net-libs/neatvnc:systemtap - Enable systemtap support
+net-misc/wayvnc:gbm - Enable zero-copy screencast support
+net-misc/wayvnc:man - Build and install man pages
+x11-apps/mesa-progs:egl - Build EGL utilities
+x11-apps/mesa-progs:gles2 - Build OpenGL ES 2 utilities
+x11-base/xorg-server:dmx - Build the Distributed Multiheaded X server
+x11-base/xorg-server:elogind - Use elogind to get control over framebuffer when running as regular user
+x11-base/xorg-server:kdrive - Build the kdrive X servers
+x11-base/xorg-server:libglvnd - Use libglvnd for dispatch.
+x11-base/xorg-server:unwind - Enable libunwind usage for backtraces
+x11-base/xorg-server:xcsecurity - Build Security extension
+x11-base/xorg-server:xephyr - Build the Xephyr server
+x11-base/xorg-server:xnest - Build the Xnest server
+x11-base/xorg-server:xorg - Build the Xorg X server (HIGHLY RECOMMENDED)
+x11-base/xorg-server:xvfb - Build the Xvfb server
+x11-libs/cairo:gles2-only - Build the OpenGL ES 2 backend
+x11-libs/cairo:glib - Compile with GLib Object System support
+x11-libs/cairo:opengl - Build the OpenGL backend
+x11-libs/cairo:utils - Build support for Cairo script and trace utilities
+x11-libs/cairo:valgrind - Built-in support to mark memory regions
