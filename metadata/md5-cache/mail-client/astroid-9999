@@ -1,14 +1,14 @@
 BDEPEND=dev-util/ninja dev-util/cmake >=dev-vcs/git-1.8.2.1[curl] test? ( x11-base/xorg-server[xvfb] x11-apps/xhost )
 DEFINED_PHASES=compile configure install postinst prepare test unpack
-DEPEND=plugins? ( dev-libs/gobject-introspection >=dev-libs/libpeas-1.0.0 || ( dev-libs/gmime:3.0[vala] dev-libs/gmime:2.6[vala] ) ) terminal? ( x11-libs/vte:2.91 ) || ( >=dev-libs/gmime-3.0.3:3.0 >=dev-libs/gmime-2.6.21:2.6 ) dev-cpp/glibmm:2 >=dev-cpp/gtkmm-3.10:3.0[X] dev-libs/boost[nls] dev-libs/libsass >=dev-libs/protobuf-3.6.0:= net-libs/libsoup:2.4 >=net-libs/webkit-gtk-2.22.0:4 net-mail/notmuch doc? ( || ( app-text/scdoc app-text/ronn ) ) test? ( x11-base/xorg-server[xvfb] x11-apps/xhost app-crypt/gnupg app-text/cmark ) virtual/pkgconfig
+DEPEND=plugins? ( dev-libs/gobject-introspection >=dev-libs/libpeas-1.0.0 || ( dev-libs/gmime:3.0[vala] dev-libs/gmime:2.6[vala] ) ) terminal? ( x11-libs/vte:2.91 ) || ( >=dev-libs/gmime-3.0.3:3.0 >=dev-libs/gmime-2.6.21:2.6 ) dev-cpp/glibmm:2 >=dev-cpp/gtkmm-3.10:3.0 dev-libs/boost[nls] dev-libs/libsass >=dev-libs/protobuf-3.6.0:= net-libs/libsoup:2.4 >=net-libs/webkit-gtk-2.22.0:4 net-mail/notmuch doc? ( || ( app-text/scdoc app-text/ronn ) ) test? ( x11-base/xorg-server[xvfb] x11-apps/xhost app-crypt/gnupg app-text/cmark ) virtual/pkgconfig
 DESCRIPTION=lightweight graphical threads-with-tags style email client for notmuch
 EAPI=7
 HOMEPAGE=https://github.com/astroidmail/astroid
 IUSE=+doc embedded-editor plugins profile terminal test test
 LICENSE=GPL-3+
 PROPERTIES=live
-RDEPEND=plugins? ( dev-libs/gobject-introspection >=dev-libs/libpeas-1.0.0 || ( dev-libs/gmime:3.0[vala] dev-libs/gmime:2.6[vala] ) ) terminal? ( x11-libs/vte:2.91 ) || ( >=dev-libs/gmime-3.0.3:3.0 >=dev-libs/gmime-2.6.21:2.6 ) dev-cpp/glibmm:2 >=dev-cpp/gtkmm-3.10:3.0[X] dev-libs/boost[nls] dev-libs/libsass >=dev-libs/protobuf-3.6.0:= net-libs/libsoup:2.4 >=net-libs/webkit-gtk-2.22.0:4 net-mail/notmuch
+RDEPEND=plugins? ( dev-libs/gobject-introspection >=dev-libs/libpeas-1.0.0 || ( dev-libs/gmime:3.0[vala] dev-libs/gmime:2.6[vala] ) ) terminal? ( x11-libs/vte:2.91 ) || ( >=dev-libs/gmime-3.0.3:3.0 >=dev-libs/gmime-2.6.21:2.6 ) dev-cpp/glibmm:2 >=dev-cpp/gtkmm-3.10:3.0 dev-libs/boost[nls] dev-libs/libsass >=dev-libs/protobuf-3.6.0:= net-libs/libsoup:2.4 >=net-libs/webkit-gtk-2.22.0:4 net-mail/notmuch
 RESTRICT=!test? ( test )
 SLOT=0
 _eclasses_=cmake	ac7cb516f6a288b6a82bc0649ce49878	edos2unix	33e347e171066657f91f8b0c72ec8773	eutils	2d5b3f4b315094768576b6799e4f926e	flag-o-matic	09a8beb8e6a8e02dc1e1bd83ac353741	git-r3	3e7ec3d6619213460c85e2aa48398441	l10n	8cdd85e169b835d518bc2fd59f780d8e	multilib	d410501a125f99ffb560b0c523cd3d1e	multiprocessing	cac3169468f893670dac3e7cb940e045	ninja-utils	132cbb376048d079b5a012f5467c4e7f	toolchain-funcs	605c126bed8d87e4378d5ff1645330cb	virtualx	7e60d3b10c791ab996f717bc1f30072f	wrapper	4251d4c84c25f59094fd557e0063a974	xdg-utils	ff2ff954e6b17929574eee4efc5152ba
-_md5_=3fc47a03726a88038021f225ee9b0579
+_md5_=bcbe019271827df2fa90f0e154d6d0cf
