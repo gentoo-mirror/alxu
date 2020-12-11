@@ -11,7 +11,7 @@ dev-java/openjdk-jre-bin 15.0.1_p9: Prebuilt Java JRE binaries provided by Adopt
 dev-libs/aml 0.1.0 9999: Another Main Loop
 dev-libs/libdwarf 20200719: The DWARF Debugging Information Format
 dev-libs/openssl 1.0.2u-r1 1.1.0l-r1 1.1.1g-r1 1.1.1h-r1: full-strength general purpose cryptography library (including SSL and TLS)
-dev-python/fonttools 4.18.0: Library for manipulating TrueType, OpenType, AFM and Type1 fonts
+dev-python/fonttools 4.18.1: Library for manipulating TrueType, OpenType, AFM and Type1 fonts
 dev-python/fs 2.4.12_pre: Filesystem abstraction layer
 dev-qt/qtgui 5.15.1-r1 5.15.2-r1: The GUI module and platform plugins for the Qt5 framework
 dev-util/android-udev-rules 20201003: Comprehensive list of udev rules to connect to android devices
