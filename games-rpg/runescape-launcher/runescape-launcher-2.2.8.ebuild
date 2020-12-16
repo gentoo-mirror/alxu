@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit unpacker
+inherit unpacker xdg
 
 DESCRIPTION="Official RuneScape NXT client launcher"
 HOMEPAGE="http://www.runescape.com"
@@ -12,6 +12,7 @@ SRC_URI="https://content.runescape.com/downloads/ubuntu/pool/non-free/${PN:0:1}/
 LICENSE="RuneScape-EULA"
 SLOT="0"
 KEYWORDS="-* ~amd64"
+IUSE="kde"
 
 DEPEND=""
 RDEPEND="
@@ -32,6 +33,15 @@ QA_PREBUILT="/usr/share/games/runescape-launcher/runescape"
 
 S="${WORKDIR}"
 
+src_compile() {
+	mv usr/share/doc . || die
+	gunzip doc/runescape-launcher/changelog.gz || die
+	if ! use kde; then
+		rm -r usr/share/kde4 || die
+	fi
+}
+
 src_install() {
-	cp -r usr "${D}"
+	doins -r usr
+	dodoc doc/runescape-launcher/*
 }
