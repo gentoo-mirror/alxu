@@ -11,7 +11,7 @@ SRC_URI="mirror://sourceforge/qjackctl/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="alsa dbus debug portaudio"
 
 BDEPEND="dev-qt/linguist-tools:5"
@@ -47,6 +47,5 @@ src_compile() {
 src_install() {
 	default
 
-	gunzip "${D}/usr/share/man/man1/qjackctl.fr.1.gz" || die
 	gunzip "${D}/usr/share/man/man1/qjackctl.1.gz" || die
 }
