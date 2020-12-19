@@ -20,7 +20,7 @@ gui-apps/gammastep 2.0.2: A screen color temperature adjusting software
 gui-apps/waypipe 0.7.0: proxy for Wayland clients
 gui-apps/wshowkeys 9999: Displays keys being pressed on a Wayland session
 mail-client/astroid 9999: lightweight graphical threads-with-tags style email client for notmuch
-media-sound/qjackctl 0.6.3-r1 9999: Qt GUI to control the JACK Audio Connection Kit and ALSA sequencer connections
+media-sound/qjackctl 0.9.0-r1 9999: Qt GUI to control the JACK Audio Connection Kit and ALSA sequencer connections
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 net-libs/neatvnc 0.3.2 9999: A liberally licensed VNC server library with a clean interface
 net-misc/wayvnc 0.3.0 9999: A VNC server for wlroots based Wayland compositors
