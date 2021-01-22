@@ -17,7 +17,7 @@ fi
 LICENSE="ISC"
 SLOT="0"
 KEYWORDS=""
-IUSE="gbm"
+IUSE="gbm +man pam systemtap"
 
 DEPEND="
 	dev-libs/aml
@@ -27,6 +27,9 @@ DEPEND="
 	x11-libs/libxkbcommon
 	x11-libs/pixman
 	gbm? ( media-libs/mesa )
+	man? ( app-text/scdoc )
+	pam? ( sys-libs/pam )
+	systemtap? ( dev-util/systemtap )
 "
 RDEPEND="${DEPEND}"
 BDEPEND="dev-libs/wayland"
@@ -34,6 +37,9 @@ BDEPEND="dev-libs/wayland"
 src_configure() {
 	local emesonargs=(
 		$(meson_feature gbm screencopy-dmabuf)
+		$(meson_feature man man-pages)
+		$(meson_feature pam)
+		$(meson_use systemtap)
 	)
 
 	meson_src_configure
