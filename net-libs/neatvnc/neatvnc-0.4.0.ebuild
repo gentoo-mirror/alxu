@@ -36,7 +36,7 @@ src_configure() {
 		$(meson_use examples)
 		$(meson_feature jpeg)
 		$(meson_feature ssl tls)
-		$(meson_feature systemtap)
+		$(meson_use systemtap)
 	)
 
 	meson_src_configure
