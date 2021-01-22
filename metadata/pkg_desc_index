@@ -26,7 +26,6 @@ media-sound/qjackctl 0.9.0-r1 9999: Qt GUI to control the JACK Audio Connection 
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 net-libs/neatvnc 0.3.2 9999: A liberally licensed VNC server library with a clean interface
 net-misc/wayvnc 0.3.0 9999: A VNC server for wlroots based Wayland compositors
-sys-apps/xdg-desktop-portal-wlr 0.1.0: xdg-desktop-portal backend for wlroots
 virtual/jdk 11-r2 15: Virtual for Java Development Kit (JDK)
 virtual/jre 11-r2 15: Virtual for Java Runtime Environment (JRE)
 virtual/notification-daemon 1: Virtual for notification daemon dbus service
