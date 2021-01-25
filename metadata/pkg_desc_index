@@ -3,17 +3,17 @@ app-crypt/libsecret 0.20.4-r1: GObject library for accessing the freedesktop.org
 app-emulation/wine-mono 4.8.1 4.8.3 4.9.0 4.9.2 4.9.3 4.9.4 5.0.0 5.1.0 5.1.1: Wine Mono is a replacement for the .NET runtime and class libraries in Wine
 app-text/pdfsizeopt 9999: PDF file size optimizer
 dev-java/freemarker-bin 2.3.30: A Java tool to generate text output based on templates (binary package)
-dev-java/openj9-openjdk 11.0.23.0 11.9999 15.0.23.0 15.9999: Open source implementation of the Java programming language
-dev-java/openj9-openjdk-bin 11.0.9.11.0.23.0 15.0.1.9.0.23.0: Prebuilt Java JDK binaries provided by AdoptOpenJDK
-dev-java/openj9-openjdk-jre-bin 11.0.9.11.0.23.0 15.0.1.9.0.23.0: Prebuilt Java JRE binaries provided by AdoptOpenJDK
-dev-java/openjdk 15.0.1_p9: Open source implementation of the Java programming language
-dev-java/openjdk-bin 15.0.1_p9: Prebuilt Java JDK binaries provided by AdoptOpenJDK
-dev-java/openjdk-jre-bin 15.0.1_p9: Prebuilt Java JRE binaries provided by AdoptOpenJDK
+dev-java/openj9-openjdk 11.0.24.0 11.9999 15.0.24.0 15.9999: Open source implementation of the Java programming language
+dev-java/openj9-openjdk-bin 11.0.10.9.0.24.0 15.0.2.7.0.24.0: Prebuilt Java JDK binaries provided by AdoptOpenJDK
+dev-java/openj9-openjdk-jre-bin 11.0.10.9.0.24.0 15.0.2.7.0.24.0: Prebuilt Java JRE binaries provided by AdoptOpenJDK
+dev-java/openjdk 15.0.2_p7: Open source implementation of the Java programming language
+dev-java/openjdk-bin 15.0.2_p7: Prebuilt Java JDK binaries provided by AdoptOpenJDK
+dev-java/openjdk-jre-bin 15.0.2_p7: Prebuilt Java JRE binaries provided by AdoptOpenJDK
 dev-lang/mono 6.12.0.107: Mono runtime and class libraries, a C# compiler/interpreter
 dev-libs/aml 0.1.0 9999: Another Main Loop
 dev-libs/libdwarf 20200719: The DWARF Debugging Information Format
 dev-libs/openssl 1.0.2u-r1 1.1.0l-r1 1.1.1g-r1 1.1.1h-r1 1.1.1i-r1: full-strength general purpose cryptography library (including SSL and TLS)
-dev-qt/qtgui 5.15.1-r1 5.15.2-r1: The GUI module and platform plugins for the Qt5 framework
+dev-qt/qtgui 5.15.2-r2: The GUI module and platform plugins for the Qt5 framework
 dev-util/android-udev-rules 20201003: Comprehensive list of udev rules to connect to android devices
 dev-util/cargo-c 0.6.18: Helper program to build and install c-like libraries
 dev-util/pmbootstrap 1.22.0: Sophisticated chroot/build/flash tool to develop and install postmarketOS
@@ -23,14 +23,13 @@ gui-apps/waypipe 0.7.0: proxy for Wayland clients
 gui-apps/wshowkeys 9999: Displays keys being pressed on a Wayland session
 mail-client/astroid 9999: lightweight graphical threads-with-tags style email client for notmuch
 media-sound/qjackctl 0.9.0-r1 9999: Qt GUI to control the JACK Audio Connection Kit and ALSA sequencer connections
+media-video/pipewire-compat 0.2.7: Multimedia processing graphs
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 net-libs/neatvnc 0.4.0 9999: A liberally licensed VNC server library with a clean interface
 net-misc/wayvnc 0.4.0 9999: A VNC server for wlroots based Wayland compositors
 virtual/jdk 11-r2 15: Virtual for Java Development Kit (JDK)
 virtual/jre 11-r2 15: Virtual for Java Runtime Environment (JRE)
-virtual/notification-daemon 1: Virtual for notification daemon dbus service
 virtual/rust 1.46.0 1.47.0 1.48.0: Virtual for Rust language compiler
 x11-apps/mesa-progs 8.4.0-r1: Mesa's OpenGL utility and demo programs (glxgears and glxinfo)
 x11-apps/sx 2.1.3 9999: Start an xorg server
 x11-base/xorg-server 1.20.8-r2 1.20.10-r1 9999: X.Org X servers
-x11-libs/cairo 1.16.0-r5 9999: A vector graphics library with cross-device output support
