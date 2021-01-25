@@ -19,8 +19,8 @@ if [[ ${OPENJ9_PV} == 9999 ]]; then
 	OPENJ9_OMR_EGIT_REPO_URI="https://github.com/eclipse/openj9-omr.git"
 else
 	SRC_URI="
-		https://github.com/ibmruntimes/openj9-openjdk-jdk${SLOT}/archive/${OPENJ9_P}.tar.gz -> openj9-openjdk-jdk${SLOT}-${OPENJ9_P}.tar.gz
-		https://github.com/eclipse/openj9/archive/${OPENJ9_P}.tar.gz -> ${OPENJ9_P}.tar.gz
+		https://github.com/ibmruntimes/openj9-openjdk-jdk${SLOT}/archive/v${OPENJ9_PV}-release.tar.gz -> openj9-openjdk-jdk${SLOT}-${OPENJ9_P}.tar.gz
+		https://github.com/eclipse/openj9/archive/${OPENJ9_P}.tar.gz
 		https://github.com/eclipse/openj9-omr/archive/${OPENJ9_P}.tar.gz -> openj9-omr-${OPENJ9_PV}.tar.gz
 	"
 fi

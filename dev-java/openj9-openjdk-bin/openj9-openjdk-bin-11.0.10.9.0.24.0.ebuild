@@ -27,6 +27,7 @@ DL_PV=${JDK_PV}_openj9-$(get_version_component_range 5-7)
 SLOT=$(get_major_version)
 
 SRC_URI="
+	$(abi_uri aarch64 arm64)
 	$(abi_uri ppc64le ppc64)
 	$(abi_uri x64 amd64)
 "
@@ -34,7 +35,7 @@ SRC_URI="
 DESCRIPTION="Prebuilt Java JDK binaries provided by AdoptOpenJDK"
 HOMEPAGE="https://adoptopenjdk.net"
 LICENSE="GPL-2-with-classpath-exception"
-KEYWORDS="~amd64 ~ppc64"
+KEYWORDS="~amd64 ~arm64 ~ppc64"
 IUSE="alsa cups debug +gentoo-vm headless-awt large-heap selinux source"
 
 RDEPEND="

@@ -3,26 +3,34 @@
 
 EAPI=6
 
-inherit java-vm-2
+inherit java-vm-2 toolchain-funcs versionator
 
 abi_uri() {
 	echo "${2-$1}? (
-			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${MY_PV/+/%2B}/OpenJDK${SLOT}U-jre_${1}_linux_hotspot_${MY_PV/+/_}.tar.gz
-		)"
+		large-heap? (
+			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV/+/%2B}/OpenJDK${SLOT}U-jre_${1}_linux_openj9_linuxXL_${DL_PV/+/_}.tar.gz
+		)
+		!large-heap? (
+			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV/+/%2B}/OpenJDK${SLOT}U-jre_${1}_linux_openj9_${DL_PV/+/_}.tar.gz
+		)
+	)"
 }
 
-MY_PV=${PV/_p/+}
-SLOT=${MY_PV%%[.+]*}
+JDK_PV=$(get_version_component_range 1-3)+$(get_version_component_range 4)
+DL_PV=${JDK_PV}_openj9-$(get_version_component_range 5-7)
+SLOT=$(get_major_version)
 
 SRC_URI="
+	$(abi_uri aarch64 arm64)
+	$(abi_uri ppc64le ppc64)
 	$(abi_uri x64 amd64)
 "
 
 DESCRIPTION="Prebuilt Java JRE binaries provided by AdoptOpenJDK"
 HOMEPAGE="https://adoptopenjdk.net"
 LICENSE="GPL-2-with-classpath-exception"
-KEYWORDS="~amd64"
-IUSE="alsa cups +gentoo-vm headless-awt selinux"
+KEYWORDS="~amd64 ~arm64 ~ppc64"
+IUSE="alsa cups +gentoo-vm large-heap headless-awt selinux"
 
 RDEPEND="
 	media-libs/fontconfig:1.0

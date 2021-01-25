@@ -3,32 +3,21 @@
 
 EAPI=6
 
-inherit autotools check-reqs flag-o-matic java-pkg-2 java-vm-2 multiprocessing pax-utils toolchain-funcs versionator
+inherit autotools check-reqs flag-o-matic java-pkg-2 java-vm-2 multiprocessing pax-utils toolchain-funcs
 
-SLOT="$(get_major_version)"
-OPENJ9_PV="$(get_version_component_range 2-4)"
-OPENJ9_P=openj9-${OPENJ9_PV}
-FREEMARKER_PV=2.3.30
+# we need -ga tag to fetch tarball and unpack it, but exact number everywhere else to
+# set build version properly
+MY_PV="${PV%_p*}-ga"
+SLOT="${MY_PV%%[.+]*}"
 
 DESCRIPTION="Open source implementation of the Java programming language"
 HOMEPAGE="https://openjdk.java.net"
-if [[ ${OPENJ9_PV} == 9999 ]]; then
-	inherit git-r3
-	EGIT_REPO_URI="https://github.com/ibmruntimes/openj9-openjdk-jdk${SLOT}.git"
-	OPENJ9_EGIT_REPO_URI="https://github.com/eclipse/openj9.git"
-	OPENJ9_OMR_EGIT_REPO_URI="https://github.com/eclipse/openj9-omr.git"
-else
-	SRC_URI="
-		https://github.com/ibmruntimes/openj9-openjdk-jdk${SLOT}/archive/${OPENJ9_P}.tar.gz -> openj9-openjdk-jdk${SLOT}-${OPENJ9_P}.tar.gz
-		https://github.com/eclipse/openj9/archive/${OPENJ9_P}.tar.gz -> ${OPENJ9_P}.tar.gz
-		https://github.com/eclipse/openj9-omr/archive/${OPENJ9_P}.tar.gz -> openj9-omr-${OPENJ9_PV}.tar.gz
-	"
-fi
+SRC_URI="https://hg.${PN}.java.net/jdk-updates/jdk${SLOT}u/archive/jdk-${MY_PV}.tar.bz2 -> ${P}.tar.bz2"
 
 LICENSE="GPL-2"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc64"
 
-IUSE="alsa cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap large-heap +pch selinux source systemtap"
+IUSE="alsa cups debug doc examples gentoo-vm headless-awt javafx +jbootstrap +pch selinux source systemtap"
 
 COMMON_DEPEND="
 	media-libs/freetype:2=
@@ -38,10 +27,6 @@ COMMON_DEPEND="
 	sys-libs/zlib
 	virtual/jpeg:0=
 	systemtap? ( dev-util/systemtap )
-
-	dev-libs/elfutils
-	dev-libs/libdwarf
-	sys-process/numactl
 "
 
 # Many libs are required to build, but not to run, make is possible to remove
@@ -66,7 +51,6 @@ RDEPEND="
 DEPEND="
 	${COMMON_DEPEND}
 	app-arch/zip
-	dev-lang/nasm
 	media-libs/alsa-lib
 	net-print/cups
 	x11-base/xorg-proto
@@ -77,31 +61,20 @@ DEPEND="
 	x11-libs/libXrender
 	x11-libs/libXt
 	x11-libs/libXtst
+	virtual/jdk:15
 	javafx? ( dev-java/openjfx:${SLOT}= )
-	|| (
-		virtual/jdk:${SLOT}
-		virtual/jdk:$((SLOT-1))
-	)
-	|| (
-		dev-java/freemarker-bin
-		dev-java/freemarker
-	)
 "
 
 REQUIRED_USE="javafx? ( alsa !headless-awt )"
 
-if [[ ${OPENJ9_PV} == 9999 ]]; then
-	S="${WORKDIR}/openj9-openjdk-jdk${SLOT}"
-else
-	S="${WORKDIR}/openj9-openjdk-jdk${SLOT}-${OPENJ9_P}"
-fi
+S="${WORKDIR}/jdk${SLOT}u-jdk-${MY_PV}"
 
 # The space required to build varies wildly depending on USE flags,
-# ranging from 3GB to 16GB. This function is certainly not exact but
+# ranging from 2GB to 16GB. This function is certainly not exact but
 # should be close enough to be useful.
 openjdk_check_requirements() {
 	local M
-	M=3192
+	M=2048
 	M=$(( $(usex jbootstrap 2 1) * $M ))
 	M=$(( $(usex debug 3 1) * $M ))
 	M=$(( $(usex doc 320 0) + $(usex source 128 0) + 192 + $M ))
@@ -118,43 +91,17 @@ pkg_pretend() {
 
 pkg_setup() {
 	openjdk_check_requirements
+
+	JAVA_PKG_WANT_BUILD_VM="openjdk-${SLOT} openjdk-bin-${SLOT} openj9-openjdk-${SLOT} openj9-openjdk-bin-${SLOT}"
+	JAVA_PKG_WANT_SOURCE="${SLOT}"
+	JAVA_PKG_WANT_TARGET="${SLOT}"
+
 	java-vm-2_pkg_setup
 	java-pkg-2_pkg_setup
 }
 
-src_unpack() {
-	if [[ ${OPENJ9_PV} == 9999 ]]; then
-		EGIT_CHECKOUT_DIR=openj9 EGIT_REPO_URI=${OPENJ9_EGIT_REPO_URI} git-r3_src_unpack
-		EGIT_CHECKOUT_DIR=openj9-omr EGIT_REPO_URI=${OPENJ9_OMR_EGIT_REPO_URI} git-r3_src_unpack
-		# unpack openjdk last to save correct EGIT_VERSION
-		EGIT_CHECKOUT_DIR=${S} git-r3_src_unpack
-	else
-		default
-	fi
-}
-
 src_prepare() {
-	if [[ ${OPENJ9_PV} == 9999 ]]; then
-		ln -s ../openj9 openj9 || die
-		ln -s ../openj9-omr omr || die
-	else
-		ln -s ../openj9-${OPENJ9_P} openj9 || die
-		ln -s ../openj9-omr-${OPENJ9_P} omr || die
-	fi
-
 	default
-
-	eapply "${FILESDIR}/openjdk-src-doubledollar.patch"
-	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
-	eapply -d omr -- "${FILESDIR}/omr-fam.patch"
-
-	if [[ ${OPENJ9_PV} != 9999 ]]; then
-		sed -i -e '/^OPENJ9_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
-			   -e '/^OPENJ9_TAG :=/s/:=.*/:= '${OPENJ9_P}/ \
-			   -e '/^OPENJ9OMR_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
-			   closed/OpenJ9.gmk
-	fi
-
 	chmod +x configure || die
 }
 
@@ -162,11 +109,8 @@ src_configure() {
 	# Work around stack alignment issue, bug #647954. in case we ever have x86
 	use x86 && append-flags -mincoming-stack-boundary=2
 
-	if has_version dev-java/freemarker; then
-		local freemarker=freemarker
-	else
-		local freemarker=freemarker-bin
-	fi
+	# Work around -fno-common ( GCC10 default ), bug #713180
+	append-flags -fcommon
 
 	# Enabling full docs appears to break doc building. If not
 	# explicitly disabled, the flag will get auto-enabled if pandoc and
@@ -179,7 +123,6 @@ src_configure() {
 		--with-extra-cflags="${CFLAGS}"
 		--with-extra-cxxflags="${CXXFLAGS}"
 		--with-extra-ldflags="${LDFLAGS}"
-		--with-stdc++lib=dynamic
 		--with-giflib=system
 		--with-lcms=system
 		--with-libjpeg=system
@@ -191,15 +134,11 @@ src_configure() {
 		--with-vendor-vm-bug-url="https://bugs.openjdk.java.net"
 		--with-vendor-version-string="${PVR}"
 		--with-version-pre=""
-		--with-version-opt=""
+		--with-version-string="${PV%_p*}"
+		--with-version-build="${PV#*_p}"
 		--with-zlib=system
 		--enable-dtrace=$(usex systemtap yes no)
 		--enable-headless-only=$(usex headless-awt yes no)
-
-		--with-freemarker-jar=$(java-pkg_getjar --build-only $freemarker freemarker.jar)
-		--disable-warnings-as-errors{,-omr,-openj9}
-		$(use_enable ddr)
-		$(use_with large-heap noncompressedrefs)
 	)
 
 	if use javafx; then
@@ -229,8 +168,8 @@ src_configure() {
 src_compile() {
 	local myemakeargs=(
 		JOBS=$(makeopts_jobs)
-		# https://github.com/ibmruntimes/openj9-openjdk-jdk14/issues/72
-		#LOG=debug
+		LOG=debug
+		CFLAGS_WARNINGS_ARE_ERRORS= # No -Werror
 		$(usex doc docs '')
 		$(usex jbootstrap bootcycle-images product-images)
 	)
@@ -272,7 +211,10 @@ src_install() {
 	# must be done before running itself
 	java-vm_set-pax-markings "${ddest}"
 
-	use gentoo-vm && java-vm_install-env "${FILESDIR}"/${PN}.env.sh
+	einfo "Creating the Class Data Sharing archives and disabling usage tracking"
+	"${ddest}/bin/java" -server -Xshare:dump -Djdk.disableLastUsageTracking || die
+
+	use gentoo-vm && java-vm_install-env "${FILESDIR}"/${PN}-${SLOT}.env.sh
 	java-vm_revdep-mask
 	java-vm_sandbox-predict /dev/random /proc/self/coredump_filter
 
