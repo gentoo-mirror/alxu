@@ -19,7 +19,6 @@ fi
 IUSE="accessibility dbus egl eglfs evdev +gif gles2-only ibus jpeg
 	+libinput +png tslib tuio +udev vnc vulkan wayland +X"
 REQUIRED_USE="
-	|| ( eglfs X )
 	accessibility? ( dbus X )
 	eglfs? ( egl )
 	ibus? ( dbus )
