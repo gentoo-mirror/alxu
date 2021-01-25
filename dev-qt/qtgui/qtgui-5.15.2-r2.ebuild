@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -7,6 +7,8 @@ QT5_MODULE="qtbase"
 inherit qt5-build
 
 DESCRIPTION="The GUI module and platform plugins for the Qt5 framework"
+SRC_URI+=" https://dev.gentoo.org/~asturm/distfiles/qtbase-${PV}-gcc11.patch.xz"
+
 SLOT=5/$(ver_cut 1-3) # bug 707658
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
@@ -14,10 +16,10 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 fi
 
 # TODO: linuxfb
-
 IUSE="accessibility dbus egl eglfs evdev +gif gles2-only ibus jpeg
 	+libinput +png tslib tuio +udev vnc vulkan wayland +X"
 REQUIRED_USE="
+	|| ( eglfs X )
 	accessibility? ( dbus X )
 	eglfs? ( egl )
 	ibus? ( dbus )
@@ -25,7 +27,7 @@ REQUIRED_USE="
 	X? ( gles2-only? ( egl ) )
 "
 
-RDEPEND="
+COMMON_DEPEND="
 	dev-libs/glib:2
 	~dev-qt/qtcore-${PV}:5=
 	dev-util/gtk-update-icon-cache
@@ -65,9 +67,12 @@ RDEPEND="
 		x11-libs/xcb-util-wm
 	)
 "
-DEPEND="${RDEPEND}
+DEPEND="${COMMON_DEPEND}
 	evdev? ( sys-kernel/linux-headers )
 	udev? ( sys-kernel/linux-headers )
+"
+RDEPEND="${COMMON_DEPEND}
+	dev-qt/qtchooser
 "
 PDEPEND="
 	ibus? ( app-i18n/ibus )
@@ -130,6 +135,8 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 PATCHES=(
 	"${FILESDIR}/qt-5.12-gcc-avx2.patch" # bug 672946
 	"${FILESDIR}/${PN}-5.14.1-cmake-macro-backward-compat.patch" # bug 703306
+	"${FILESDIR}/${P}-bogus-xcb-util-dep.patch" # QTBUG-86287, QTBUG-88688
+	"${WORKDIR}"/qtbase-${PV}-gcc11.patch # bug 764038
 )
 
 src_prepare() {
