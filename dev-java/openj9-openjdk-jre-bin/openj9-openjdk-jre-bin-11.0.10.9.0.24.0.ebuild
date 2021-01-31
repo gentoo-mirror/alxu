@@ -53,7 +53,7 @@ RDEPEND="
 RESTRICT="preserve-libs splitdebug"
 QA_PREBUILT="*"
 
-S="${WORKDIR}/jdk-${MY_PV}-jre"
+S="${WORKDIR}/jdk-${JDK_PV}-jre"
 
 src_install() {
 	local dest="/opt/${P}"
