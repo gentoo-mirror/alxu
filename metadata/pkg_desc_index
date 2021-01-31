@@ -21,7 +21,6 @@ gui-apps/waypipe 0.7.0: proxy for Wayland clients
 gui-apps/wshowkeys 9999: Displays keys being pressed on a Wayland session
 mail-client/astroid 9999: lightweight graphical threads-with-tags style email client for notmuch
 media-sound/qjackctl 0.9.0-r1 9999: Qt GUI to control the JACK Audio Connection Kit and ALSA sequencer connections
-media-video/pipewire-compat 0.2.7: Multimedia processing graphs
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 virtual/jdk 11-r2 15: Virtual for Java Development Kit (JDK)
 virtual/jre 11-r2 15: Virtual for Java Runtime Environment (JRE)
