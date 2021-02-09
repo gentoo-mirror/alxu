@@ -47,8 +47,6 @@ dev-qt/qtgui:tuio - Build plugin to receive touch events over the TUIO protocol
 dev-qt/qtgui:vulkan - Enable support for Vulkan
 dev-qt/qtgui:wayland - Provide dev-qt/qtwayland to ensure Qt applications can be run as Wayland clients
 gui-apps/gammastep:geoclue - Enable geolocation support.
-gui-apps/waypipe:drm - Direct Rendering Manager support
-gui-apps/waypipe:man - Install man pages
 mail-client/astroid:embedded-editor - Embedded editor
 mail-client/astroid:plugins - Plugins
 mail-client/astroid:terminal - Embedded terminal
