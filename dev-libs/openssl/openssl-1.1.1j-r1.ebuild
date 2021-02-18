@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="7"
@@ -7,14 +7,14 @@ inherit flag-o-matic toolchain-funcs multilib multilib-minimal
 
 MY_P=${P/_/-}
 
-# This patch set is based on the following files from Fedora 28,
-# see https://src.fedoraproject.org/rpms/openssl/blob/f28/f/openssl.spec
+# This patch set is based on the following files from Fedora 31,
+# see https://src.fedoraproject.org/rpms/openssl/blob/f31/f/openssl.spec
 # for more details:
 # - hobble-openssl (SOURCE1)
 # - ec_curve.c (SOURCE12) -- MODIFIED
 # - ectest.c (SOURCE13)
-# - openssl-1.1.0-ec-curves.patch (PATCH37) -- MODIFIED
-BINDIST_PATCH_SET="openssl-1.1.0l-bindist-1.0.tar.xz"
+# - openssl-1.1.1-ec-curves.patch (PATCH37) -- MODIFIED
+BINDIST_PATCH_SET="openssl-1.1.1i-bindist-1.0.tar.xz"
 
 DESCRIPTION="full-strength general purpose cryptography library (including SSL and TLS)"
 HOMEPAGE="https://www.openssl.org/"
@@ -26,6 +26,7 @@ SRC_URI="mirror://openssl/source/${MY_P}.tar.gz
 
 LICENSE="openssl"
 SLOT="0/1.1" # .so version of libssl/libcrypto
+[[ "${PV}" = *_pre* ]] || \
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~x86-linux"
 IUSE="+asm bindist elibc_musl rfc3779 sctp cpu_flags_x86_sse2 sslv3 static-libs test tls-heartbeat vanilla zlib"
 RESTRICT="!bindist? ( bindist )
@@ -40,22 +41,43 @@ BDEPEND="
 	test? (
 		sys-apps/diffutils
 		sys-devel/bc
+		sys-process/procps
 	)"
 PDEPEND="app-misc/ca-certificates"
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-1.0.2a-x32-asm.patch #542618
 	"${FILESDIR}"/${PN}-1.1.0j-parallel_install_fix.patch #671602
-	"${FILESDIR}"/${PN}-1.1.0k-fix-test_fuzz.patch
+	"${FILESDIR}"/${PN}-1.1.1i-riscv32.patch
 )
 
 S="${WORKDIR}/${MY_P}"
+
+# force upgrade to prevent broken login, bug 696950
+RDEPEND+=" !<net-misc/openssh-8.0_p1-r3"
 
 MULTILIB_WRAPPED_HEADERS=(
 	usr/include/openssl/opensslconf.h
 )
 
+pkg_setup() {
+	[[ ${MERGE_TYPE} == binary ]] && return
+
+	# must check in pkg_setup; sysctl don't work with userpriv!
+	if has test ${FEATURES} && use sctp; then
+		# test_ssl_new will fail with "Ensure SCTP AUTH chunks are enabled in kernel"
+		# if sctp.auth_enable is not enabled.
+		local sctp_auth_status=$(sysctl -n net.sctp.auth_enable 2>/dev/null)
+		if [[ -z "${sctp_auth_status}" ]] || [[ ${sctp_auth_status} != 1 ]]; then
+			die "FEATURES=test with USE=sctp requires net.sctp.auth_enable=1!"
+		fi
+	fi
+}
+
 src_prepare() {
+	# allow openssl to be cross-compiled
+	cp "${FILESDIR}"/gentoo.config-1.0.2 gentoo.config || die
+	chmod a+rx gentoo.config || die
+
 	if use bindist; then
 		mv "${WORKDIR}"/bindist-patches/hobble-openssl "${WORKDIR}" || die
 		bash "${WORKDIR}"/hobble-openssl || die
@@ -91,11 +113,15 @@ src_prepare() {
 		if [[ $(declare -p PATCHES 2>/dev/null) == "declare -a"* ]] ; then
 			[[ ${#PATCHES[@]} -gt 0 ]] && eapply "${PATCHES[@]}"
 		fi
-
-		use bindist || eapply "${FILESDIR}"/${PN}-1.1.0l-fix-no-ec2m-in-ec_curve.c.patch
 	fi
 
 	eapply_user #332661
+
+	if has test ${FEATURES} && use sctp && has network-sandbox ${FEATURES}; then
+		ebegin "Disabling test '80-test_ssl_new.t' which is known to fail with FEATURES=network-sandbox"
+		rm test/recipes/80-test_ssl_new.t || die
+		eend $?
+	fi
 
 	# make sure the man pages are suffixed #302165
 	# don't bother building man pages if they're disabled
@@ -110,17 +136,10 @@ src_prepare() {
 		Configurations/unix-Makefile.tmpl \
 		|| die
 
-	# show the actual commands in the log
-	sed -i '/^SET_X/s@=.*@=set -x@' Makefile.shared || die
-
 	# quiet out unknown driver argument warnings since openssl
 	# doesn't have well-split CFLAGS and we're making it even worse
 	# and 'make depend' uses -Werror for added fun (#417795 again)
 	[[ ${CC} == *clang* ]] && append-flags -Qunused-arguments
-
-	# allow openssl to be cross-compiled
-	cp "${FILESDIR}"/gentoo.config-1.0.2 gentoo.config || die
-	chmod a+rx gentoo.config || die
 
 	append-flags -fno-strict-aliasing
 	append-flags $(test-flags-CC -Wa,--noexecstack)
@@ -188,6 +207,7 @@ multilib_src_configure() {
 		${sslout} \
 		$(use cpu_flags_x86_sse2 || echo "no-sse2") \
 		$(use_ssl !bindist ec2m) \
+		$(use_ssl !bindist sm2) \
 		$(use elibc_musl && echo "no-async") \
 		${ec_nistp_64_gcc_128} \
 		$(use_ssl sslv3 ssl3) \
