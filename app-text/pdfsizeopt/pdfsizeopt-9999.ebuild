@@ -4,6 +4,7 @@
 EAPI=7
 
 PYTHON_COMPAT=( python2_7 )
+_PYTHON_ALLOW_PY27=1
 inherit git-r3 python-single-r1
 
 DESCRIPTION="PDF file size optimizer"
