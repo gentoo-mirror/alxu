@@ -236,6 +236,7 @@ src_configure() {
 		--with-zlib=system
 		--enable-dtrace=$(usex systemtap yes no)
 		--enable-headless-only=$(usex headless-awt yes no)
+		$(tc-is-clang && echo "--with-toolchain-type=clang")
 
 		--with-freemarker-jar=$(java-pkg_getjar --build-only $freemarker freemarker.jar)
 		--disable-warnings-as-errors{,-omr,-openj9}
