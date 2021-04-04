@@ -7,5 +7,5 @@ KEYWORDS=~amd64 ~arm ~x86
 LICENSE=LGPL-2.1
 RDEPEND=virtual/libelf
 SLOT=0
-SRC_URI=https://www.prevanders.net/libdwarf-20200719.tar.gz
+SRC_URI=https://www.prevanders.net/libdwarf-20210305.tar.gz
 _md5_=e9c4fcf6a701c05d0879c6ce24f37f95
