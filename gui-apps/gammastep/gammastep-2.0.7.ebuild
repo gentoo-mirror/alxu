@@ -37,7 +37,6 @@ S="${WORKDIR}/${PN}-v${PV}"
 
 src_prepare() {
 	default
-	eapply "${FILESDIR}/metainfo.patch"
 	eautoreconf
 }
 
