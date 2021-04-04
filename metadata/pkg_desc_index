@@ -2,14 +2,13 @@ app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-crypt/libsecret 0.20.4-r1: GObject library for accessing the freedesktop.org Secret Service API
 app-emulation/wine-mono 4.8.1 4.8.3 4.9.0 4.9.2 4.9.3 4.9.4 5.0.0 5.1.0 5.1.1 6.0.0: Wine Mono is a replacement for the .NET runtime and class libraries in Wine
 app-text/pdfsizeopt 9999: PDF file size optimizer
-dev-java/freemarker-bin 2.3.30: A Java tool to generate text output based on templates (binary package)
+dev-java/freemarker-bin 2.3.31: A Java tool to generate text output based on templates (binary package)
 dev-java/openj9-openjdk 11.0.24.0 11.9999 16.0.25.0 16.9999: Open source implementation of the Java programming language
 dev-java/openj9-openjdk-bin 11.0.10.9.0.24.0 15.0.2.7.0.24.0: Prebuilt Java JDK binaries provided by AdoptOpenJDK
 dev-java/openj9-openjdk-jre-bin 11.0.10.9.0.24.0 15.0.2.7.0.24.0: Prebuilt Java JRE binaries provided by AdoptOpenJDK
 dev-java/openjdk 15.0.2_p7: Open source implementation of the Java programming language
 dev-java/openjdk-bin 15.0.2_p7: Prebuilt Java JDK binaries provided by AdoptOpenJDK
 dev-java/openjdk-jre-bin 15.0.2_p7: Prebuilt Java JRE binaries provided by AdoptOpenJDK
-dev-lang/mono 6.12.0.122: Mono runtime and class libraries, a C# compiler/interpreter
 dev-libs/libdwarf 20200719: The DWARF Debugging Information Format
 dev-libs/openssl 1.0.2u-r1 1.1.1j-r1: full-strength general purpose cryptography library (including SSL and TLS)
 dev-qt/qtgui 5.15.2-r2: The GUI module and platform plugins for the Qt5 framework
