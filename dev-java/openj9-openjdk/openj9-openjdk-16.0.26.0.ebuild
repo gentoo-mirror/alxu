@@ -20,7 +20,7 @@ if [[ ${OPENJ9_PV} == 9999 ]]; then
 else
 	SRC_URI="
 		https://github.com/ibmruntimes/openj9-openjdk-jdk${SLOT}/archive/v${OPENJ9_PV}-release.tar.gz -> openj9-openjdk-jdk${SLOT}-${OPENJ9_P}.tar.gz
-		https://github.com/eclipse/openj9/archive/${OPENJ9_P}.tar.gz
+		https://github.com/eclipse/openj9/archive/${OPENJ9_P}.tar.gz -> ${OPENJ9_P}.tar.gz
 		https://github.com/eclipse/openj9-omr/archive/${OPENJ9_P}.tar.gz -> openj9-omr-${OPENJ9_PV}.tar.gz
 	"
 fi
@@ -28,7 +28,7 @@ fi
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap large-heap +pch selinux source systemtap"
+IUSE="alsa cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap +pch selinux source systemtap"
 
 COMMON_DEPEND="
 	media-libs/freetype:2=
@@ -80,10 +80,7 @@ DEPEND="
 	javafx? ( dev-java/openjfx:${SLOT}= )
 	|| (
 		virtual/jdk:${SLOT}
-		dev-java/openj9-openjdk-bin:${SLOT}
-		dev-java/openj9-openjdk:${SLOT}
-		dev-java/openjdk-bin:${SLOT}
-		dev-java/openjdk:${SLOT}
+		virtual/jdk:$((SLOT-1))
 	)
 	|| (
 		dev-java/freemarker-bin
@@ -122,46 +119,7 @@ pkg_pretend() {
 pkg_setup() {
 	openjdk_check_requirements
 	java-vm-2_pkg_setup
-
-	JAVA_PKG_WANT_BUILD_VM="openj9-openjdk-${SLOT} openj9-openjdk-bin-${SLOT} openjdk-${SLOT} openjdk-bin-${SLOT}"
-	JAVA_PKG_WANT_SOURCE="${SLOT}"
-	JAVA_PKG_WANT_TARGET="${SLOT}"
-
-	# The nastiness below is necessary while the gentoo-vm USE flag is
-	# masked. First we call java-pkg-2_pkg_setup if it looks like the
-	# flag was unmasked against one of the possible build VMs. If not,
-	# we try finding one of them in their expected locations. This would
-	# have been slightly less messy if openjdk-bin had been installed to
-	# /opt/${PN}-${SLOT} or if there was a mechanism to install a VM env
-	# file but disable it so that it would not normally be selectable.
-
-	local vm
-	for vm in ${JAVA_PKG_WANT_BUILD_VM}; do
-		if [[ -d ${EPREFIX}/usr/lib/jvm/${vm} ]]; then
-			java-pkg-2_pkg_setup
-			return
-		fi
-	done
-
-	if [[ ${MERGE_TYPE} != binary ]]; then
-		if [[ -z ${JDK_HOME} ]]; then
-			for slot in ${SLOT} $((SLOT-1)); do
-				for variant in openj9- ''; do
-					if has_version --host-root dev-java/${variant}openjdk:${slot}; then
-						JDK_HOME=${EPREFIX}/usr/$(get_libdir)/${variant}openjdk-${slot}
-						break
-					elif has_version --host-root dev-java/${variant}openjdk-bin:${slot}; then
-						JDK_HOME=$(best_version --host-root dev-java/${variant}openjdk-bin:${slot})
-						JDK_HOME=${JDK_HOME#*/}
-						JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
-						break
-					fi
-				done
-			done
-		fi
-		[[ -n ${JDK_HOME} ]] || die "Build VM not found!"
-		export JDK_HOME
-	fi
+	java-pkg-2_pkg_setup
 }
 
 src_unpack() {
@@ -241,7 +199,6 @@ src_configure() {
 		--with-freemarker-jar=$(java-pkg_getjar --build-only $freemarker freemarker.jar)
 		--disable-warnings-as-errors{,-omr,-openj9}
 		$(use_enable ddr)
-		$(use_with large-heap noncompressedrefs)
 	)
 
 	if use javafx; then
