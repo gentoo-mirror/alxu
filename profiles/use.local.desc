@@ -14,15 +14,12 @@ dev-java/openj9-openjdk:gentoo-vm - Allow this JDK to be recognised by Gentoo (p
 dev-java/openj9-openjdk:headless-awt - Don't install the X backend for AWT, needed by some GUIs
 dev-java/openj9-openjdk:javafx - Import OpenJFX modules at build time, via dev-java/openjfx
 dev-java/openj9-openjdk:jbootstrap - Build OpenJDK twice, the second time using the result of the first
-dev-java/openj9-openjdk:large-heap - Support Java heap sizes greater than 57Gb
 dev-java/openj9-openjdk:systemtap - Enable SystemTAP/DTrace tracing
 dev-java/openj9-openjdk-bin:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
 dev-java/openj9-openjdk-bin:headless-awt - Don't install the X backend for AWT, needed by some GUIs (used to be X flag)
-dev-java/openj9-openjdk-bin:large-heap - Support Java heap sizes greater than 57Gb
 dev-java/openj9-openjdk-bin:source - Install JVM sources
 dev-java/openj9-openjdk-jre-bin:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
 dev-java/openj9-openjdk-jre-bin:headless-awt - Don't install the X backend for AWT, needed by some GUIs (used to be X flag)
-dev-java/openj9-openjdk-jre-bin:large-heap - Support Java heap sizes greater than 57Gb
 dev-java/openjdk:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
 dev-java/openjdk:headless-awt - Don't install the X backend for AWT, needed by some GUIs
 dev-java/openjdk:javafx - Import OpenJFX modules at build time, via dev-java/openjfx
