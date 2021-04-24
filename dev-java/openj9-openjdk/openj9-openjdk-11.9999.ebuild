@@ -28,7 +28,7 @@ fi
 LICENSE="GPL-2"
 KEYWORDS=""
 
-IUSE="alsa cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap large-heap +pch selinux source systemtap"
+IUSE="alsa cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap +pch selinux source systemtap"
 
 COMMON_DEPEND="
 	media-libs/freetype:2=
@@ -241,7 +241,6 @@ src_configure() {
 		--with-freemarker-jar=$(java-pkg_getjar --build-only $freemarker freemarker.jar)
 		--disable-warnings-as-errors{,-omr,-openj9}
 		$(use_enable ddr)
-		$(use_with large-heap noncompressedrefs)
 	)
 
 	if use javafx; then
