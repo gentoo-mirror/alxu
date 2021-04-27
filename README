@@ -1,0 +1,9 @@
+This is Alex Xu (Hello71)'s personal Gentoo overlay. Ebuilds are of varying
+quality and should generally be checked before use. Packages that also exist in
+::gentoo generally have minor modifications.
+
+Note in particular that openjdk packages are tested infrequently due to
+excessively long compile time.
+
+Please submit problems/questions/etc to alex at alxu under the Canadian ccTLD,
+or at https://github.com/Hello71/gentoo-overlay.
