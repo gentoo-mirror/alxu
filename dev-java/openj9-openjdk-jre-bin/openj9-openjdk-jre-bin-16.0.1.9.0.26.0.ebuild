@@ -54,11 +54,6 @@ src_install() {
 	local dest="/opt/${P}"
 	local ddest="${ED%/}/${dest#/}"
 
-	# Not sure why they bundle this as it's commonly available and they
-	# only do so on x86_64. It's needed by libfontmanager.so. IcedTea
-	# also has an explicit dependency while Oracle seemingly dlopens it.
-	rm -vf lib/libfreetype.so || die
-
 	# Oracle and IcedTea have libjsoundalsa.so depending on
 	# libasound.so.2 but AdoptOpenJDK only has libjsound.so. Weird.
 	if ! use alsa ; then
@@ -78,7 +73,7 @@ src_install() {
 	# provide stable symlink
 	dosym "${P}" "/opt/${PN}-${SLOT}"
 
-	use gentoo-vm && java-vm_install-env "${FILESDIR}"/${PN}-${SLOT}.env.sh
+	use gentoo-vm && java-vm_install-env "${FILESDIR}"/${PN}.env.sh
 	java-vm_set-pax-markings "${ddest}"
 	java-vm_revdep-mask
 	java-vm_sandbox-predict /dev/random /proc/self/coredump_filter
