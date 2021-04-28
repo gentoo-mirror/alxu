@@ -94,7 +94,7 @@ REQUIRED_USE="javafx? ( alsa !headless-awt )"
 if [[ ${OPENJ9_PV} == 9999 ]]; then
 	S="${WORKDIR}/openj9-openjdk-jdk${SLOT}"
 else
-	S="${WORKDIR}/openj9-openjdk-jdk${SLOT}-${OPENJ9_P}"
+	S="${WORKDIR}/openj9-openjdk-jdk${SLOT}-${OPENJ9_PV}-release"
 fi
 
 # The space required to build varies wildly depending on USE flags,
@@ -149,7 +149,8 @@ src_prepare() {
 	eapply -d omr -- "${FILESDIR}/omr-fam.patch"
 
 	if [[ ${OPENJ9_PV} != 9999 ]]; then
-		sed -i -e '/^OPENJ9_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
+		sed -i -e '/^OPENJDK_SHA :=/s/:=.*/:= __OPENJDK_SHA__/' \
+			   -e '/^OPENJ9_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
 			   -e '/^OPENJ9_TAG :=/s/:=.*/:= '${OPENJ9_P}/ \
 			   -e '/^OPENJ9OMR_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
 			   closed/OpenJ9.gmk
