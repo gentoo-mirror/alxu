@@ -1,6 +1,6 @@
 app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-crypt/libsecret 0.20.4-r1: GObject library for accessing the freedesktop.org Secret Service API
-app-emulation/wine-mono 4.8.1 4.8.3 4.9.0 4.9.2 4.9.3 4.9.4 5.0.0 5.1.0 5.1.1 6.0.0 6.1.1: Wine Mono is a replacement for the .NET runtime and class libraries in Wine
+app-emulation/wine-mono 5.1.1 6.1.1 6.2.0: Wine Mono is a replacement for the .NET runtime and class libraries in Wine
 app-text/evince 40.0-r2: Simple document viewer for GNOME
 app-text/pdfsizeopt 9999: PDF file size optimizer
 dev-java/freemarker-bin 2.3.31: A Java tool to generate text output based on templates (binary package)
