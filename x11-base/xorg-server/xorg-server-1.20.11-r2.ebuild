@@ -10,7 +10,7 @@ EGIT_REPO_URI="https://gitlab.freedesktop.org/xorg/xserver.git"
 DESCRIPTION="X.Org X servers"
 SLOT="0/${PV}"
 if [[ ${PV} != 9999* ]]; then
-	KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~amd64-linux ~x86-linux"
+	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux"
 fi
 
 IUSE_SERVERS="dmx kdrive wayland xephyr xnest xorg xvfb"
@@ -66,11 +66,6 @@ CDEPEND="
 	)
 	udev? ( virtual/libudev:= )
 	unwind? ( sys-libs/libunwind )
-	wayland? (
-		>=dev-libs/wayland-1.3.0
-		>=media-libs/libepoxy-1.5.4[egl(+)]
-		>=dev-libs/wayland-protocols-1.18
-	)
 	systemd? (
 		sys-apps/dbus
 		sys-apps/systemd
@@ -94,6 +89,7 @@ DEPEND="${CDEPEND}
 			)
 		)
 	)
+	wayland? ( x11-base/xwayland )
 "
 RDEPEND="${CDEPEND}
 	!systemd? ( gui-libs/display-manager-init )
@@ -101,7 +97,6 @@ RDEPEND="${CDEPEND}
 "
 BDEPEND="
 	sys-devel/flex
-	wayland? ( dev-util/wayland-scanner )
 "
 PDEPEND="
 	xorg? ( >=x11-base/xorg-drivers-$(ver_cut 1-2) )"
@@ -124,14 +119,6 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-1.18-support-multiple-Files-sections.patch
 )
 
-pkg_setup() {
-	if use wayland && use minimal; then
-		ewarn "glamor is necessary for acceleration under Xwayland."
-		ewarn "Performance may be unacceptable without it."
-		ewarn "Build with USE=-minimal to enable glamor."
-	fi
-}
-
 src_configure() {
 	# localstatedir is used for the log location; we need to override the default
 	#	from ebuild.sh
@@ -145,7 +132,6 @@ src_configure() {
 		$(use_enable kdrive)
 		$(use_enable test unit-tests)
 		$(use_enable unwind libunwind)
-		$(use_enable wayland xwayland)
 		$(use_enable !minimal record)
 		$(use_enable !minimal xfree86-utils)
 		$(use_enable !minimal dri)
@@ -162,6 +148,7 @@ src_configure() {
 		$(use_with doc doxygen)
 		$(use_with doc xmlto)
 		$(use_with systemd systemd-daemon)
+		--disable-xwayland
 		--enable-libdrm
 		--sysconfdir="${EPREFIX}"/etc/X11
 		--localstatedir="${EPREFIX}"/var
