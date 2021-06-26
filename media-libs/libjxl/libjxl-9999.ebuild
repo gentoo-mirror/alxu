@@ -13,7 +13,7 @@ EGIT_SUBMODULES=(third_party/lodepng third_party/skcms)
 
 LICENSE="Apache-2.0"
 SLOT="0"
-IUSE="apng doc gif jpeg +man openexr test viewers"
+IUSE="apng doc gif jpeg +man openexr static-libs test viewers"
 
 RDEPEND="app-arch/brotli
 	dev-libs/highway
@@ -53,11 +53,20 @@ src_configure() {
 		-DJPEGXL_FORCE_SYSTEM_BROTLI=ON
 		-DJPEGXL_WARNINGS_AS_ERRORS=OFF
 
+		$(cmake_use_find_package apng PNG)
+		$(cmake_use_find_package apng ZLIB)
+		$(cmake_use_find_package doc Doxygen)
 		$(cmake_use_find_package gif GIF)
 		$(cmake_use_find_package jpeg JPEG)
-		$(cmake_use_find_package png PNG)
-		$(cmake_use_find_package doc Doxygen)
 	)
 
 	cmake_src_configure
+}
+
+src_install() {
+	cmake_src_install
+	dobin "${BUILD_DIR}/examples/jxlinfo"
+	if ! use static-libs; then
+		rm "${ED}"/usr/$(get_libdir)/libjxl{,_dec}.a
+	fi
 }
