@@ -1,5 +1,6 @@
 app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-crypt/libsecret 0.20.4-r1: GObject library for accessing the freedesktop.org Secret Service API
+app-emulation/dxvk 1.8.1: Vulkan-based implementation of D3D9, D3D10 and D3D11 for Linux / Wine
 app-emulation/wine-mono 5.1.1 6.1.1 6.2.0: Wine Mono is a replacement for the .NET runtime and class libraries in Wine
 app-text/evince 40.0-r2: Simple document viewer for GNOME
 app-text/pdfsizeopt 9999: PDF file size optimizer
@@ -10,6 +11,7 @@ dev-java/openj9-openjdk-jre-bin 11.0.11.9.0.26.0 16.0.1.9.0.26.0: Prebuilt Java 
 dev-java/openjdk 16.0.1_p9: Open source implementation of the Java programming language
 dev-java/openjdk-bin 16.0.1_p9: Prebuilt Java JDK binaries provided by AdoptOpenJDK
 dev-java/openjdk-jre-bin 16.0.1_p9: Prebuilt Java JRE binaries provided by AdoptOpenJDK
+dev-libs/highway 0.12.2: Performance-portable, length-agnostic SIMD with runtime dispatch
 dev-libs/libdwarf 20210305: The DWARF Debugging Information Format
 dev-libs/openssl 1.0.2u-r1 1.1.1k-r1: full-strength general purpose cryptography library (including SSL and TLS)
 dev-qt/qtgui 5.15.2-r2: The GUI module and platform plugins for the Qt5 framework
@@ -21,6 +23,7 @@ games-rpg/runescape-launcher 2.2.9: Official RuneScape NXT client launcher
 gui-apps/gammastep 2.0.7: A screen color temperature adjusting software
 gui-apps/wshowkeys 9999: Displays keys being pressed on a Wayland session
 mail-client/astroid 9999: lightweight graphical threads-with-tags style email client for notmuch
+media-libs/libjxl 9999: JPEG XL image format reference implementation
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 virtual/jdk 11-r2 16: Virtual for Java Development Kit (JDK)
 virtual/jre 11-r2 16: Virtual for Java Runtime Environment (JRE)

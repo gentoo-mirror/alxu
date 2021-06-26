@@ -2,6 +2,10 @@
 # Please add your descriptions to your package's metadata.xml ONLY.
 # * generated automatically using pmaint *
 
+app-emulation/dxvk:d3d10 - Direct3D 10 support
+app-emulation/dxvk:d3d11 - Direct3D 11 support
+app-emulation/dxvk:d3d9 - Direct3D 9 support
+app-emulation/dxvk:dxgi - DXGI support
 app-emulation/wine-mono:shared - Unpack files for sharing between wineprefixes
 app-text/evince:dvi - Enable the built-in DVI viewer
 app-text/evince:nautilus - Enable property page extension in gnome-base/nautilus
@@ -51,6 +55,8 @@ gui-apps/gammastep:geoclue - Enable geolocation support.
 mail-client/astroid:embedded-editor - Embedded editor
 mail-client/astroid:plugins - Plugins
 mail-client/astroid:terminal - Embedded terminal
+media-libs/libjxl:apng - APNG support
+media-libs/libjxl:viewers - Viewer programs
 x11-apps/mesa-progs:egl - Build EGL utilities
 x11-apps/mesa-progs:gles2 - Build OpenGL ES 2 utilities
 x11-base/xorg-server:dmx - Build the Distributed Multiheaded X server
