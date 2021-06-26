@@ -15,28 +15,28 @@ LICENSE="Apache-2.0"
 SLOT="0"
 IUSE="apng doc gif jpeg +man openexr test viewers"
 
-DEPEND="app-arch/brotli
+RDEPEND="app-arch/brotli
 	dev-libs/highway
 	virtual/opengl
 	apng? (
 		media-libs/libpng
 		sys-libs/zlib
 	)
-	doc? ( app-doc/doxygen )
 	gif? ( media-libs/giflib )
 	jpeg? ( virtual/jpeg )
 	man? ( app-text/asciidoc )
 	openexr? ( media-libs/openexr )
-	test? ( dev-cpp/gtest )
 	viewers? (
 		dev-qt/qtwidgets
 		dev-qt/qtx11extras
 	)
 "
-
-BDEPEND=""
-
-RDEPEND="${DEPEND}"
+BDEPEND="
+	doc? ( app-doc/doxygen )
+"
+DEPEND="${RDEPEND}
+	test? ( dev-cpp/gtest )
+"
 
 src_configure() {
 	local mycmakeargs=(
