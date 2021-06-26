@@ -31,5 +31,5 @@ src_configure() {
 
 src_test() {
 	cd "${BUILD_DIR}" || die
-	${S}/check.py || die
+	"${S}/check.py" || die
 }
