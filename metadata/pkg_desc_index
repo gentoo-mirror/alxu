@@ -1,5 +1,4 @@
 app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
-app-crypt/libsecret 0.20.4-r1: GObject library for accessing the freedesktop.org Secret Service API
 app-emulation/dxvk 1.8.1: Vulkan-based implementation of D3D9, D3D10 and D3D11 for Linux / Wine
 app-emulation/wine-mono 5.1.1 6.1.1 6.2.0: Wine Mono is a replacement for the .NET runtime and class libraries in Wine
 app-text/evince 40.0-r2: Simple document viewer for GNOME
@@ -29,4 +28,4 @@ virtual/jdk 11-r2 16: Virtual for Java Development Kit (JDK)
 virtual/jre 11-r2 16: Virtual for Java Runtime Environment (JRE)
 x11-apps/mesa-progs 8.4.0-r1: Mesa's OpenGL utility and demo programs (glxgears and glxinfo)
 x11-apps/sx 2.1.3 9999: Start an xorg server
-x11-base/xorg-server 1.20.11-r2 9999: X.Org X servers
+x11-base/xorg-server 1.20.11-r3 9999: X.Org X servers
