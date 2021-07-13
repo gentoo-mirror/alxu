@@ -64,8 +64,6 @@ BDEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}"/${PV}-build-Fix-t1lib-detection.patch
-	"${FILESDIR}"/${PV}-previewer-Fix-build-regression-when-gtk_unix_print-i.patch
 	"${FILESDIR}"/40.0-internal-synctex.patch
 )
 
