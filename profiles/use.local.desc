@@ -2,6 +2,12 @@
 # Please add your descriptions to your package's metadata.xml ONLY.
 # * generated automatically using pmaint *
 
+app-admin/keepassxc:autotype - Add support to autotype the passwords into other applications
+app-admin/keepassxc:browser - Enables browser plugin support
+app-admin/keepassxc:ccache - Use dev-util/ccache to build keepassxc
+app-admin/keepassxc:keeshare - Enable KeeShare sharing integration
+app-admin/keepassxc:network - Enable network support
+app-admin/keepassxc:yubikey - Enable database unlocking via YubiKey.
 app-emulation/dxvk:d3d10 - Direct3D 10 support
 app-emulation/dxvk:d3d11 - Direct3D 11 support
 app-emulation/dxvk:d3d9 - Direct3D 9 support
@@ -57,6 +63,7 @@ mail-client/astroid:plugins - Plugins
 mail-client/astroid:terminal - Embedded terminal
 media-libs/libjxl:apng - APNG support
 media-libs/libjxl:viewers - Viewer programs
+sci-calculators/units:units-cur - Install the units_cur python script that updates currencies
 x11-apps/mesa-progs:egl - Build EGL utilities
 x11-apps/mesa-progs:gles2 - Build OpenGL ES 2 utilities
 x11-base/xorg-server:dmx - Build the Distributed Multiheaded X server
