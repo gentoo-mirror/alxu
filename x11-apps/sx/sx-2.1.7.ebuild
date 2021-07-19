@@ -18,10 +18,15 @@ fi
 LICENSE="MIT"
 SLOT="0"
 
+RDEPEND="
+	x11-apps/xauth
+	x11-base/xorg-server[xorg]
+"
+
 src_compile() {
 	:
 }
 
 src_install() {
-	emake PREFIX=/usr DESTDIR="${D}" install
+	emake PREFIX=${EPREFIX}/usr DESTDIR="${D}" install
 }
