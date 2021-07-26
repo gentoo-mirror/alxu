@@ -1,6 +1,6 @@
 app-admin/keepassxc 2.6.6-r1 9999: KeePassXC - KeePass Cross-platform Community Edition
 app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
-app-emulation/dxvk 1.8.1: Vulkan-based implementation of D3D9, D3D10 and D3D11 for Linux / Wine
+app-emulation/dxvk 1.9.1: Vulkan-based implementation of D3D9, D3D10 and D3D11 for Linux / Wine
 app-emulation/wine-gecko 2.47.2: A Mozilla Gecko based version of Internet Explorer for Wine
 app-emulation/wine-mono 5.1.1 6.1.1 6.2.0: Wine Mono is a replacement for the .NET runtime and class libraries in Wine
 app-text/evince 40.4-r1: Simple document viewer for GNOME
