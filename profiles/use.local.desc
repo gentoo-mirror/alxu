@@ -64,8 +64,6 @@ mail-client/astroid:terminal - Embedded terminal
 media-libs/libjxl:apng - APNG support
 media-libs/libjxl:viewers - Viewer programs
 sci-calculators/units:units-cur - Install the units_cur python script that updates currencies
-x11-apps/mesa-progs:egl - Build EGL utilities
-x11-apps/mesa-progs:gles2 - Build OpenGL ES 2 utilities
 x11-base/xorg-server:dmx - Build the Distributed Multiheaded X server
 x11-base/xorg-server:elogind - Use elogind to get control over framebuffer when running as regular user
 x11-base/xorg-server:kdrive - Build the kdrive X servers
