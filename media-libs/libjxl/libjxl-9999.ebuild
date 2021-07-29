@@ -17,7 +17,6 @@ IUSE="apng doc gif jpeg +man openexr static-libs test viewers"
 
 RDEPEND="app-arch/brotli
 	dev-libs/highway
-	virtual/opengl
 	apng? (
 		media-libs/libpng
 		sys-libs/zlib
@@ -67,6 +66,6 @@ src_install() {
 	cmake_src_install
 	dobin "${BUILD_DIR}/examples/jxlinfo"
 	if ! use static-libs; then
-		rm "${ED}"/usr/$(get_libdir)/libjxl{,_dec}.a
+		rm "${ED}"/usr/$(get_libdir)/libjxl{,_dec}.a || die
 	fi
 }
