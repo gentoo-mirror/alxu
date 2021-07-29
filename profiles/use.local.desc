@@ -63,6 +63,10 @@ mail-client/astroid:plugins - Plugins
 mail-client/astroid:terminal - Embedded terminal
 media-libs/libjxl:apng - APNG support
 media-libs/libjxl:viewers - Viewer programs
+media-libs/x265:10bit - Add support for producing 10bits HEVC.
+media-libs/x265:12bit - Add support for producing 12bits HEVC.
+media-libs/x265:numa - Build with support for NUMA nodes.
+media-libs/x265:pic - Disable optimized assembly code that is not PIC friendly
 sci-calculators/units:units-cur - Install the units_cur python script that updates currencies
 x11-base/xorg-server:dmx - Build the Distributed Multiheaded X server
 x11-base/xorg-server:elogind - Use elogind to get control over framebuffer when running as regular user

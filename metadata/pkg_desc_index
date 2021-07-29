@@ -25,6 +25,7 @@ gui-apps/gammastep 2.0.7: A screen color temperature adjusting software
 gui-apps/wshowkeys 9999: Displays keys being pressed on a Wayland session
 mail-client/astroid 9999: lightweight graphical threads-with-tags style email client for notmuch
 media-libs/libjxl 9999: JPEG XL image format reference implementation
+media-libs/x265 3.5 9999: Library for encoding video streams into the H.265/HEVC format
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 sci-calculators/units 2.21-r1: Unit conversion program
 virtual/jdk 11-r2 16: Virtual for Java Development Kit (JDK)
