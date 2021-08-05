@@ -1,0 +1,24 @@
+Title: dev-java/*openjdk* provider change, potential move
+Author: Alex Xu (Hello71) <alex_y_xu@yahoo.ca>
+Posted: 2021-08-05
+Revision: 1
+News-Item-Format: 2.0
+Display-If-Installed: dev-java/openjdk
+Display-If-Installed: dev-java/openjdk-bin
+Display-If-Installed: dev-java/openjdk-jre-bin
+Display-If-Installed: dev-java/openj9-openjdk
+Display-If-Installed: dev-java/openj9-openjdk-bin
+Display-If-Installed: dev-java/openj9-openjdk-jre-bin
+
+As of jdk8u302, jdk-11.0.12+7, and jdk-16.0.2+7, AdoptOpenJDK builds have
+ceased. The replacements are Eclipse Temurin and IBM Semeru builds. Temurin
+JREs and non-x86_64 architectures are not yet available upstream, but will be
+added as they become available. IBM Semeru has JREs and JDKs available for all
+AdoptOpenJDK architectures, so may be an alternative, depending on your use.
+
+openj9-openjdk also appears to be changing name to IBM Semeru. IBM messaging
+is not clear on this subject, but it seems that OpenJ9 will retain its name,
+but the combination of openj9-openjdk and openj9 will now be called IBM
+Semeru. If this holds, dev-java/openj9-openjdk will likely be moved to
+dev-java/semeru. If that happens, a package move will be used, so no end-user
+action should be necessary.
