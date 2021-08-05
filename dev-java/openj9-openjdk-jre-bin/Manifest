@@ -1,6 +1,8 @@
-DIST OpenJDK11U-jre_aarch64_linux_openj9_11.0.11_9_openj9-0.26.0.tar.gz 41794638 SHA256 434219d233bdb8f1bee024b1ca5accfc3f1f832320b5221ded715eed101e705f
-DIST OpenJDK11U-jre_ppc64le_linux_openj9_11.0.11_9_openj9-0.26.0.tar.gz 44241602 SHA256 f11ae15da7f2809caeeca70a7cf3b9e7f943848869f498f1b73efc10ef7170f0
-DIST OpenJDK11U-jre_x64_linux_openj9_11.0.11_9_openj9-0.26.0.tar.gz 43611878 SHA256 152bf992d965ed018e9e1c3c2eb2c1771f92e0b6485b9a1f2c6d84d282117715
-DIST OpenJDK16U-jre_aarch64_linux_openj9_16.0.1_9_openj9-0.26.0.tar.gz 41556034 SHA256 01d8337d1069b8bfdcdf096b30cc24d1df42ffeede676da99fed77bef2670454
-DIST OpenJDK16U-jre_ppc64le_linux_openj9_16.0.1_9_openj9-0.26.0.tar.gz 43963611 SHA256 f9734c100f0e85ac63b9f9327b77135221a905e1d743cd9cd4edc0ea0e0fe8d9
-DIST OpenJDK16U-jre_x64_linux_openj9_16.0.1_9_openj9-0.26.0.tar.gz 43355843 SHA256 fab572dd1a2ef00fd18ad4f5a4c373d0cf140045e61f9104cd5b8dbf6b3a517d
+DIST ibm-semeru-open-jre_aarch64_linux_11.0.12_7_openj9-0.27.0.tar.gz 41737266 SHA256 06fa66b99d3c9ba07f117860ef653d52bcb19dac1ea598c15f3b4eec9f832b36
+DIST ibm-semeru-open-jre_aarch64_linux_16.0.2_7_openj9-0.27.0.tar.gz 41451784 SHA256 575dc3827077fc661fd1103effaa13ccd0f1606d01a33643956ed2eb1ece9763
+DIST ibm-semeru-open-jre_ppc64le_linux_11.0.12_7_openj9-0.27.0.tar.gz 44324701 SHA256 285bd388a497db61408d26a9f3328f62004714ede94456718cf6440a109e25d2
+DIST ibm-semeru-open-jre_ppc64le_linux_16.0.2_7_openj9-0.27.0.tar.gz 44063048 SHA256 51dac9a69b594c72adabb2c36634a121be04a17c4ce34628cf9b37fd5010c1a8
+DIST ibm-semeru-open-jre_s390x_linux_11.0.12_7_openj9-0.27.0.tar.gz 43083467 SHA256 6e5829aeb37abfb122e0944e438ecb2043c56df14fcdcce39bd4e3c9a55571a8
+DIST ibm-semeru-open-jre_s390x_linux_16.0.2_7_openj9-0.27.0.tar.gz 42822005 SHA256 dba28e3e06bb7c76b4da2f46c48ed74dc72e168f9ee01439decadea181eb402c
+DIST ibm-semeru-open-jre_x64_linux_11.0.12_7_openj9-0.27.0.tar.gz 43580993 SHA256 f352998f6fdf0b84f63c563608be57f30aa3f14c8117c1219422dbc712ad4f81
+DIST ibm-semeru-open-jre_x64_linux_16.0.2_7_openj9-0.27.0.tar.gz 43282252 SHA256 b077cd0b35d3ed1927c22e5b498264ecff67297992809056187b42662edfc536
