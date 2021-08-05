@@ -8,9 +8,9 @@ inherit java-vm-2 toolchain-funcs versionator
 abi_uri() {
 	echo "${2-$1}? (
 		debug? (
-			https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV//+/%2B}/OpenJDK${SLOT}U-debugimage_${1}_linux_openj9_${DL_PV//+/_}.tar.gz
+			https://github.com/ibmruntimes/semeru${SLOT}-binaries/releases/download/jdk-${DL_PV/+/%2B}/ibm-semeru-open-debugimage_${1}_linux_${DL_PV/+/_}.tar.gz
 		)
-		https://github.com/AdoptOpenJDK/openjdk${SLOT}-binaries/releases/download/jdk-${DL_PV//+/%2B}/OpenJDK${SLOT}U-jdk_${1}_linux_openj9_${DL_PV//+/_}.tar.gz
+		https://github.com/ibmruntimes/semeru${SLOT}-binaries/releases/download/jdk-${DL_PV/+/%2B}/ibm-semeru-open-jdk_${1}_linux_${DL_PV/+/_}.tar.gz
 	)"
 }
 
@@ -21,13 +21,14 @@ SLOT=$(get_major_version)
 SRC_URI="
 	$(abi_uri aarch64 arm64)
 	$(abi_uri ppc64le ppc64)
+	$(abi_uri s390x s390)
 	$(abi_uri x64 amd64)
 "
 
-DESCRIPTION="Prebuilt Java JDK binaries provided by AdoptOpenJDK"
-HOMEPAGE="https://adoptopenjdk.net"
+DESCRIPTION="Prebuilt IBM Semeru JDK binaries provided by IBM"
+HOMEPAGE="https://developer.ibm.com/languages/java/semeru-runtimes/"
 LICENSE="GPL-2-with-classpath-exception"
-KEYWORDS="~amd64 ~arm64 ~ppc64"
+KEYWORDS="~amd64 ~arm64 ~ppc64 ~s390"
 IUSE="alsa cups debug +gentoo-vm headless-awt selinux source"
 
 RDEPEND="
@@ -68,11 +69,6 @@ do_rm() {
 src_install() {
 	local dest="/opt/${P}"
 	local ddest="${ED%/}/${dest#/}"
-
-	# Not sure why they bundle this as it's commonly available and they
-	# only do so on x86_64. It's needed by libfontmanager.so. IcedTea
-	# also has an explicit dependency while Oracle seemingly dlopens it.
-	do_rm 'lib/libfreetype.*'
 
 	# Oracle and IcedTea have libjsoundalsa.so depending on
 	# libasound.so.2 but AdoptOpenJDK only has libjsound.so. Weird.
