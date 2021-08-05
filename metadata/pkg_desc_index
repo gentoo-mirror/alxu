@@ -4,11 +4,11 @@ app-emulation/dxvk 1.9.1: Vulkan-based implementation of D3D9, D3D10 and D3D11 f
 app-text/evince 40.4-r1: Simple document viewer for GNOME
 app-text/pdfsizeopt 9999: PDF file size optimizer
 dev-java/freemarker-bin 2.3.31: A Java tool to generate text output based on templates (binary package)
-dev-java/openj9-openjdk 11.0.26.0 11.9999 16.0.26.0 16.9999: Open source implementation of the Java programming language
-dev-java/openj9-openjdk-bin 11.0.11.9.0.26.0 16.0.1.9.0.26.0: Prebuilt Java JDK binaries provided by AdoptOpenJDK
-dev-java/openj9-openjdk-jre-bin 11.0.11.9.0.26.0 16.0.1.9.0.26.0: Prebuilt Java JRE binaries provided by AdoptOpenJDK
-dev-java/openjdk 16.0.1_p9: Open source implementation of the Java programming language
-dev-java/openjdk-bin 16.0.1_p9: Prebuilt Java JDK binaries provided by AdoptOpenJDK
+dev-java/openj9-openjdk 11.0.27.0 11.9999 16.0.27.0 16.9999: Open source implementation of the Java programming language
+dev-java/openj9-openjdk-bin 11.0.12.7.0.27.0 16.0.2.7.0.27.0: Prebuilt IBM Semeru JDK binaries provided by IBM
+dev-java/openj9-openjdk-jre-bin 11.0.12.7.0.27.0 16.0.2.7.0.27.0: Prebuilt IBM Semeru JRE binaries provided by IBM
+dev-java/openjdk 16.0.2_p7: Open source implementation of the Java programming language
+dev-java/openjdk-bin 16.0.1_p9 16.0.2_p7: Prebuilt Java JDK binaries provided by Eclipse Temurin
 dev-java/openjdk-jre-bin 16.0.1_p9: Prebuilt Java JRE binaries provided by AdoptOpenJDK
 dev-libs/highway 0.12.2: Performance-portable, length-agnostic SIMD with runtime dispatch
 dev-libs/libdwarf 20210305: The DWARF Debugging Information Format
