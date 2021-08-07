@@ -183,6 +183,7 @@ src_prepare() {
 
 	default
 
+	eapply -d openj9 -- "${FILESDIR}/openj9-no-o3.patch"
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
 	eapply -d omr -- "${FILESDIR}/omr-fam.patch"
 
