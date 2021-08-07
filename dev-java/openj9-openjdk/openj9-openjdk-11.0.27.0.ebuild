@@ -113,6 +113,7 @@ pkg_pretend() {
 	openjdk_check_requirements
 	if [[ ${MERGE_TYPE} != binary ]]; then
 		has ccache ${FEATURES} && die "FEATURES=ccache doesn't work with ${PN}, bug #677876"
+		[[ $(gcc-major-version) == 11 ]] && die "gcc 11 hangs when optimizing exploded image"
 	fi
 }
 
@@ -183,6 +184,7 @@ src_prepare() {
 
 	default
 
+	eapply -d openj9 -- "${FILESDIR}/openj9-no-o3.patch"
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
 	eapply -d omr -- "${FILESDIR}/omr-fam.patch"
 
@@ -256,7 +258,6 @@ src_configure() {
 		unset _JAVA_OPTIONS JAVA JAVA_TOOL_OPTIONS JAVAC XARGS
 		CFLAGS= CXXFLAGS= LDFLAGS= \
 		CONFIG_SITE=/dev/null \
-		EXTRA_CMAKE_ARGS="-DOMR_WARNINGS_AS_ERRORS=OFF" \
 		econf "${myconf[@]}"
 	)
 }
@@ -268,6 +269,8 @@ src_compile() {
 		#LOG=debug
 		$(usex doc docs '')
 		$(usex jbootstrap bootcycle-images product-images)
+
+		EXTRA_CMAKE_ARGS="-DOMR_WARNINGS_AS_ERRORS=OFF"
 	)
 	emake "${myemakeargs[@]}" -j1 #nowarn
 }

@@ -74,9 +74,6 @@ src_prepare() {
 }
 
 src_configure() {
-	# https://github.com/keepassxreboot/keepassxc/issues/5801
-	append-cxxflags -fPIC
-
 	local mycmakeargs=(
 		-DWITH_CCACHE="$(usex ccache)"
 		-DWITH_GUI_TESTS=OFF
