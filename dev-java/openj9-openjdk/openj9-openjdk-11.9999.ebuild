@@ -86,10 +86,6 @@ DEPEND="
 		dev-java/openjdk-bin:${SLOT}
 		dev-java/openjdk:${SLOT}
 	)
-	|| (
-		dev-java/freemarker-bin
-		dev-java/freemarker
-	)
 "
 
 REQUIRED_USE="javafx? ( alsa !headless-awt )"
@@ -241,8 +237,8 @@ src_configure() {
 		--enable-headless-only=$(usex headless-awt yes no)
 		$(tc-is-clang && echo "--with-toolchain-type=clang")
 
-		--with-freemarker-jar=$(java-pkg_getjar --build-only $freemarker freemarker.jar)
 		--disable-warnings-as-errors{,-omr,-openj9}
+		--with-cmake
 		$(use_enable ddr)
 	)
 
@@ -266,6 +262,7 @@ src_configure() {
 		unset _JAVA_OPTIONS JAVA JAVA_TOOL_OPTIONS JAVAC XARGS
 		CFLAGS= CXXFLAGS= LDFLAGS= \
 		CONFIG_SITE=/dev/null \
+		EXTRA_CMAKE_ARGS="-DOMR_WARNINGS_AS_ERRORS=OFF" \
 		econf "${myconf[@]}"
 	)
 }
