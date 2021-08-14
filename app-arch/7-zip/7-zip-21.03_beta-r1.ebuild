@@ -12,7 +12,7 @@ DESCRIPTION="File archiver with a high compression ratio"
 HOMEPAGE="https://7-zip.org/"
 SRC_URI="https://7-zip.org/a/7z${MY_PV}-src.7z"
 
-LICENSE=""
+LICENSE="LGPL-2.1+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
@@ -26,12 +26,12 @@ PATCHES=( ${FILESDIR}/7-zip-flags.patch )
 
 src_unpack() {
 	if command -v 7z >/dev/null 2>&1; then
-		7z x ${DISTDIR}/7z${MY_PV}-src.7z -o$S || die
+		7z x "${DISTDIR}/7z${MY_PV}-src.7z" -o"$S" || die
 	elif command -v bsdtar >/dev/null 2>&1; then
 		mkdir $S || die
-		bsdtar -C $S -xf ${DISTDIR}/7z${MY_PV}-src.7z || die
+		bsdtar -C "$S" -xf "${DISTDIR}/7z${MY_PV}-src.7z" || die
 	elif command -v unar >/dev/null 2>&1; then
-		unar -d $S ${DISTDIR}/7z${MY_PV}-src.7z || die
+		unar -d "$S" "${DISTDIR}/7z${MY_PV}-src.7z" || die
 	else
 		die "no 7z unpacker found"
 	fi
