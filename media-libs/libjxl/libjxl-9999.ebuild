@@ -24,7 +24,7 @@ RDEPEND="app-arch/brotli
 	gif? ( media-libs/giflib )
 	jpeg? ( virtual/jpeg )
 	man? ( app-text/asciidoc )
-	openexr? ( media-libs/openexr )
+	openexr? ( media-libs/openexr:= )
 	viewers? (
 		dev-qt/qtwidgets
 		dev-qt/qtx11extras
