@@ -55,11 +55,6 @@ src_install() {
 	local dest="/opt/${P}"
 	local ddest="${ED%/}/${dest#/}"
 
-	# Not sure why they bundle this as it's commonly available and they
-	# only do so on x86_64. It's needed by libfontmanager.so. IcedTea
-	# also has an explicit dependency while Oracle seemingly dlopens it.
-	rm -vf lib/libfreetype.so || die
-
 	# Oracle and IcedTea have libjsoundalsa.so depending on
 	# libasound.so.2 but AdoptOpenJDK only has libjsound.so. Weird.
 	if ! use alsa ; then
