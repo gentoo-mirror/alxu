@@ -1,0 +1,49 @@
+diff -ru a/CPP/7zip/7zip_gcc.mak b/CPP/7zip/7zip_gcc.mak
+--- a/CPP/7zip/7zip_gcc.mak	2021-07-16 08:23:49.524088300 -0400
++++ b/CPP/7zip/7zip_gcc.mak	2021-08-14 14:43:34.618587556 -0400
+@@ -13,13 +13,13 @@
+ 
+ 
+ ifneq ($(CC), xlc)
+-CFLAGS_WARN_WALL = -Wall -Werror -Wextra
++CFLAGS_WARN_WALL = -Wall -Wextra -Wno-misleading-indentation
+ endif
+ 
+ # for object file
+ CFLAGS_BASE_LIST = -c
+ # CFLAGS_BASE_LIST = -S
+-CFLAGS_BASE = -O2 $(CFLAGS_BASE_LIST) $(CFLAGS_WARN_WALL) $(CFLAGS_WARN) \
++CFLAGS_BASE = $(CFLAGS_BASE_LIST) $(CFLAGS_WARN_WALL) $(CFLAGS_WARN) \
+  -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+  -fPIC
+ 
+@@ -62,17 +62,17 @@
+ 
+ ifdef IS_MINGW
+ SHARED_EXT=.dll
+-LDFLAGS = -shared -DEF $(DEF_FILE) $(LDFLAGS_STATIC)
++MY_LDFLAGS = -shared -DEF $(DEF_FILE) $(LDFLAGS_STATIC)
+ else
+ SHARED_EXT=.so
+-LDFLAGS = -shared -fPIC $(LDFLAGS_STATIC)
++MY_LDFLAGS = -shared -fPIC $(LDFLAGS_STATIC)
+ CC_SHARED=-fPIC
+ endif
+ 
+ 
+ else
+ 
+-LDFLAGS = $(LDFLAGS_STATIC)
++MY_LDFLAGS = $(LDFLAGS_STATIC)
+ # -s is not required for clang, do we need it for GGC ???
+ # -s
+ 
+@@ -156,7 +156,7 @@
+ 	$(MY_MKDIR) $(O)
+ 
+ $(PROGPATH): $(OBJS)
+-	$(CXX) -o $(PROGPATH) -s $(MY_ARCH_2) $(LDFLAGS) $(LD_arch) $(OBJS) $(MY_LIBS) $(LIB2)
++	$(CXX) -o $(PROGPATH) $(MY_ARCH_2) $(LDFLAGS) $(MY_LDFLAGS) $(LD_arch) $(OBJS) $(MY_LIBS) $(LIB2)
+ 
+ #	-s strips debug sections from executable in GCC
+ 

@@ -22,6 +22,8 @@ BDEPEND="|| ( virtual/7z app-arch/libarchive app-arch/unar )"
 
 S=${WORKDIR}/7z${MY_PV}-src
 
+PATCHES=( ${FILESDIR}/7-zip-flags.patch )
+
 src_unpack() {
 	if command -v 7z >/dev/null 2>&1; then
 		7z x ${DISTDIR}/7z${MY_PV}-src.7z -o$S || die
@@ -35,14 +37,8 @@ src_unpack() {
 	fi
 }
 
-src_prepare() {
-	default
-	sed -i -e 's/-Werror//g' -e "s/-O2/$CFLAGS/" CPP/7zip/7zip_gcc.mak || die
-}
-
 src_compile() {
 	cd CPP/7zip/Bundles/Alone2
-	append-ldflags -Wl,-z,noexecstack
 	make -f ../../cmpl_gcc.mak
 }
 
