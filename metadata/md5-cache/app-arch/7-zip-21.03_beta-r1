@@ -1,0 +1,12 @@
+BDEPEND=|| ( virtual/7z app-arch/libarchive app-arch/unar )
+DEFINED_PHASES=compile install unpack
+DESCRIPTION=File archiver with a high compression ratio
+EAPI=8
+HOMEPAGE=https://7-zip.org/
+INHERIT=flag-o-matic
+KEYWORDS=~amd64 ~x86
+LICENSE=LGPL-2.1+
+SLOT=0
+SRC_URI=https://7-zip.org/a/7z2103-src.7z
+_eclasses_=toolchain-funcs	9ea1c67b6f8315fdc2568abb674519aa	multilib	97566c1a256d07b00848aa767e38a352	flag-o-matic	4134b5c0fb719b9161d10bdaba9e09e5
+_md5_=221e0813d2e4c2c0df57248e24ed8741

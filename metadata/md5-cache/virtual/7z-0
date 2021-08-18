@@ -1,0 +1,7 @@
+DEFINED_PHASES=-
+DESCRIPTION=Virtual for /usr/bin/7z
+EAPI=8
+KEYWORDS=~amd64 ~x86
+RDEPEND=|| ( app-arch/7-zip app-arch/p7zip )
+SLOT=0
+_md5_=d6c33c0c385d50cca4b177aa265383b4
