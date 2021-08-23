@@ -184,7 +184,7 @@ if [[ ${PV} == *9999 ]] ; then
 	inherit git-r3
 else
 	SRC_URI="
-		https://github.com/xiph/rav1e/archive/v${PV}.tar.gz -> ${P}.tar.gz
+		https://github.com/xiph/rav1e/archive/v${PV//_/-}.tar.gz -> ${P}.tar.gz
 		$(cargo_crate_uris ${CRATES})
 		"
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
@@ -203,6 +203,8 @@ BDEPEND="
 	amd64? ( ${ASM_DEP} )
 	capi? ( dev-util/cargo-c )
 "
+
+S=${WORKDIR}/${P//_/-}
 
 src_unpack() {
 	if [[ "${PV}" == *9999* ]]; then
