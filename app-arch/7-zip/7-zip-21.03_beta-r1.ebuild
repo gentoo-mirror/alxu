@@ -28,7 +28,7 @@ src_unpack() {
 	if command -v 7z >/dev/null 2>&1; then
 		7z x "${DISTDIR}/7z${MY_PV}-src.7z" -o"$S" || die
 	elif command -v bsdtar >/dev/null 2>&1; then
-		mkdir $S || die
+		mkdir "$S" || die
 		bsdtar -C "$S" -xf "${DISTDIR}/7z${MY_PV}-src.7z" || die
 	elif command -v unar >/dev/null 2>&1; then
 		unar -d "$S" "${DISTDIR}/7z${MY_PV}-src.7z" || die
