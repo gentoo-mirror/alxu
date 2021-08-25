@@ -196,7 +196,7 @@ RESTRICT=""
 LICENSE="BSD-2 Apache-2.0 MIT Unlicense"
 SLOT="0"
 
-IUSE="+capi"
+IUSE="+capi static-libs"
 
 ASM_DEP=">=dev-lang/nasm-2.15"
 BDEPEND="
@@ -226,6 +226,7 @@ src_compile() {
 	if use capi; then
 		cargo cbuild ${args} --target-dir="capi" \
 			--prefix="/usr" --libdir="/usr/$(get_libdir)" \
+			--library-type=$(usex static-libs cdylib,staticlib cdylib) \
 			|| die "cargo cbuild failed"
 	fi
 }
@@ -237,6 +238,7 @@ src_install() {
 	if use capi; then
 		cargo cinstall $args --target-dir="capi" \
 			--prefix="/usr" --libdir="/usr/$(get_libdir)" --destdir="${ED}" \
+			--library-type=$(usex static-libs cdylib,staticlib cdylib) \
 			|| die "cargo cinstall failed"
 	fi
 
