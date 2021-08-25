@@ -9,12 +9,12 @@ dev-java/openj9-openjdk 11.0.27.0 16.0.27.0: Open source implementation of the J
 dev-java/openj9-openjdk-bin 11.0.12.7.0.27.0 16.0.2.7.0.27.0: Prebuilt IBM Semeru JDK binaries provided by IBM
 dev-java/openj9-openjdk-jre-bin 11.0.12.7.0.27.0 16.0.2.7.0.27.0: Prebuilt IBM Semeru JRE binaries provided by IBM
 dev-java/openjdk 16.0.2_p7: Open source implementation of the Java programming language
-dev-java/openjdk-bin 16.0.1_p9 16.0.2_p7: Prebuilt Java JDK binaries provided by Eclipse Temurin
+dev-java/openjdk-bin 16.0.2_p7: Prebuilt Java JDK binaries provided by Eclipse Temurin
 dev-java/openjdk-jre-bin 16.0.1_p9: Prebuilt Java JRE binaries provided by AdoptOpenJDK
 dev-libs/highway 0.12.2: Performance-portable, length-agnostic SIMD with runtime dispatch
 dev-libs/libdwarf 20210305: The DWARF Debugging Information Format
-dev-libs/openssl 1.0.2u-r1 1.1.1k-r1: full-strength general purpose cryptography library (including SSL and TLS)
-dev-qt/qtgui 5.15.2-r2: The GUI module and platform plugins for the Qt5 framework
+dev-libs/openssl 1.1.1l-r1: full-strength general purpose cryptography library (including SSL and TLS)
+dev-qt/qtgui 5.15.2-r2 5.15.2-r11: The GUI module and platform plugins for the Qt5 framework
 dev-util/android-udev-rules 20210501: Comprehensive list of udev rules to connect to android devices
 dev-util/binaryen 101: Compiler and toolchain infrastructure library for WebAssembly
 dev-util/pmbootstrap 1.35.0: Sophisticated chroot/build/flash tool to develop and install postmarketOS
@@ -26,7 +26,7 @@ mail-client/astroid 9999: lightweight graphical threads-with-tags style email cl
 media-libs/libjxl 9999: JPEG XL image format reference implementation
 media-libs/svt-av1 0.8.6 9999: Scalable Video Technology for AV1 (SVT-AV1 Encoder and Decoder)
 media-video/ffmpeg 4.4-r2 9999: Complete solution to record/convert/stream audio and video. Includes libavcodec
-media-video/rav1e 0.5.0_beta: The fastest and safest AV1 encoder
+media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 sci-calculators/units 2.21-r1: Unit conversion program
 virtual/7z 0: Virtual for /usr/bin/7z
