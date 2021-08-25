@@ -15,13 +15,16 @@ MY_PV=${PV/_p/+}
 SLOT=${MY_PV%%[.+]*}
 
 SRC_URI="
+	$(abi_uri aarch64 arm64)
+	$(abi_uri ppc64le ppc64)
+	$(abi_uri s390x s390)
 	$(abi_uri x64 amd64)
 "
 
 DESCRIPTION="Prebuilt Java JDK binaries provided by Eclipse Temurin"
 HOMEPAGE="https://adoptopenjdk.net"
 LICENSE="GPL-2-with-classpath-exception"
-KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~s390"
+KEYWORDS="~amd64 ~arm64 ~ppc64 ~s390"
 IUSE="alsa cups +gentoo-vm headless-awt selinux source"
 
 RDEPEND="
