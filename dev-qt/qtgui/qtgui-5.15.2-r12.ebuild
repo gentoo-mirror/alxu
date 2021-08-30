@@ -1,23 +1,21 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
+KDE_ORG_COMMIT=c2ea67ecefe049f6e9bb8f910d7f9c60319d8619
 QT5_MODULE="qtbase"
 inherit qt5-build
 
 DESCRIPTION="The GUI module and platform plugins for the Qt5 framework"
-SRC_URI+=" https://dev.gentoo.org/~asturm/distfiles/qtbase-${PV}-gcc11.patch.xz"
-
 SLOT=5/$(ver_cut 1-3) # bug 707658
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	KEYWORDS="amd64 arm arm64 ~hppa ppc ppc64 ~sparc x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~riscv ~sparc ~x86"
 fi
 
-# TODO: linuxfb
 IUSE="accessibility dbus egl eglfs evdev +gif gles2-only ibus jpeg
-	+libinput +png tslib tuio +udev vnc vulkan wayland +X"
+	+libinput linuxfb +png tslib tuio +udev vnc vulkan wayland +X"
 REQUIRED_USE="
 	accessibility? ( dbus X )
 	eglfs? ( egl )
@@ -26,7 +24,7 @@ REQUIRED_USE="
 	X? ( gles2-only? ( egl ) )
 "
 
-COMMON_DEPEND="
+RDEPEND="
 	dev-libs/glib:2
 	~dev-qt/qtcore-${PV}:5=
 	dev-util/gtk-update-icon-cache
@@ -66,12 +64,9 @@ COMMON_DEPEND="
 		x11-libs/xcb-util-wm
 	)
 "
-DEPEND="${COMMON_DEPEND}
+DEPEND="${RDEPEND}
 	evdev? ( sys-kernel/linux-headers )
 	udev? ( sys-kernel/linux-headers )
-"
-RDEPEND="${COMMON_DEPEND}
-	dev-qt/qtchooser
 "
 PDEPEND="
 	ibus? ( app-i18n/ibus )
@@ -134,8 +129,6 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 PATCHES=(
 	"${FILESDIR}/qt-5.12-gcc-avx2.patch" # bug 672946
 	"${FILESDIR}/${PN}-5.14.1-cmake-macro-backward-compat.patch" # bug 703306
-	"${FILESDIR}/${P}-bogus-xcb-util-dep.patch" # QTBUG-86287, QTBUG-88688
-	"${WORKDIR}"/qtbase-${PV}-gcc11.patch # bug 764038
 )
 
 src_prepare() {
@@ -174,13 +167,14 @@ src_configure() {
 		-system-harfbuzz
 		$(qt_use jpeg libjpeg system)
 		$(qt_use libinput)
+		$(qt_use linuxfb)
 		-opengl $(usex gles2-only es2 desktop)
 		$(qt_use png libpng system)
 		$(qt_use tslib)
 		$(qt_use udev libudev)
 		$(qt_use vulkan)
 		$(qt_use X xcb)
-		$(usex X '-xcb-xlib' '')
+		$(usex X '-xcb-xlib -DUSE_X11' '')
 	)
 	if use libinput || use X; then
 		myconf+=( -xkbcommon )
