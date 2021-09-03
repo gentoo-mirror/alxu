@@ -11,5 +11,5 @@ RDEPEND=x11-libs/cairo x11-libs/gdk-pixbuf x11-libs/gtk+:2 sys-libs/libcap x11-l
 RESTRICT=bindist mirror strip
 SLOT=0
 SRC_URI=https://content.runescape.com/downloads/ubuntu/pool/non-free/r/runescape-launcher/runescape-launcher_2.2.9_amd64.deb
-_eclasses_=toolchain-funcs	9ea1c67b6f8315fdc2568abb674519aa	multilib	97566c1a256d07b00848aa767e38a352	unpacker	928e1f35ef78ba9fc2b214e29c2b55a4	xdg-utils	27f9a2f19502b925ac117bd657aa2979	xdg	6024fbc93167fad782e2032933654857
+_eclasses_=toolchain-funcs	9ea1c67b6f8315fdc2568abb674519aa	multilib	4b66d835ec72e021e359bb81eacfe988	unpacker	928e1f35ef78ba9fc2b214e29c2b55a4	xdg-utils	27f9a2f19502b925ac117bd657aa2979	xdg	6024fbc93167fad782e2032933654857
 _md5_=fa17fce71c988ea1eb742c24e1008ae5
