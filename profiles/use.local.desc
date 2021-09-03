@@ -40,6 +40,8 @@ dev-java/openjdk-bin:headless-awt - Don't install the X backend for AWT, needed 
 dev-java/openjdk-bin:source - Install JVM sources
 dev-java/openjdk-jre-bin:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
 dev-java/openjdk-jre-bin:headless-awt - Don't install the X backend for AWT, needed by some GUIs (used to be X flag)
+dev-libs/libdwarf:dwarfexample - dwarfexample
+dev-libs/libdwarf:dwarfgen - dwarfgen
 dev-libs/openssl:asm - Support assembly hand optimized crypto functions (i.e. faster run time)
 dev-libs/openssl:bindist - Disable/Restrict EC algorithms (as they seem to be patented) -- note: changes the ABI
 dev-libs/openssl:rfc3779 - Enable support for RFC 3779 (X.509 Extensions for IP Addresses and AS Identifiers)

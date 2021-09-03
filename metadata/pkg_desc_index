@@ -5,14 +5,14 @@ app-emulation/dxvk 1.9.1: Vulkan-based implementation of D3D9, D3D10 and D3D11 f
 app-text/evince 40.4-r1: Simple document viewer for GNOME
 app-text/pdfsizeopt 9999: PDF file size optimizer
 dev-java/freemarker-bin 2.3.31: A Java tool to generate text output based on templates (binary package)
-dev-java/openj9-openjdk 11.0.27.0 16.0.27.0: Open source implementation of the Java programming language
+dev-java/openj9-openjdk 11.0.27.1 16.0.27.1: Open source implementation of the Java programming language
 dev-java/openj9-openjdk-bin 11.0.12.7.0.27.0 16.0.2.7.0.27.0: Prebuilt IBM Semeru JDK binaries provided by IBM
 dev-java/openj9-openjdk-jre-bin 11.0.12.7.0.27.0 16.0.2.7.0.27.0: Prebuilt IBM Semeru JRE binaries provided by IBM
 dev-java/openjdk 16.0.2_p7: Open source implementation of the Java programming language
 dev-java/openjdk-bin 16.0.2_p7: Prebuilt Java JDK binaries provided by Eclipse Temurin
 dev-java/openjdk-jre-bin 16.0.1_p9: Prebuilt Java JRE binaries provided by AdoptOpenJDK
 dev-libs/highway 0.12.2: Performance-portable, length-agnostic SIMD with runtime dispatch
-dev-libs/libdwarf 20210305: The DWARF Debugging Information Format
+dev-libs/libdwarf 0.1.1: The DWARF Debugging Information Format
 dev-libs/openssl 1.1.1l-r1: full-strength general purpose cryptography library (including SSL and TLS)
 dev-qt/qtgui 5.15.2-r12: The GUI module and platform plugins for the Qt5 framework
 dev-util/android-udev-rules 20210501: Comprehensive list of udev rules to connect to android devices
