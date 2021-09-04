@@ -1,6 +1,7 @@
 app-admin/keepassxc 2.6.6-r1 9999: KeePassXC - KeePass Cross-platform Community Edition
 app-arch/7-zip 21.03_beta-r1: File archiver with a high compression ratio
 app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
+app-crypt/openpgp-keys-runescape 0: OpenPGP keys used by Jagex to sign RuneScape packages for Ubuntu
 app-emulation/dxvk 1.9.1: Vulkan-based implementation of D3D9, D3D10 and D3D11 for Linux / Wine
 app-text/evince 40.4-r1: Simple document viewer for GNOME
 app-text/pdfsizeopt 9999: PDF file size optimizer
@@ -19,13 +20,14 @@ dev-util/android-udev-rules 20210501: Comprehensive list of udev rules to connec
 dev-util/binaryen 101: Compiler and toolchain infrastructure library for WebAssembly
 dev-util/pmbootstrap 1.35.0: Sophisticated chroot/build/flash tool to develop and install postmarketOS
 dev-util/wabt 1.0.24: The WebAssembly Binary Toolkit
-games-rpg/runescape-launcher 2.2.9-r1: Official RuneScape NXT client launcher
+games-rpg/runescape-launcher 2.2.9-r2: Official RuneScape NXT client launcher
 gui-apps/gammastep 2.0.7-r1: A screen color temperature adjusting software
 gui-apps/wshowkeys 9999: Displays keys being pressed on a Wayland session
 mail-client/astroid 9999: lightweight graphical threads-with-tags style email client for notmuch
 media-libs/libjxl 9999: JPEG XL image format reference implementation
 media-libs/svt-av1 0.8.6 9999: Scalable Video Technology for AV1 (SVT-AV1 Encoder and Decoder)
 media-video/ffmpeg 4.4-r2 9999: Complete solution to record/convert/stream audio and video. Includes libavcodec
+media-video/mpv 0.33.1-r2: Media player based on MPlayer and mplayer2
 media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 sci-calculators/units 2.21-r1: Unit conversion program

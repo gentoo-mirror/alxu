@@ -1,0 +1,9 @@
+DEFINED_PHASES=install
+DESCRIPTION=OpenPGP keys used by Jagex to sign RuneScape packages for Ubuntu
+EAPI=8
+HOMEPAGE=https://www.runescape.com/
+KEYWORDS=~*
+LICENSE=public-domain
+SLOT=0
+SRC_URI=https://content.runescape.com/downloads/ubuntu/runescape.gpg.key
+_md5_=f95c79102454d7716ad8251ed8fc5d80
