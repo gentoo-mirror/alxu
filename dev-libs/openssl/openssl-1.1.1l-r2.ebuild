@@ -181,17 +181,6 @@ multilib_src_configure() {
 
 	local krb5=$(has_version app-crypt/mit-krb5 && echo "MIT" || echo "Heimdal")
 
-	# See if our toolchain supports __uint128_t.  If so, it's 64bit
-	# friendly and can use the nicely optimized code paths. #460790
-	local ec_nistp_64_gcc_128
-	# Disable it for now though #469976
-	if ! use bindist ; then
-		echo "__uint128_t i;" > "${T}"/128.c
-		if ${CC} ${CFLAGS} -c "${T}"/128.c -o /dev/null >&/dev/null ; then
-			ec_nistp_64_gcc_128="enable-ec_nistp_64_gcc_128"
-		fi
-	fi
-
 	local sslout=$(./gentoo.config)
 	einfo "Use configuration ${sslout:-(openssl knows best)}"
 	local config="Configure"
@@ -213,10 +202,9 @@ multilib_src_configure() {
 		$(use_ssl !bindist sm2) \
 		enable-srp \
 		$(use elibc_musl && echo "no-async") \
-		${ec_nistp_64_gcc_128} \
+		$(use amd64 && echo enable-ec_nistp_64_gcc_128) \
 		enable-idea \
 		enable-mdc2 \
-		enable-rc5 \
 		$(use_ssl sslv3 ssl3) \
 		$(use_ssl sslv3 ssl3-method) \
 		$(use_ssl asm) \
