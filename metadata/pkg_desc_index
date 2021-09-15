@@ -1,5 +1,6 @@
 app-admin/keepassxc 2.6.6-r1 9999: KeePassXC - KeePass Cross-platform Community Edition
 app-arch/7-zip 21.03_beta-r1: File archiver with a high compression ratio
+app-arch/precomp-cpp 0.4.7: Precomp, C++ version - further compress already compressed files
 app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-crypt/openpgp-keys-runescape 0: OpenPGP keys used by Jagex to sign RuneScape packages for Ubuntu
 app-emulation/dxvk 1.9.1: Vulkan-based implementation of D3D9, D3D10 and D3D11 for Linux / Wine
@@ -9,12 +10,12 @@ dev-java/freemarker-bin 2.3.31: A Java tool to generate text output based on tem
 dev-java/openj9-openjdk 11.0.27.1 16.0.27.1: Open source implementation of the Java programming language
 dev-java/openj9-openjdk-bin 11.0.12.7.0.27.0 16.0.2.7.0.27.0: Prebuilt IBM Semeru JDK binaries provided by IBM
 dev-java/openj9-openjdk-jre-bin 11.0.12.7.0.27.0 16.0.2.7.0.27.0: Prebuilt IBM Semeru JRE binaries provided by IBM
-dev-java/openjdk 16.0.2_p7: Open source implementation of the Java programming language
+dev-java/openjdk 17.0.0_p35: Open source implementation of the Java programming language
 dev-java/openjdk-bin 16.0.2_p7: Prebuilt Java JDK binaries provided by Eclipse Temurin
 dev-java/openjdk-jre-bin 16.0.1_p9: Prebuilt Java JRE binaries provided by AdoptOpenJDK
 dev-libs/highway 0.12.2: Performance-portable, length-agnostic SIMD with runtime dispatch
 dev-libs/libdwarf 0.1.1: The DWARF Debugging Information Format
-dev-libs/openssl 1.1.1l-r2: full-strength general purpose cryptography library (including SSL and TLS)
+dev-libs/openssl 1.1.1l-r2 3.0.0-r1: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
 dev-qt/qtgui 5.15.2-r12: The GUI module and platform plugins for the Qt5 framework
 dev-util/android-udev-rules 20210501: Comprehensive list of udev rules to connect to android devices
 dev-util/binaryen 102: Compiler and toolchain infrastructure library for WebAssembly
@@ -32,6 +33,6 @@ media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 sci-calculators/units 2.21-r1: Unit conversion program
 virtual/7z 0: Virtual for /usr/bin/7z
-virtual/jdk 11-r2 16: Virtual for Java Development Kit (JDK)
-virtual/jre 11-r2 16: Virtual for Java Runtime Environment (JRE)
+virtual/jdk 11-r2 16 17: Virtual for Java Development Kit (JDK)
+virtual/jre 11-r2 16 17: Virtual for Java Runtime Environment (JRE)
 x11-apps/sx 2.1.7 9999: Start an xorg server
