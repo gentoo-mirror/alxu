@@ -1,0 +1,28 @@
+From 730a7ab72b80f89bb89152e8e5ef555dacf05a45 Mon Sep 17 00:00:00 2001
+From: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
+Date: Sat, 11 Sep 2021 13:32:57 -0400
+Subject: [PATCH] use add_compile_definitions instead of CMAKE_C_FLAGS
+
+this allows the user-specified CFLAGS/CXXFLAGS to take effect.
+---
+ CMakeLists.txt | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index dbc0829..ba1c614 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -17,9 +17,8 @@ else()
+ endif()
+ 
+ if (UNIX)
+-  set(CMAKE_C_FLAGS "-DLINUX -DUNIX -DHAVE_STDBOOL_H")
++  add_compile_definitions(LINUX UNIX HAVE_STDBOOL_H)
+   set(CMAKE_C_STANDARD 99)
+-  set(CMAKE_CXX_FLAGS "-DUNIX")
+   set(CMAKE_CXX_STANDARD 11)
+   set(THREADS_PREFER_PTHREAD_FLAG ON)
+   find_package(Threads REQUIRED)
+-- 
+2.33.0
+
