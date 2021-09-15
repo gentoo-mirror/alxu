@@ -7,8 +7,9 @@ inherit autotools check-reqs flag-o-matic java-pkg-2 java-vm-2 multiprocessing p
 
 # we need -ga tag to fetch tarball and unpack it, but exact number everywhere else to
 # set build version properly
-MY_PV="${PV%_p*}-ga"
-SLOT="${MY_PV%%[.+]*}"
+MY_PV="${PV%_p*}"
+MY_PV="${MY_PV%.0.0}-ga"
+SLOT="${PV%%[.+]*}"
 
 DESCRIPTION="Open source implementation of the Java programming language"
 HOMEPAGE="https://openjdk.java.net"
@@ -95,11 +96,6 @@ pkg_pretend() {
 
 pkg_setup() {
 	openjdk_check_requirements
-
-	JAVA_PKG_WANT_BUILD_VM="openjdk-${SLOT} openjdk-bin-${SLOT} openj9-openjdk-${SLOT} openj9-openjdk-bin-${SLOT}"
-	JAVA_PKG_WANT_SOURCE="${SLOT}"
-	JAVA_PKG_WANT_TARGET="${SLOT}"
-
 	java-vm-2_pkg_setup
 	java-pkg-2_pkg_setup
 }
