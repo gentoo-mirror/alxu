@@ -7,12 +7,13 @@ inherit java-vm-2 toolchain-funcs
 
 abi_uri() {
 	echo "${2-$1}? (
-			https://github.com/adoptium/temurin${SLOT}-binaries/releases/download/jdk-${MY_PV/+/%2B}/OpenJDK${SLOT}U-jdk_${1}_linux_hotspot_${MY_PV/+/_}.tar.gz
+			https://github.com/adoptium/temurin${SLOT}-binaries/releases/download/jdk-${MY_PV/+/%2B}/OpenJDK${SLOT}-jdk_${1}_linux_hotspot_${MY_PV/+/_}.tar.gz
 		)"
 }
 
-MY_PV=${PV/_p/+}
-SLOT=${MY_PV%%[.+]*}
+MY_PV=${PV/.0.0_p/_p}
+MY_PV=${MY_PV/_p/+}
+SLOT=${PV%%[.+]*}
 
 SRC_URI="
 	$(abi_uri aarch64 arm64)
