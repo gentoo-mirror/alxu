@@ -3,7 +3,7 @@ app-arch/7-zip 21.03_beta-r1: File archiver with a high compression ratio
 app-arch/precomp-cpp 0.4.7: Precomp, C++ version - further compress already compressed files
 app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-crypt/openpgp-keys-runescape 0: OpenPGP keys used by Jagex to sign RuneScape packages for Ubuntu
-app-emulation/dxvk 1.9.1: Vulkan-based implementation of D3D9, D3D10 and D3D11 for Linux / Wine
+app-emulation/dxvk 1.9.2: Vulkan-based implementation of D3D9, D3D10 and D3D11 for Linux / Wine
 app-text/evince 40.4-r1: Simple document viewer for GNOME
 app-text/pdfsizeopt 9999: PDF file size optimizer
 dev-java/freemarker-bin 2.3.31: A Java tool to generate text output based on templates (binary package)
