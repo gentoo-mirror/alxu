@@ -3,33 +3,32 @@
 
 EAPI=6
 
-inherit java-vm-2 toolchain-funcs
+inherit java-vm-2 toolchain-funcs versionator
 
 abi_uri() {
 	echo "${2-$1}? (
-			https://github.com/adoptium/temurin${SLOT}-binaries/releases/download/jdk-${MY_PV/+/%2B}/OpenJDK${SLOT}U-jdk_${1}_linux_hotspot_${MY_PV/+/_}.tar.gz
-		)"
+		https://github.com/ibmruntimes/semeru${SLOT}-binaries/releases/download/jdk-${DL_PV/+/%2B}/ibm-semeru-open-jre_${1}_linux_${DL_PV/+/_}.tar.gz
+	)"
 }
 
-MY_PV=${PV/_p/+}
-SLOT=${MY_PV%%[.+]*}
+JDK_PV=$(get_version_component_range 1-3)+$(get_version_component_range 4)
+DL_PV=${JDK_PV}_openj9-$(get_version_component_range 5-7)
+SLOT=$(get_major_version)
 
 SRC_URI="
-	$(abi_uri aarch64 arm64)
 	$(abi_uri ppc64le ppc64)
-	$(abi_uri s390x s390)
-	$(abi_uri x64 amd64)
 "
 
-DESCRIPTION="Prebuilt Java JDK binaries provided by Eclipse Temurin"
+DESCRIPTION="Prebuilt IBM Semeru JRE binaries provided by IBM"
 HOMEPAGE="https://adoptopenjdk.net"
 LICENSE="GPL-2-with-classpath-exception"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~s390"
-IUSE="alsa cups +gentoo-vm headless-awt selinux source"
+KEYWORDS="~ppc64"
+IUSE="alsa cups +gentoo-vm headless-awt selinux"
 
 RDEPEND="
 	media-libs/fontconfig:1.0
 	media-libs/freetype:2
+	>net-libs/libnet-1.1
 	>=sys-apps/baselayout-java-0.1.0-r1
 	>=sys-libs/glibc-2.2.5:*
 	sys-libs/zlib
@@ -47,13 +46,7 @@ RDEPEND="
 RESTRICT="preserve-libs splitdebug"
 QA_PREBUILT="*"
 
-S="${WORKDIR}/jdk-${MY_PV}"
-
-pkg_pretend() {
-	if [[ "$(tc-is-softfloat)" != "no" ]]; then
-		die "These binaries require a hardfloat system."
-	fi
-}
+S="${WORKDIR}/jdk-${JDK_PV}-jre"
 
 src_install() {
 	local dest="/opt/${P}"
@@ -69,13 +62,8 @@ src_install() {
 		rm -v lib/lib*{[jx]awt,splashscreen}* || die
 	fi
 
-	if ! use source ; then
-		rm -v lib/src.zip || die
-	fi
-
 	rm -v lib/security/cacerts || die
-	dosym ../../../../etc/ssl/certs/java/cacerts \
-		"${dest}"/lib/security/cacerts
+	dosym ../../../../etc/ssl/certs/java/cacerts "${dest}"/lib/security/cacerts
 
 	dodir "${dest}"
 	cp -pPR * "${ddest}" || die
@@ -93,14 +81,13 @@ pkg_postinst() {
 	java-vm-2_pkg_postinst
 
 	if use gentoo-vm ; then
-		ewarn "WARNING! You have enabled the gentoo-vm USE flag, making this JDK"
-		ewarn "recognised by the system. This will almost certainly break"
-		ewarn "many java ebuilds as they are not ready for openjdk-11"
+		ewarn "WARNING! You have enabled the gentoo-vm USE flag, making this JRE"
+		ewarn "recognised by the system. This will almost certainly break things."
 	else
-		ewarn "The experimental gentoo-vm USE flag has not been enabled so this JDK"
+		ewarn "The experimental gentoo-vm USE flag has not been enabled so this JRE"
 		ewarn "will not be recognised by the system. For example, simply calling"
 		ewarn "\"java\" will launch a different JVM. This is necessary until Gentoo"
-		ewarn "fully supports Java 11. This JDK must therefore be invoked using its"
+		ewarn "fully supports Java 11. This JRE must therefore be invoked using its"
 		ewarn "absolute location under ${EPREFIX}/opt/${P}."
 	fi
 }

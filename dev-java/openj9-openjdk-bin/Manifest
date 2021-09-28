@@ -1,7 +1,9 @@
 DIST ibm-semeru-open-debugimage_aarch64_linux_11.0.12_7_openj9-0.27.0.tar.gz 257296341 SHA256 c80416fd8e9f100746ca06166dd50a724d3b4b077162350f2b88ff6b746aefb8
 DIST ibm-semeru-open-debugimage_aarch64_linux_16.0.2_7_openj9-0.27.0.tar.gz 260567193 SHA256 bd8c8f9a07444c5b4c5e88de3bf952d27ef93e1f95485a027d84b4158141593f
 DIST ibm-semeru-open-debugimage_ppc64le_linux_11.0.12_7_openj9-0.27.0.tar.gz 310406729 SHA256 b3f2a7de056bd6a817a28baaca93b7337163941fe88a49ea2460ce677f4144d5
+DIST ibm-semeru-open-debugimage_ppc64le_linux_11.0.12_7_openj9-0.27.1.tar.gz 310409351 SHA256 8eb7a7371e0025e1eac245c02c45145b3b2cf7e9f8154582a6511a097aaf271d
 DIST ibm-semeru-open-debugimage_ppc64le_linux_16.0.2_7_openj9-0.27.0.tar.gz 313671311 SHA256 92535ef6c071e6e00dba4988fb4ec2533cb1c27232d1b308cc872043ed4ffc98
+DIST ibm-semeru-open-debugimage_ppc64le_linux_16.0.2_7_openj9-0.27.1.tar.gz 313670254 SHA256 4240e341755efea9e8c7ffb963132b199598de07926cd238e161d31dbd58acda
 DIST ibm-semeru-open-debugimage_s390x_linux_11.0.12_7_openj9-0.27.0.tar.gz 275761551 SHA256 eb7b44331d65771f4ef72978b8088166007a340330c8eda0de0a6a29d566842c
 DIST ibm-semeru-open-debugimage_s390x_linux_16.0.2_7_openj9-0.27.0.tar.gz 279233218 SHA256 b771cd97b91cf9233b5ae3fa4970debac036c434ebce03c833bc73113f03986c
 DIST ibm-semeru-open-debugimage_x64_linux_11.0.12_7_openj9-0.27.0.tar.gz 320291464 SHA256 a3bf2cf972394b0dfd4f984dfe2d71fea3552ba448c0c050057091c587bf4be3
@@ -9,7 +11,9 @@ DIST ibm-semeru-open-debugimage_x64_linux_16.0.2_7_openj9-0.27.0.tar.gz 32368914
 DIST ibm-semeru-open-jdk_aarch64_linux_11.0.12_7_openj9-0.27.0.tar.gz 197763167 SHA256 f025af94a65872653baeb6f889ec6d592ce9d92391fa04e82fb68a50b96178a7
 DIST ibm-semeru-open-jdk_aarch64_linux_16.0.2_7_openj9-0.27.0.tar.gz 200907027 SHA256 022cda1210331488c3db3d0d1282ea74467397fdabc34cb482cdfe81c45f6a15
 DIST ibm-semeru-open-jdk_ppc64le_linux_11.0.12_7_openj9-0.27.0.tar.gz 203013889 SHA256 7d49a5b29a84831526f7bffaaee399ac9a26d05712ac4b9cb7ca0a370ed3f020
+DIST ibm-semeru-open-jdk_ppc64le_linux_11.0.12_7_openj9-0.27.1.tar.gz 203028556 SHA256 4465df8798e84d62dd951a10913e817a9611856fa64166691bb30182402dec4f
 DIST ibm-semeru-open-jdk_ppc64le_linux_16.0.2_7_openj9-0.27.0.tar.gz 206337625 SHA256 d5901996f2c0889b2b92de97fed0b36d5068da308be0fbd6c8293a6b6b91634d
+DIST ibm-semeru-open-jdk_ppc64le_linux_16.0.2_7_openj9-0.27.1.tar.gz 206335729 SHA256 edc972a824a8c9993b1403eb33a2148f59d1fd8d6faa5e89582be9d518999441
 DIST ibm-semeru-open-jdk_s390x_linux_11.0.12_7_openj9-0.27.0.tar.gz 200393575 SHA256 991f8df53079378782b9de3bbfd4c52a19920ea9ba90e9a54c871ce47b599cdb
 DIST ibm-semeru-open-jdk_s390x_linux_16.0.2_7_openj9-0.27.0.tar.gz 203152325 SHA256 3a2741a2e14b9934405a6c0b6af9e865687a70814af355e62dd84025707ccfdc
 DIST ibm-semeru-open-jdk_x64_linux_11.0.12_7_openj9-0.27.0.tar.gz 202156239 SHA256 4c2d776f69e3ff7d01cd57c0938b7a7f058264425faf18e3708b905e93f915c4

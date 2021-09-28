@@ -1,7 +1,9 @@
 DIST ibm-semeru-open-jre_aarch64_linux_11.0.12_7_openj9-0.27.0.tar.gz 41737266 SHA256 06fa66b99d3c9ba07f117860ef653d52bcb19dac1ea598c15f3b4eec9f832b36
 DIST ibm-semeru-open-jre_aarch64_linux_16.0.2_7_openj9-0.27.0.tar.gz 41451784 SHA256 575dc3827077fc661fd1103effaa13ccd0f1606d01a33643956ed2eb1ece9763
 DIST ibm-semeru-open-jre_ppc64le_linux_11.0.12_7_openj9-0.27.0.tar.gz 44324701 SHA256 285bd388a497db61408d26a9f3328f62004714ede94456718cf6440a109e25d2
+DIST ibm-semeru-open-jre_ppc64le_linux_11.0.12_7_openj9-0.27.1.tar.gz 44328092 SHA256 3c5ca6fe3738f55ed0caaefe941eba4277fb6754be4251381d9681e155bac7e4
 DIST ibm-semeru-open-jre_ppc64le_linux_16.0.2_7_openj9-0.27.0.tar.gz 44063048 SHA256 51dac9a69b594c72adabb2c36634a121be04a17c4ce34628cf9b37fd5010c1a8
+DIST ibm-semeru-open-jre_ppc64le_linux_16.0.2_7_openj9-0.27.1.tar.gz 44062139 SHA256 4251f3ec4f12a34131f40487b1216238fe3de12179da8e9475bf5fdf7933ccd5
 DIST ibm-semeru-open-jre_s390x_linux_11.0.12_7_openj9-0.27.0.tar.gz 43083467 SHA256 6e5829aeb37abfb122e0944e438ecb2043c56df14fcdcce39bd4e3c9a55571a8
 DIST ibm-semeru-open-jre_s390x_linux_16.0.2_7_openj9-0.27.0.tar.gz 42822005 SHA256 dba28e3e06bb7c76b4da2f46c48ed74dc72e168f9ee01439decadea181eb402c
 DIST ibm-semeru-open-jre_x64_linux_11.0.12_7_openj9-0.27.0.tar.gz 43580993 SHA256 f352998f6fdf0b84f63c563608be57f30aa3f14c8117c1219422dbc712ad4f81
