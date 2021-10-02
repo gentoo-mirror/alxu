@@ -1,5 +1,2 @@
 # https://github.com/pts/pdfsizeopt/issues/139
 app-text/pdfsizeopt
-
-# 16.0.2 is out but no binaries yet
-=dev-java/openjdk-jre-bin-16.0.1_p9
