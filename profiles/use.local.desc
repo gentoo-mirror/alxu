@@ -18,6 +18,7 @@ app-text/evince:postscript - Enable support for PostScript and Adobe Illustrator
 app-text/evince:spell - Enable inline spell check for annotations via app-text/gspell
 app-text/evince:t1lib - Enable the Type-1 fonts for the built-in DVI viewer (media-libs/t1lib)
 app-text/evince:xps - Enable XPS viewer using app-text/libgxps
+app-text/zathura:synctex - Use libsynctex to get latex codeline from pdf
 dev-java/openj9-openjdk:ddr - Enable Direct Dump Reader
 dev-java/openj9-openjdk:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
 dev-java/openj9-openjdk:headless-awt - Don't install the X backend for AWT, needed by some GUIs
@@ -38,8 +39,6 @@ dev-java/openjdk:systemtap - Enable SystemTAP/DTrace tracing
 dev-java/openjdk-bin:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
 dev-java/openjdk-bin:headless-awt - Don't install the X backend for AWT, needed by some GUIs (used to be X flag)
 dev-java/openjdk-bin:source - Install JVM sources
-dev-java/openjdk-jre-bin:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
-dev-java/openjdk-jre-bin:headless-awt - Don't install the X backend for AWT, needed by some GUIs (used to be X flag)
 dev-libs/libdwarf:dwarfexample - dwarfexample
 dev-libs/libdwarf:dwarfgen - dwarfgen
 dev-libs/openssl:asm - Support assembly hand optimized crypto functions (i.e. faster run time)
