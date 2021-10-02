@@ -1,0 +1,119 @@
+diff --git a/doc/man/conf.py b/doc/man/conf.py
+deleted file mode 100644
+index 2aad25f..0000000
+--- a/doc/man/conf.py
++++ /dev/null
+@@ -1,36 +0,0 @@
+-# -*- coding: utf-8 -*-
+-#
+-# SPDX-License-Identifier: Zlib
+-
+-import os.path
+-import glob
+-import time
+-
+-dirname = os.path.dirname(__file__)
+-files = glob.glob(os.path.join(dirname, '*.rst'))
+-
+-maxdate = 0
+-for path in files:
+-    s = os.stat(path)
+-    maxdate = max(maxdate, s.st_mtime)
+-
+-# -- General configuration ------------------------------------------------
+-
+-source_suffix  = '.rst'
+-master_doc     = 'zathura.1'
+-templates_path = ['_templates']
+-today          = time.strftime('%Y-%m-%d', time.gmtime(maxdate))
+-
+-# -- Project configuration ------------------------------------------------
+-
+-project   = 'zathura'
+-copyright = '2009-2018, pwmt.org'
+-version   = '0.2.7'
+-release   = '0.2.7'
+-
+-# -- Options for manual page output ---------------------------------------
+-
+-man_pages = [
+-    ('zathura.1', 'zathura', 'a document viewer', ['pwmt.org'], 1),
+-    ('zathurarc.5', 'zathurarc', 'zathura configuration file', ['pwmt.org'], 5)
+-]
+diff --git a/doc/man/zathura.1.rst b/doc/man/zathura.1.rst
+index 089dbf7..19cc44c 100644
+--- a/doc/man/zathura.1.rst
++++ b/doc/man/zathura.1.rst
+@@ -1,5 +1,14 @@
+-Manpage
+ =======
++zathura
++=======
++
++-----------------
++a document viewer
++-----------------
++
++:Author: pwmt.org
++:Copyright: 2009-2018, pwmt.org
++:Manual section: 1
+ 
+ Synopsis
+ --------
+diff --git a/doc/man/zathurarc.5.rst b/doc/man/zathurarc.5.rst
+index bf519ae..1ec6462 100644
+--- a/doc/man/zathurarc.5.rst
++++ b/doc/man/zathurarc.5.rst
+@@ -2,6 +2,14 @@
+ zathurarc
+ *********
+ 
++--------------------------
++zathura configuration file
++--------------------------
++
++:Author: pwmt.org
++:Copyright: 2009-2018, pwmt.org
++:Manual section: 5
++
+ SYNOPSIS
+ ========
+ 
+diff --git a/doc/meson.build b/doc/meson.build
+index b67c8ab..a02116b 100644
+--- a/doc/meson.build
++++ b/doc/meson.build
+@@ -1,24 +1,10 @@
+-sphinx = find_program('sphinx-build', required: get_option('manpages'))
+-if sphinx.found()
+-  custom_target('man pages',
+-    command: [
+-      sphinx,
+-      '-b', 'man',
+-      '-D', 'version=' + version,
+-      '-D', 'release=' + version,
+-      join_paths(meson.current_source_dir(), 'man'),
+-      meson.current_build_dir()],
+-    output: ['zathura.1', 'zathurarc.5'],
+-    input: [
+-      'man/conf.py',
+-      'man/zathurarc.5.rst',
+-      'man/zathura.1.rst'
+-    ],
+-    build_by_default: true,
+-    install: true,
+-    install_dir: [
+-      join_paths(get_option('mandir'), 'man1'),
+-      join_paths(get_option('mandir'), 'man5')
+-    ]
+-  )
++rst2man = find_program('rst2man', 'rst2man.py', required: get_option('manpages'))
++
++if rst2man.found()
++  custom_target('zathura.1', input: [ 'man/zathura.1.rst' ], output: [ 'zathura.1' ],
++                command: [rst2man, '@INPUT@', '@OUTPUT@'], install: true,
++                install_dir: join_paths(get_option('mandir'), 'man1'))
++  custom_target('zathurarc.5', input: [ 'man/zathurarc.5.rst' ], output: [ 'zathurarc.5' ],
++                command: [rst2man, '@INPUT@', '@OUTPUT@'], install: true,
++                install_dir: join_paths(get_option('mandir'), 'man5'))
+ endif
