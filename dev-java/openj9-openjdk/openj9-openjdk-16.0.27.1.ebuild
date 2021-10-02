@@ -8,7 +8,6 @@ inherit autotools check-reqs flag-o-matic java-pkg-2 java-vm-2 multiprocessing p
 SLOT="$(get_major_version)"
 OPENJ9_PV="$(get_version_component_range 2-4)"
 OPENJ9_P=openj9-${OPENJ9_PV}
-FREEMARKER_PV=2.3.30
 
 DESCRIPTION="Open source implementation of the Java programming language"
 HOMEPAGE="https://openjdk.java.net"
