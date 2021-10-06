@@ -7,13 +7,13 @@ app-emulation/dxvk 1.9.2: Vulkan-based implementation of D3D9, D3D10 and D3D11 f
 app-text/evince 40.4-r1: Simple document viewer for GNOME
 app-text/pdfsizeopt 9999: PDF file size optimizer
 app-text/zathura 0.4.8 9999: A highly customizable and functional document viewer
+dev-cpp/highway 0.14.2: Performance-portable, length-agnostic SIMD with runtime dispatch
 dev-java/openj9-openjdk 11.0.27.1 16.0.27.1: Open source implementation of the Java programming language
 dev-java/openj9-openjdk-bin 11.0.12.7.0.27.0 11.0.12.7.0.27.1 16.0.2.7.0.27.0 16.0.2.7.0.27.1: Prebuilt IBM Semeru JDK binaries provided by IBM
 dev-java/openj9-openjdk-jre-bin 11.0.12.7.0.27.0 11.0.12.7.0.27.1 16.0.2.7.0.27.0 16.0.2.7.0.27.1: Prebuilt IBM Semeru JRE binaries provided by IBM
 dev-java/openjdk 17.0.0_p35: Open source implementation of the Java programming language
 dev-java/openjdk-bin 17.0.0_p35: Prebuilt Java JDK binaries provided by Eclipse Temurin
 dev-libs/girara 0.3.6: UI library that focuses on simplicity and minimalism
-dev-libs/highway 0.12.2: Performance-portable, length-agnostic SIMD with runtime dispatch
 dev-libs/libdwarf 0.1.1: The DWARF Debugging Information Format
 dev-libs/openssl 1.1.1l-r2 3.0.0-r1: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
 dev-qt/qtgui 5.15.2-r13: The GUI module and platform plugins for the Qt5 framework
