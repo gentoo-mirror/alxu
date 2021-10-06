@@ -26,7 +26,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="apng doc gif java jpeg +man openexr static-libs test viewers"
 
 RDEPEND="app-arch/brotli
-	dev-libs/highway
+	dev-cpp/highway
 	media-libs/lcms
 	apng? (
 		media-libs/libpng
