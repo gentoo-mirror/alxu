@@ -63,6 +63,7 @@ mail-client/astroid:embedded-editor - Embedded editor
 mail-client/astroid:plugins - Plugins
 mail-client/astroid:terminal - Embedded terminal
 media-libs/libjxl:apng - APNG support
+media-libs/libjxl:gdk-pixbuf - gdk-pixbuf plugin
 media-libs/libjxl:viewers - Viewer programs
 media-video/ffmpeg:amr - Enables Adaptive Multi-Rate Audio support
 media-video/ffmpeg:amrenc - Enables Adaptive Multi-Rate Audio encoding support with media-libs/vo-amrwbenc.
