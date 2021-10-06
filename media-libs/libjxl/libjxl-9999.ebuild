@@ -23,7 +23,7 @@ fi
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="apng doc gif java jpeg +man openexr static-libs test viewers"
+IUSE="apng doc gif gdk-pixbuf gimp java jpeg +man openexr static-libs test viewers"
 
 RDEPEND="app-arch/brotli
 	dev-cpp/highway
@@ -32,12 +32,15 @@ RDEPEND="app-arch/brotli
 		media-libs/libpng
 		sys-libs/zlib
 	)
+	gdk-pixbuf? ( x11-libs/gdk-pixbuf )
 	gif? ( media-libs/giflib )
-	java? ( virtual/jdk )
+	gimp? ( media-gfx/gimp )
+	java? ( virtual/jdk:* )
 	jpeg? ( virtual/jpeg )
 	man? ( app-text/asciidoc )
 	openexr? ( media-libs/openexr:= )
 	viewers? (
+		kde-frameworks/extra-cmake-modules
 		dev-qt/qtwidgets
 		dev-qt/qtx11extras
 	)
@@ -56,6 +59,8 @@ src_prepare() {
 		rmdir third_party/lodepng
 		ln -sv ../../lodepng-${LODEPNG_COMMIT} third_party/lodepng || die
 	fi
+	use gdk-pixbuf || sed -i -e '/(gdk-pixbuf)/s/^/#/' plugins/CMakeLists.txt || die
+	use gimp || sed -i -e '/(gimp)/s/^/#/' plugins/CMakeLists.txt || die
 	cmake_src_prepare
 }
 
@@ -69,7 +74,7 @@ src_configure() {
 		-DJPEGXL_ENABLE_JNI=$(usex java ON OFF)
 		-DJPEGXL_ENABLE_MANPAGES=$(usex man ON OFF)
 		-DJPEGXL_ENABLE_OPENEXR=$(usex openexr ON OFF)
-		-DJPEGXL_ENABLE_PLUGINS=OFF
+		-DJPEGXL_ENABLE_PLUGINS=ON # USE=gdk-pixbuf, USE=gimp handled in src_prepare
 		-DJPEGXL_ENABLE_SJPEG=OFF
 		-DJPEGXL_ENABLE_SKCMS=OFF
 		-DJPEGXL_ENABLE_VIEWERS=$(usex viewers ON OFF)
@@ -77,7 +82,6 @@ src_configure() {
 		-DJPEGXL_FORCE_SYSTEM_BROTLI=ON
 		-DJPEGXL_FORCE_SYSTEM_HWY=ON
 		-DJPEGXL_FORCE_SYSTEM_LCMS=ON
-		-DJPEGXL_WARNINGS_AS_ERRORS=OFF
 
 		$(cmake_use_find_package apng PNG)
 		$(cmake_use_find_package apng ZLIB)
