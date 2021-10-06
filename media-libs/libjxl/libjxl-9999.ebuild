@@ -22,7 +22,9 @@ fi
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+if [[ ${PV} != 9999 ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 IUSE="apng doc gif gdk-pixbuf gimp java jpeg +man openexr static-libs test viewers"
 
 RDEPEND="app-arch/brotli
