@@ -97,10 +97,9 @@ multilib_src_configure() {
 }
 
 multilib_src_test() {
-	# DecodeTest.PixelTestWithICCProfileLossy: https://github.com/libjxl/libjxl/issues/500
 	# RobustStatisticsTest: https://github.com/libjxl/libjxl/issues/698
 	local myctestargs=(
-		-E '^DecodeTest\.PixelTestWithICCProfileLossy$|^RobustStatisticsTest\.'
+		-E '^RobustStatisticsTest\.'
 	)
 	cmake_src_test
 }
