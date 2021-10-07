@@ -53,7 +53,10 @@ DEPEND="${RDEPEND}
 	java? ( virtual/jdk:* )
 "
 
-PATCHES=("${FILESDIR}/system-lcms.patch")
+PATCHES=(
+	"${FILESDIR}/system-lcms.patch"
+	"${FILESDIR}/roundtripanimationpatches-ifdef-gif.patch"
+)
 
 src_prepare() {
 	if [[ ${PV} != 9999 ]]; then
