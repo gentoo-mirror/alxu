@@ -1,0 +1,71 @@
+From 134f1876473d9463332711a834e2ddc70fa7e38c Mon Sep 17 00:00:00 2001
+From: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
+Date: Thu, 7 Oct 2021 14:07:35 -0400
+Subject: [PATCH] Run RoundtripAnimationPatches only if gif enabled
+
+---
+ lib/jxl/jxl_test.cc | 42 +++++++++++++++++++++---------------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
+
+diff --git a/lib/jxl/jxl_test.cc b/lib/jxl/jxl_test.cc
+index aaf1f4e..815ec7c 100644
+--- a/lib/jxl/jxl_test.cc
++++ b/lib/jxl/jxl_test.cc
+@@ -1336,6 +1336,27 @@ TEST(JxlTest, RoundtripLosslessAnimation) {
+             5e-4);
+ }
+ 
++TEST(JxlTest, RoundtripAnimationPatches) {
++  ThreadPool* pool = nullptr;
++  const PaddedBytes orig = ReadTestData("jxl/animation_patches.gif");
++  CodecInOut io;
++  ASSERT_TRUE(SetFromBytes(Span<const uint8_t>(orig), &io, pool));
++  ASSERT_EQ(2u, io.frames.size());
++
++  CompressParams cparams;
++  cparams.patches = Override::kOn;
++  DecompressParams dparams;
++  CodecInOut io2;
++  // 40k with no patches, 27k with patch frames encoded multiple times.
++  EXPECT_LE(Roundtrip(&io, cparams, dparams, pool, &io2), 24000u);
++
++  EXPECT_EQ(io2.frames.size(), io.frames.size());
++  // >10 with broken patches
++  EXPECT_LE(ButteraugliDistance(io, io2, cparams.ba_params,
++                                /*distmap=*/nullptr, pool),
++            2.0);
++}
++
+ #endif  // JPEGXL_ENABLE_GIF
+ 
+ #if JPEGXL_ENABLE_JPEG
+@@ -1629,26 +1650,5 @@ TEST(JxlTest, RoundtripProgressive) {
+             4.0f);
+ }
+ 
+-TEST(JxlTest, RoundtripAnimationPatches) {
+-  ThreadPool* pool = nullptr;
+-  const PaddedBytes orig = ReadTestData("jxl/animation_patches.gif");
+-  CodecInOut io;
+-  ASSERT_TRUE(SetFromBytes(Span<const uint8_t>(orig), &io, pool));
+-  ASSERT_EQ(2u, io.frames.size());
+-
+-  CompressParams cparams;
+-  cparams.patches = Override::kOn;
+-  DecompressParams dparams;
+-  CodecInOut io2;
+-  // 40k with no patches, 27k with patch frames encoded multiple times.
+-  EXPECT_LE(Roundtrip(&io, cparams, dparams, pool, &io2), 24000u);
+-
+-  EXPECT_EQ(io2.frames.size(), io.frames.size());
+-  // >10 with broken patches
+-  EXPECT_LE(ButteraugliDistance(io, io2, cparams.ba_params,
+-                                /*distmap=*/nullptr, pool),
+-            2.0);
+-}
+-
+ }  // namespace
+ }  // namespace jxl
+-- 
+2.33.0
+

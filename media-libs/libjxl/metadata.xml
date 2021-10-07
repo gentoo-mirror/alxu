@@ -7,7 +7,6 @@
 	</maintainer>
 	<use>
 		<flag name="apng">APNG support</flag>
-		<flag name="gdk-pixbuf">gdk-pixbuf plugin</flag>
 		<flag name="viewers">Viewer programs</flag>
 	</use>
 </pkgmetadata>
