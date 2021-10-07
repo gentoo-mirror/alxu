@@ -1,9 +1,9 @@
 # Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit cmake
+inherit cmake-multilib
 
 DESCRIPTION="Performance-portable, length-agnostic SIMD with runtime dispatch"
 HOMEPAGE="https://github.com/google/highway"
@@ -14,11 +14,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="test"
 
-DEPEND="test? ( dev-cpp/gtest )"
+DEPEND="test? ( dev-cpp/gtest[${MULTILIB_USEDEP}] )"
 RDEPEND=""
 BDEPEND=""
 
-src_configure() {
+multilib_src_configure() {
 	local mycmakeargs=(
 		-DBUILD_TESTING=$(usex test ON OFF)
 		-DHWY_SYSTEM_GTEST=ON
