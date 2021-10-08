@@ -25,7 +25,7 @@ SLOT="0"
 if [[ ${PV} != 9999 ]]; then
 	KEYWORDS="~amd64 ~x86"
 fi
-IUSE="apng doc gif java jpeg +man openexr static-libs test viewers"
+IUSE="apng doc gif java +jpeg +man openexr static-libs test viewers"
 
 RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 	dev-cpp/highway[${MULTILIB_USEDEP}]
