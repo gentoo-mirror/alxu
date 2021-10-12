@@ -55,7 +55,7 @@ DEPEND="${RDEPEND}
 
 PATCHES=(
 	"${FILESDIR}/system-lcms.patch"
-	"${FILESDIR}/roundtripanimationpatches-ifdef-gif.patch"
+	"${FILESDIR}/roundtripanimationpatches-ifdef-gif-9999.patch"
 )
 
 src_prepare() {
@@ -73,35 +73,28 @@ multilib_src_configure() {
 		-DJPEGXL_ENABLE_COVERAGE=OFF
 		-DJPEGXL_ENABLE_EXAMPLES=OFF
 		-DJPEGXL_ENABLE_FUZZERS=OFF
-		-DJPEGXL_ENABLE_JNI=$(usex java ON OFF)
+		-DJPEGXL_ENABLE_JNI=$(multilib_native_usex java ON OFF)
 		-DJPEGXL_ENABLE_MANPAGES=$(multilib_native_usex man ON OFF)
 		-DJPEGXL_ENABLE_OPENEXR=$(usex openexr ON OFF)
 		-DJPEGXL_ENABLE_PLUGINS=OFF
 		-DJPEGXL_ENABLE_SJPEG=OFF
 		-DJPEGXL_ENABLE_SKCMS=OFF
+		-DJPEGXL_ENABLE_TCMALLOC=OFF
 		-DJPEGXL_ENABLE_VIEWERS=$(multilib_native_usex viewers ON OFF)
-		-DJPEGXL_FORCE_SYSTEM_GTEST=ON
 		-DJPEGXL_FORCE_SYSTEM_BROTLI=ON
+		-DJPEGXL_FORCE_SYSTEM_GTEST=ON
 		-DJPEGXL_FORCE_SYSTEM_HWY=ON
 		-DJPEGXL_FORCE_SYSTEM_LCMS=ON
 		-DJPEGXL_WARNINGS_AS_ERRORS=OFF
 
 		$(cmake_use_find_package apng PNG)
 		$(cmake_use_find_package apng ZLIB)
-		-DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=$(! multilib_is_native_abi || use doc || echo ON)
+		-DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=$(multilib_native_usex doc OFF ON)
 		$(cmake_use_find_package gif GIF)
 		$(cmake_use_find_package jpeg JPEG)
 	)
 
 	cmake_src_configure
-}
-
-multilib_src_test() {
-	# RobustStatisticsTest: https://github.com/libjxl/libjxl/issues/698
-	local myctestargs=(
-		-E '^RobustStatisticsTest\.'
-	)
-	cmake_src_test
 }
 
 multilib_src_install() {
