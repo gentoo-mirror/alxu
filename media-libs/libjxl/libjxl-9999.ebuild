@@ -55,7 +55,6 @@ DEPEND="${RDEPEND}
 
 PATCHES=(
 	"${FILESDIR}/system-lcms.patch"
-	"${FILESDIR}/roundtripanimationpatches-ifdef-gif-9999.patch"
 )
 
 src_prepare() {
