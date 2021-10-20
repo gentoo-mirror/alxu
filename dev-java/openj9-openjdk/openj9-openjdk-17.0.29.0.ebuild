@@ -27,7 +27,7 @@ fi
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap +pch selinux source systemtap"
+IUSE="alsa cups custom-optimization ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap +pch selinux source systemtap"
 
 COMMON_DEPEND="
 	media-libs/freetype:2=
@@ -80,7 +80,10 @@ DEPEND="
 	javafx? ( dev-java/openjfx:${SLOT}= )
 	|| (
 		virtual/jdk:${SLOT}
-		virtual/jdk:$((SLOT-1))
+		dev-java/openj9-openjdk-bin:${SLOT}
+		dev-java/openj9-openjdk:${SLOT}
+		dev-java/openjdk-bin:${SLOT}
+		dev-java/openjdk:${SLOT}
 	)
 "
 
@@ -116,7 +119,46 @@ pkg_pretend() {
 pkg_setup() {
 	openjdk_check_requirements
 	java-vm-2_pkg_setup
-	java-pkg-2_pkg_setup
+
+	JAVA_PKG_WANT_BUILD_VM="openj9-openjdk-${SLOT} openj9-openjdk-bin-${SLOT} openjdk-${SLOT} openjdk-bin-${SLOT}"
+	JAVA_PKG_WANT_SOURCE="${SLOT}"
+	JAVA_PKG_WANT_TARGET="${SLOT}"
+
+	# The nastiness below is necessary while the gentoo-vm USE flag is
+	# masked. First we call java-pkg-2_pkg_setup if it looks like the
+	# flag was unmasked against one of the possible build VMs. If not,
+	# we try finding one of them in their expected locations. This would
+	# have been slightly less messy if openjdk-bin had been installed to
+	# /opt/${PN}-${SLOT} or if there was a mechanism to install a VM env
+	# file but disable it so that it would not normally be selectable.
+
+	local vm
+	for vm in ${JAVA_PKG_WANT_BUILD_VM}; do
+		if [[ -d ${EPREFIX}/usr/lib/jvm/${vm} ]]; then
+			java-pkg-2_pkg_setup
+			return
+		fi
+	done
+
+	if [[ ${MERGE_TYPE} != binary ]]; then
+		if [[ -z ${JDK_HOME} ]]; then
+			for slot in ${SLOT} $((SLOT-1)); do
+				for variant in openj9- ''; do
+					if has_version --host-root dev-java/${variant}openjdk:${slot}; then
+						JDK_HOME=${EPREFIX}/usr/$(get_libdir)/${variant}openjdk-${slot}
+						break
+					elif has_version --host-root dev-java/${variant}openjdk-bin:${slot}; then
+						JDK_HOME=$(best_version --host-root dev-java/${variant}openjdk-bin:${slot})
+						JDK_HOME=${JDK_HOME#*/}
+						JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
+						break
+					fi
+				done
+			done
+		fi
+		[[ -n ${JDK_HOME} ]] || die "Build VM not found!"
+		export JDK_HOME
+	fi
 }
 
 src_unpack() {
@@ -150,8 +192,10 @@ src_prepare() {
 			   -e '/^OPENJ9_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
 			   -e '/^OPENJ9_TAG :=/s/:=.*/:= '${OPENJ9_P}/ \
 			   -e '/^OPENJ9OMR_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
-			   closed/OpenJ9.gmk
+			   closed/OpenJ9.gmk || die
 	fi
+
+	find openj9/ omr/ -name CMakeLists.txt -exec grep -l 'set(OMR_WARNINGS_AS_ERRORS ON' {} + | xargs sed -i -e '/set(OMR_WARNINGS_AS_ERRORS ON/s/ON/OFF/' || die
 
 	chmod +x configure || die
 }
@@ -159,6 +203,8 @@ src_prepare() {
 src_configure() {
 	# Work around stack alignment issue, bug #647954. in case we ever have x86
 	use x86 && append-flags -mincoming-stack-boundary=2
+
+	use custom-optimization || filter-flags '-O*'
 
 	# Enabling full docs appears to break doc building. If not
 	# explicitly disabled, the flag will get auto-enabled if pandoc and
@@ -221,14 +267,21 @@ src_configure() {
 }
 
 src_compile() {
+	local mycmakeargsx=(
+		"-DCMAKE_C_FLAGS='${CFLAGS}'"
+		"-DJ9JIT_EXTRA_CFLAGS='${CFLAGS}'"
+		"-DCMAKE_CXX_FLAGS='${CXXFLAGS}'"
+		"-DJ9JIT_EXTRA_CXXFLAGS='${CXXFLAGS}'"
+		"-DCMAKE_EXE_LINKER_FLAGS='${LDFLAGS}'"
+		-DOMR_WARNINGS_AS_ERRORS=OFF
+	)
 	local myemakeargs=(
 		JOBS=$(makeopts_jobs)
-		# https://github.com/ibmruntimes/openj9-openjdk-jdk14/issues/72
-		#LOG=debug
+		LOG=debug
 		$(usex doc docs '')
 		$(usex jbootstrap bootcycle-images product-images)
 
-		EXTRA_CMAKE_ARGS="-DOMR_WARNINGS_AS_ERRORS=OFF"
+		EXTRA_CMAKE_ARGS="${mycmakeargsx[*]}"
 	)
 	emake "${myemakeargs[@]}" -j1 #nowarn
 }
@@ -285,7 +338,7 @@ pkg_postinst() {
 	if use gentoo-vm ; then
 		ewarn "WARNING! You have enabled the gentoo-vm USE flag, making this JDK"
 		ewarn "recognised by the system. This will almost certainly break"
-		ewarn "many java ebuilds as they are not ready for openjdk-11"
+		ewarn "many java ebuilds as they are not ready for openjdk-${SLOT}"
 	else
 		ewarn "The experimental gentoo-vm USE flag has not been enabled so this JDK"
 		ewarn "will not be recognised by the system. For example, simply calling"
