@@ -3,10 +3,10 @@
 
 EAPI=6
 
-inherit autotools check-reqs flag-o-matic java-pkg-2 java-vm-2 multiprocessing pax-utils toolchain-funcs versionator
+inherit check-reqs eapi7-ver flag-o-matic java-pkg-2 java-vm-2 multiprocessing pax-utils toolchain-funcs
 
-SLOT="$(get_major_version)"
-OPENJ9_PV="$(get_version_component_range 2-4)"
+SLOT="$(ver_cut 1)"
+OPENJ9_PV="$(ver_cut 2-4)"
 OPENJ9_P=openj9-${OPENJ9_PV}
 
 DESCRIPTION="Open source implementation of the Java programming language"
