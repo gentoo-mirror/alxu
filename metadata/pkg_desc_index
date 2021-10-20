@@ -8,7 +8,7 @@ app-text/evince 40.4-r1: Simple document viewer for GNOME
 app-text/pdfsizeopt 9999: PDF file size optimizer
 app-text/zathura 0.4.8 9999: A highly customizable and functional document viewer
 dev-cpp/highway 0.14.2: Performance-portable, length-agnostic SIMD with runtime dispatch
-dev-java/openj9-openjdk 11.0.27.1 16.0.27.1: Open source implementation of the Java programming language
+dev-java/openj9-openjdk 11.0.29.0 17.0.29.0: Open source implementation of the Java programming language
 dev-java/openj9-openjdk-bin 11.0.12.7.0.27.0 11.0.12.7.0.27.1 16.0.2.7.0.27.0 16.0.2.7.0.27.1: Prebuilt IBM Semeru JDK binaries provided by IBM
 dev-java/openj9-openjdk-jre-bin 11.0.12.7.0.27.0 11.0.12.7.0.27.1 16.0.2.7.0.27.0 16.0.2.7.0.27.1: Prebuilt IBM Semeru JRE binaries provided by IBM
 dev-libs/girara 0.3.6: UI library that focuses on simplicity and minimalism
