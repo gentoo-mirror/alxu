@@ -1,9 +1,9 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=8
 
-inherit vcs-snapshot udev user
+inherit vcs-snapshot udev
 
 DESCRIPTION="Comprehensive list of udev rules to connect to android devices"
 HOMEPAGE="https://github.com/M0Rf30/android-udev-rules"
@@ -14,15 +14,13 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND="virtual/udev"
-DEPEND="${RDEPEND}"
+RDEPEND="
+	acct-group/adbusers
+	virtual/udev
+"
 
 src_install() {
 	udev_dorules 51-android.rules
-}
-
-pkg_setup() {
-	enewgroup adbusers
 }
 
 pkg_postinst() {
