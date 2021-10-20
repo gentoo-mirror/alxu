@@ -1,3 +1,4 @@
+acct-group/adbusers 0: Android Debug Bridge user group
 app-admin/keepassxc 2.6.6-r1 9999: KeePassXC - KeePass Cross-platform Community Edition
 app-arch/7-zip 21.03_beta-r1: File archiver with a high compression ratio
 app-arch/precomp-cpp 0.4.7: Precomp, C++ version - further compress already compressed files
@@ -15,7 +16,7 @@ dev-libs/girara 0.3.6: UI library that focuses on simplicity and minimalism
 dev-libs/libdwarf 0.2.0: The DWARF Debugging Information Format
 dev-libs/openssl 1.1.1l-r2 3.0.0-r1: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
 dev-qt/qtgui 5.15.2-r13: The GUI module and platform plugins for the Qt5 framework
-dev-util/android-udev-rules 20210501: Comprehensive list of udev rules to connect to android devices
+dev-util/android-udev-rules 20210501-r1: Comprehensive list of udev rules to connect to android devices
 dev-util/binaryen 102: Compiler and toolchain infrastructure library for WebAssembly
 dev-util/pmbootstrap 1.35.0: Sophisticated chroot/build/flash tool to develop and install postmarketOS
 dev-util/wabt 1.0.24: The WebAssembly Binary Toolkit
