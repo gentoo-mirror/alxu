@@ -3,11 +3,11 @@
 
 EAPI=8
 
-inherit vcs-snapshot udev
+inherit udev
 
 DESCRIPTION="Comprehensive list of udev rules to connect to android devices"
 HOMEPAGE="https://github.com/M0Rf30/android-udev-rules"
-SRC_URI="https://github.com/M0Rf30/android-udev-rules/archive/${PV}.tar.gz -> ${P}.tar.bz2"
+SRC_URI="https://github.com/M0Rf30/android-udev-rules/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
