@@ -195,7 +195,7 @@ src_prepare() {
 			   closed/OpenJ9.gmk || die
 	fi
 
-	find openj9/ omr/ -name CMakeLists.txt -exec grep -l 'set(OMR_WARNINGS_AS_ERRORS ON' {} + | xargs sed -i -e '/set(OMR_WARNINGS_AS_ERRORS ON/s/ON/OFF/' || die
+	find openj9/ omr/ -name CMakeLists.txt -exec sed -i -e '/set(OMR_WARNINGS_AS_ERRORS ON/s/ON/OFF/' {} + || die
 
 	chmod +x configure || die
 }
