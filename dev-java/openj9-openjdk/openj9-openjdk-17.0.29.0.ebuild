@@ -79,7 +79,6 @@ DEPEND="
 	x11-libs/libXtst
 	javafx? ( dev-java/openjfx:${SLOT}= )
 	|| (
-		virtual/jdk:${SLOT}
 		dev-java/openj9-openjdk-bin:${SLOT}
 		dev-java/openj9-openjdk:${SLOT}
 		dev-java/openjdk-bin:${SLOT}
@@ -89,11 +88,7 @@ DEPEND="
 
 REQUIRED_USE="javafx? ( alsa !headless-awt )"
 
-if [[ ${OPENJ9_PV} == 9999 ]]; then
-	S="${WORKDIR}/openj9-openjdk-jdk${SLOT}"
-else
-	S="${WORKDIR}/openj9-openjdk-jdk${SLOT}-${OPENJ9_PV}-release"
-fi
+S="${WORKDIR}/openj9-openjdk-jdk${SLOT}-${OPENJ9_PV}-release"
 
 # The space required to build varies wildly depending on USE flags,
 # ranging from 3GB to 16GB. This function is certainly not exact but
@@ -112,7 +107,6 @@ pkg_pretend() {
 	openjdk_check_requirements
 	if [[ ${MERGE_TYPE} != binary ]]; then
 		has ccache ${FEATURES} && die "FEATURES=ccache doesn't work with ${PN}, bug #677876"
-		[[ $(gcc-major-version) == 11 ]] && die "gcc 11 hangs when optimizing exploded image"
 	fi
 }
 
@@ -195,7 +189,7 @@ src_prepare() {
 			   closed/OpenJ9.gmk || die
 	fi
 
-	find openj9/ omr/ -name CMakeLists.txt -exec grep -l 'set(OMR_WARNINGS_AS_ERRORS ON' {} + | xargs sed -i -e '/set(OMR_WARNINGS_AS_ERRORS ON/s/ON/OFF/' || die
+	find openj9/ omr/ -name CMakeLists.txt -exec sed -i -e '/set(OMR_WARNINGS_AS_ERRORS ON/s/ON/OFF/' {} + || die
 
 	chmod +x configure || die
 }
@@ -212,6 +206,7 @@ src_configure() {
 
 	local myconf=(
 		--disable-ccache
+		--disable-warnings-as-errors{,-omr,-openj9}
 		--enable-full-docs=no
 		--with-boot-jdk="${JDK_HOME}"
 		--with-extra-cflags="${CFLAGS}"
@@ -237,7 +232,6 @@ src_configure() {
 		--enable-headless-only=$(usex headless-awt yes no)
 		$(tc-is-clang && echo "--with-toolchain-type=clang")
 
-		--disable-warnings-as-errors{,-omr,-openj9}
 		--with-cmake
 		$(use_enable ddr)
 	)
