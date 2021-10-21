@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-	<longdescription>
-		Java™ is the world's leading programming language and platform.
-		The code for Java is open source and available at OpenJDK™.
-	</longdescription>
-	<slots>
-		<slot name="11">Java™ version 11</slot>
-	</slots>
+	<maintainer type="person">
+		<email>alex_y_xu@yahoo.ca</email>
+		<name>Alex Xu (Hello71)</name>
+	</maintainer>
 	<use>
 		<flag name="ddr">Enable Direct Dump Reader</flag>
 		<flag name="custom-optimization">Override OpenJDK and OpenJ9 per-module optimization flags</flag>
