@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit java-vm-2 toolchain-funcs versionator
+inherit eapi7-ver java-vm-2 toolchain-funcs
 
 abi_uri() {
 	echo "${2-$1}? (
@@ -11,9 +11,9 @@ abi_uri() {
 	)"
 }
 
-JDK_PV=$(get_version_component_range 1-3)+$(get_version_component_range 4)
-DL_PV=${JDK_PV}_openj9-$(get_version_component_range 5-7)
-SLOT=$(get_major_version)
+JDK_PV=$(ver_cut 1-3)+$(ver_cut 4)
+DL_PV=${JDK_PV}_openj9-$(ver_cut 5-7)
+SLOT=$(ver_cut 1)
 
 SRC_URI="
 	$(abi_uri aarch64 arm64)
