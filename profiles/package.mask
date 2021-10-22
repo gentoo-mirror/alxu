@@ -1,2 +1,5 @@
 # https://github.com/pts/pdfsizeopt/issues/139
 app-text/pdfsizeopt
+
+# not officially supported upstream
+=dev-java/openj9-openjdk-17.0.29.0
