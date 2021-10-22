@@ -23,7 +23,7 @@ SRC_URI="
 "
 
 DESCRIPTION="Prebuilt IBM Semeru JRE binaries provided by IBM"
-HOMEPAGE="https://adoptopenjdk.net"
+HOMEPAGE="https://developer.ibm.com/languages/java/semeru-runtimes/"
 LICENSE="GPL-2-with-classpath-exception"
 KEYWORDS="~amd64 ~arm64 ~ppc64 ~s390"
 IUSE="alsa cups +gentoo-vm headless-awt selinux"

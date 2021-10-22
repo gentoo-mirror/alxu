@@ -9,8 +9,8 @@ SLOT="$(ver_cut 1)"
 OPENJ9_PV="$(ver_cut 2-4)"
 OPENJ9_P=openj9-${OPENJ9_PV}
 
-DESCRIPTION="Open source implementation of the Java programming language"
-HOMEPAGE="https://openjdk.java.net"
+DESCRIPTION="Extensions for OpenJDK for Eclipse OpenJ9"
+HOMEPAGE="https://www.eclipse.org/openj9/"
 if [[ ${OPENJ9_PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/ibmruntimes/openj9-openjdk-jdk${SLOT}.git"
