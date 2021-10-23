@@ -1,7 +1,7 @@
 DEFINED_PHASES=-
 DESCRIPTION=Virtual for Java Runtime Environment (JRE)
 EAPI=7
-KEYWORDS=~amd64 ~arm ~arm64 ~ppc64
+KEYWORDS=~amd64 ~arm64 ~ppc64
 RDEPEND=|| ( dev-java/openj9-openjdk-jre-bin:16[gentoo-vm(+)] virtual/jdk:16 )
 SLOT=16
-_md5_=c50c8f25f4bb879680914896a76493c7
+_md5_=c301a6f30565baa27c05af8d6492c357
