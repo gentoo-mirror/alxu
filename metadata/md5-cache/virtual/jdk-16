@@ -1,7 +1,7 @@
 DEFINED_PHASES=-
 DESCRIPTION=Virtual for Java Development Kit (JDK)
 EAPI=7
-KEYWORDS=~amd64 ~arm ~arm64 ~ppc64
-RDEPEND=|| ( dev-java/openj9-openjdk-bin:16[gentoo-vm(+)] dev-java/openj9-openjdk:16[gentoo-vm(+)] )
+KEYWORDS=~amd64 ~arm64 ~ppc64
+RDEPEND=|| ( dev-java/openj9-openjdk-bin:16[gentoo-vm(+)] )
 SLOT=16
-_md5_=79332cd5714d47278b2e90abac73ff6c
+_md5_=96607778eb51a3c1da2f6c95b7e9b5ab
