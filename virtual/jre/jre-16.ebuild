@@ -5,7 +5,7 @@ EAPI=7
 
 DESCRIPTION="Virtual for Java Runtime Environment (JRE)"
 SLOT="${PV}"
-KEYWORDS="~amd64 ~arm ~arm64 ~ppc64"
+KEYWORDS="~amd64 ~arm64 ~ppc64"
 
 RDEPEND="|| (
 		dev-java/openj9-openjdk-jre-bin:${SLOT}[gentoo-vm(+)]
