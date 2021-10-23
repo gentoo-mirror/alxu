@@ -1,9 +1,10 @@
 # Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=8
+EAPI=7
 
-inherit cmake-multilib
+CMAKE_ECLASS=cmake
+inherit cmake-multilib java-pkg-opt-2
 
 DESCRIPTION="JPEG XL image format reference implementation"
 HOMEPAGE="https://github.com/libjxl/libjxl"
@@ -35,7 +36,7 @@ RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 		sys-libs/zlib[${MULTILIB_USEDEP}]
 	)
 	gif? ( media-libs/giflib[${MULTILIB_USEDEP}] )
-	java? ( virtual/jre:* )
+	java? ( >=virtual/jre-1.8:* )
 	jpeg? ( virtual/jpeg[${MULTILIB_USEDEP}] )
 	openexr? ( media-libs/openexr:=[${MULTILIB_USEDEP}] )
 	viewers? (
@@ -50,7 +51,7 @@ BDEPEND="
 "
 DEPEND="${RDEPEND}
 	test? ( dev-cpp/gtest[${MULTILIB_USEDEP}] )
-	java? ( virtual/jdk:* )
+	java? ( >=virtual/jdk-1.8:* )
 "
 
 PATCHES=(
@@ -63,6 +64,7 @@ src_prepare() {
 		ln -sv ../../lodepng-${LODEPNG_COMMIT} third_party/lodepng || die
 	fi
 	cmake_src_prepare
+	java-pkg-opt-2_src_prepare
 }
 
 multilib_src_configure() {
@@ -100,5 +102,8 @@ multilib_src_install() {
 	cmake_src_install
 	if ! use static-libs; then
 		rm "${ED}"/usr/$(get_libdir)/libjxl{,_dec}.a || die
+	fi
+	if use java && multilib_is_native_abi; then
+		java-pkg_doso tools/libjxl_jni.so
 	fi
 }
