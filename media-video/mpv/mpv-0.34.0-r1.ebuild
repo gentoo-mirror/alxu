@@ -16,7 +16,7 @@ HOMEPAGE="https://mpv.io/ https://github.com/mpv-player/mpv"
 
 if [[ ${PV} != *9999* ]]; then
 	SRC_URI="https://github.com/mpv-player/mpv/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~x86 ~amd64-linux"
+	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~riscv ~x86 ~amd64-linux"
 	DOCS=( RELEASE_NOTES )
 else
 	EGIT_REPO_URI="https://github.com/mpv-player/mpv.git"
@@ -71,7 +71,7 @@ COMMON_DEPEND="
 		>=media-libs/libdvdnav-4.2.0:=
 		>=media-libs/libdvdread-4.1.0:=
 	)
-	egl? ( media-libs/mesa[egl,gbm(-)?,wayland(-)?] )
+	egl? ( media-libs/mesa[egl(+),gbm(+)?,wayland(-)?] )
 	gamepad? ( media-libs/libsdl2 )
 	iconv? (
 		virtual/libiconv
@@ -93,7 +93,7 @@ COMMON_DEPEND="
 	vaapi? ( x11-libs/libva:=[drm?,X?,wayland?] )
 	vdpau? ( x11-libs/libvdpau )
 	vulkan? (
-		>=media-libs/libplacebo-2.72.2:=[vulkan]
+		media-libs/libplacebo:=[vulkan]
 		media-libs/shaderc
 	)
 	wayland? (
@@ -130,8 +130,6 @@ BDEPEND="dev-python/docutils
 	virtual/pkgconfig
 	test? ( >=dev-util/cmocka-1.0.0 )
 "
-
-PATCHES=( "${FILESDIR}/mpv-libplacebo-3.patch" )
 
 pkg_setup() {
 	use lua && lua-single_pkg_setup
@@ -338,7 +336,7 @@ pkg_postinst() {
 		elog "X11 or Mac OS Aqua. Consider enabling the 'opengl' USE flag."
 	fi
 
-	optfeature "URL support" net-misc/youtube-dl
+	optfeature "URL support" net-misc/yt-dlp
 
 	xdg_icon_cache_update
 	xdg_desktop_database_update
