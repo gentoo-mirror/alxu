@@ -27,7 +27,6 @@ mail-client/astroid 9999: lightweight graphical threads-with-tags style email cl
 media-libs/libjxl 0.6 9999: JPEG XL image format reference implementation
 media-libs/svt-av1 0.8.7 9999: Scalable Video Technology for AV1 (SVT-AV1 Encoder and Decoder)
 media-video/ffmpeg 4.4-r2 4.4.1-r2 9999: Complete solution to record/convert/stream audio and video. Includes libavcodec
-media-video/mpv 0.34.0-r1: Media player based on MPlayer and mplayer2
 media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 net-mail/notmuch 0.34-r1: Thread-based e-mail indexer, supporting quick search and tagging
