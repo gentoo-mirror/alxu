@@ -1,11 +1,3 @@
-# Depends on vulnerable old version of icedtea-web #711392
-# new version is not packaged yet
-# package/useflag is not going away anytime soon,
-# just masked. unmask as needed.
-dev-java/openj9-openjdk nsplugin webstart
-dev-java/openj9-openjdk-bin nsplugin webstart
-dev-java/openj9-openjdk-jre-bin nsplugin webstart
-
 # java.nio.file.NoSuchFileException: /tmp/portage/dev-java/openj9-openjdk-14.0.21.0/temp/j9nls.jar2321438573006199763.jar -> /tmp/portage/dev-java/openj9-openjdk-14.0.21.0/work/openj9-openjdk-jdk14-openj9-0.21.0/build/linux-x86_64-server-release/bootcycle-build/support/j9tools/j9nls.jar
 #        at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92)
 #        at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
@@ -17,7 +9,5 @@ dev-java/openj9-openjdk-jre-bin nsplugin webstart
 #        at jdk.jartool/sun.tools.jar.Main.main(Main.java:1649)
 dev-java/openj9-openjdk jbootstrap
 
-# openjfx 14 is not implemented yet
+# not implemented yet
 dev-java/openj9-openjdk javafx
-dev-java/openjdk javafx
-dev-java/openjdk-bin javafx
