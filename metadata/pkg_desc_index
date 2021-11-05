@@ -5,6 +5,7 @@ app-arch/precomp-cpp 0.4.7: Precomp, C++ version - further compress already comp
 app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-crypt/openpgp-keys-runescape 0: OpenPGP keys used by Jagex to sign RuneScape packages for Ubuntu
 app-emulation/dxvk 1.9.2: Vulkan-based implementation of D3D9, D3D10 and D3D11 for Linux / Wine
+app-misc/ca-certificates 20211016.3.72: Common CA Certificates PEM files
 app-text/evince 40.4-r1: Simple document viewer for GNOME
 app-text/pdfsizeopt 9999: PDF file size optimizer
 app-text/zathura 0.4.8 9999: A highly customizable and functional document viewer
@@ -12,7 +13,6 @@ dev-cpp/highway 0.14.2: Performance-portable, length-agnostic SIMD with runtime 
 dev-java/openj9-openjdk 11.0.29.0 17.0.29.0: Extensions for OpenJDK for Eclipse OpenJ9
 dev-java/openj9-openjdk-bin 11.0.13.8.0.29.0 16.0.2.7.0.27.0 16.0.2.7.0.27.1: Prebuilt IBM Semeru JDK binaries provided by IBM
 dev-java/openj9-openjdk-jre-bin 11.0.13.8.0.29.0 16.0.2.7.0.27.0 16.0.2.7.0.27.1: Prebuilt IBM Semeru JRE binaries provided by IBM
-dev-libs/girara 0.3.6: UI library that focuses on simplicity and minimalism
 dev-libs/libdwarf 0.2.0: The DWARF Debugging Information Format
 dev-libs/openssl 3.0.0-r1: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
 dev-qt/qtgui 5.15.2-r13: The GUI module and platform plugins for the Qt5 framework
@@ -27,9 +27,11 @@ mail-client/astroid 9999: lightweight graphical threads-with-tags style email cl
 media-libs/libjxl 0.6 9999: JPEG XL image format reference implementation
 media-libs/svt-av1 0.8.7 9999: Scalable Video Technology for AV1 (SVT-AV1 Encoder and Decoder)
 media-video/ffmpeg 4.4-r2 4.4.1-r2 9999: Complete solution to record/convert/stream audio and video. Includes libavcodec
-media-video/mpv 0.33.1-r2: Media player based on MPlayer and mplayer2
+media-video/mpv 0.34.0-r1: Media player based on MPlayer and mplayer2
 media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
+net-mail/notmuch 0.34-r1: Thread-based e-mail indexer, supporting quick search and tagging
+net-misc/yt-dlp 2021.10.22-r3: youtube-dl fork with additional features and fixes
 sci-calculators/units 2.21-r1: Unit conversion program
 virtual/7z 0: Virtual for /usr/bin/7z
 virtual/jdk 11-r3 16 17-r1: Virtual for Java Development Kit (JDK)
