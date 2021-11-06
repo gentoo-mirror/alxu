@@ -24,7 +24,7 @@ games-rpg/runescape-launcher 2.2.9-r3: Official RuneScape NXT client launcher
 gui-apps/gammastep 2.0.7-r1: A screen color temperature adjusting software
 gui-apps/wshowkeys 9999: Displays keys being pressed on a Wayland session
 mail-client/astroid 9999: lightweight graphical threads-with-tags style email client for notmuch
-media-libs/libjxl 0.6 9999: JPEG XL image format reference implementation
+media-libs/libjxl 0.6.1 9999: JPEG XL image format reference implementation
 media-libs/svt-av1 0.8.7 9999: Scalable Video Technology for AV1 (SVT-AV1 Encoder and Decoder)
 media-video/ffmpeg 4.4-r2 4.4.1-r2 9999: Complete solution to record/convert/stream audio and video. Includes libavcodec
 media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
