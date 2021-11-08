@@ -15,7 +15,7 @@ dev-java/openj9-openjdk-bin 11.0.13.8.0.29.0 16.0.2.7.0.27.0 16.0.2.7.0.27.1: Pr
 dev-java/openj9-openjdk-jre-bin 11.0.13.8.0.29.0 16.0.2.7.0.27.0 16.0.2.7.0.27.1: Prebuilt IBM Semeru JRE binaries provided by IBM
 dev-libs/libdwarf 0.2.0: The DWARF Debugging Information Format
 dev-libs/openssl 3.0.0-r1: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
-dev-qt/qtgui 5.15.2-r13: The GUI module and platform plugins for the Qt5 framework
+dev-qt/qtgui 5.15.2-r15: The GUI module and platform plugins for the Qt5 framework
 dev-util/android-udev-rules 20210501-r1: Comprehensive list of udev rules to connect to android devices
 dev-util/binaryen 102: Compiler and toolchain infrastructure library for WebAssembly
 dev-util/pmbootstrap 1.35.0: Sophisticated chroot/build/flash tool to develop and install postmarketOS
