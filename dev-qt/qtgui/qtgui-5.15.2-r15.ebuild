@@ -3,12 +3,12 @@
 
 EAPI=8
 
-KDE_ORG_COMMIT=a4f9e56975fa6ab4a1f63a9b34a4d77b1cfe4acd
+KDE_ORG_COMMIT=c9fde86b0a2440133bc08f4811b6ca793be47f0a
 QT5_MODULE="qtbase"
 inherit qt5-build
 
 DESCRIPTION="The GUI module and platform plugins for the Qt5 framework"
-SLOT=5/$(ver_cut 1-3) # bug 707658
+SLOT=5/${QT5_PV} # bug 707658
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~riscv ~sparc ~x86"
@@ -17,6 +17,7 @@ fi
 IUSE="accessibility dbus egl eglfs evdev +gif gles2-only ibus jpeg
 	+libinput linuxfb +png tslib tuio +udev vnc vulkan wayland +X"
 REQUIRED_USE="
+	|| ( eglfs linuxfb vnc wayland X )
 	accessibility? ( dbus X )
 	eglfs? ( egl )
 	ibus? ( dbus )
@@ -29,22 +30,23 @@ RDEPEND="
 	=dev-qt/qtcore-${QT5_PV}*:5=
 	dev-util/gtk-update-icon-cache
 	media-libs/fontconfig
-	>=media-libs/freetype-2.6.1:2
-	>=media-libs/harfbuzz-1.6.0:=
-	media-libs/libglvnd
+	media-libs/freetype:2
+	media-libs/harfbuzz:=
 	sys-libs/zlib:=
 	dbus? ( =dev-qt/qtdbus-${QT5_PV}* )
 	eglfs? (
-		media-libs/mesa[gbm]
+		media-libs/mesa[gbm(+)]
 		x11-libs/libdrm
 	)
 	evdev? ( sys-libs/mtdev )
-	jpeg? ( virtual/jpeg:0 )
+	jpeg? ( virtual/jpeg )
+	gles2-only? ( media-libs/libglvnd )
+	!gles2-only? ( media-libs/libglvnd[X] )
 	libinput? (
 		dev-libs/libinput:=
-		>=x11-libs/libxkbcommon-0.5.0
+		x11-libs/libxkbcommon
 	)
-	png? ( media-libs/libpng:0= )
+	png? ( media-libs/libpng:= )
 	tslib? ( >=x11-libs/tslib-1.21 )
 	tuio? ( =dev-qt/qtnetwork-${QT5_PV}* )
 	udev? ( virtual/libudev:= )
@@ -54,8 +56,8 @@ RDEPEND="
 		x11-libs/libICE
 		x11-libs/libSM
 		x11-libs/libX11
-		>=x11-libs/libxcb-1.12:=[xkb]
-		>=x11-libs/libxkbcommon-0.5.0[X]
+		x11-libs/libxcb:=[xkb]
+		x11-libs/libxkbcommon[X]
 		x11-libs/xcb-util-image
 		x11-libs/xcb-util-keysyms
 		x11-libs/xcb-util-renderutil
@@ -64,6 +66,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	evdev? ( sys-kernel/linux-headers )
+	linuxfb? ( sys-kernel/linux-headers )
 	udev? ( sys-kernel/linux-headers )
 "
 PDEPEND="
