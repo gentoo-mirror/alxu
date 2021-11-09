@@ -30,7 +30,6 @@ media-video/ffmpeg 4.4-r2 4.4.1-r2 9999: Complete solution to record/convert/str
 media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 net-mail/notmuch 0.34-r1: Thread-based e-mail indexer, supporting quick search and tagging
-net-misc/yt-dlp 2021.10.22-r3: youtube-dl fork with additional features and fixes
 sci-calculators/units 2.21-r1: Unit conversion program
 virtual/7z 0: Virtual for /usr/bin/7z
 virtual/jdk 11-r3 16 17-r1: Virtual for Java Development Kit (JDK)
