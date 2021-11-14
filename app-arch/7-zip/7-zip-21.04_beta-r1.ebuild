@@ -48,15 +48,17 @@ src_compile() {
 	local myemakeargs=(
 		CC="$(tc-getCC) ${CFLAGS} ${LDFLAGS}"
 		CXX="$(tc-getCXX) ${CXXFLAGS} ${LDFLAGS}"
-		MY_ASM=uasm
 		CFLAGS_WARN_WALL="-Wall -Wextra"
 	)
-	if use amd64; then
-		myemakeargs+=(IS_X64=1 USE_ASM=1)
-	elif use arm64; then
-		myemakeargs+=(IS_ARM64=1 USE_ASM=1)
-	elif use x86; then
-		myemakeargs+=(IS_X86=1 USE_ASM=1)
+	if use asm; then
+		myemakeargs+=(USE_ASM=1 MY_ASM=uasm)
+		if use amd64; then
+			myemakeargs+=(IS_X64=1)
+		elif use arm64; then
+			myemakeargs+=(IS_ARM64=1)
+		elif use x86; then
+			myemakeargs+=(IS_X86=1)
+		fi
 	fi
 	mkdir -p b/g || die
 	emake -f ../../cmpl_gcc.mak "${myemakeargs[@]}"
