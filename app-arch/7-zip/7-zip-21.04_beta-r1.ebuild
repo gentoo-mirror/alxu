@@ -15,10 +15,16 @@ SRC_URI="https://7-zip.org/a/7z${MY_PV}-src.7z"
 LICENSE="LGPL-2.1+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
+IUSE="+asm"
 
-DEPEND=""
-RDEPEND="${DEPEND}"
-BDEPEND="|| ( virtual/7z app-arch/libarchive app-arch/unar )"
+BDEPEND="
+	|| ( virtual/7z app-arch/libarchive app-arch/unar )
+	asm? (
+		amd64? ( dev-lang/uasm )
+		arm64? ( dev-lang/uasm )
+		x86? ( dev-lang/uasm )
+	)
+"
 
 S=${WORKDIR}/7z${MY_PV}-src
 
@@ -38,8 +44,24 @@ src_unpack() {
 }
 
 src_compile() {
-	cd CPP/7zip/Bundles/Alone2
-	make -f ../../cmpl_gcc.mak
+	cd CPP/7zip/Bundles/Alone2 || die
+	local myemakeargs=(
+		CC="$(tc-getCC) ${CFLAGS} ${LDFLAGS}"
+		CXX="$(tc-getCXX) ${CXXFLAGS} ${LDFLAGS}"
+		CFLAGS_WARN_WALL="-Wall -Wextra"
+	)
+	if use asm; then
+		myemakeargs+=(USE_ASM=1 MY_ASM=uasm)
+		if use amd64; then
+			myemakeargs+=(IS_X64=1)
+		elif use arm64; then
+			myemakeargs+=(IS_ARM64=1)
+		elif use x86; then
+			myemakeargs+=(IS_X86=1)
+		fi
+	fi
+	mkdir -p b/g || die
+	emake -f ../../cmpl_gcc.mak "${myemakeargs[@]}"
 }
 
 src_install() {
