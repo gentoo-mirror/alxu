@@ -8,6 +8,7 @@ app-admin/keepassxc:ccache - Use dev-util/ccache to build keepassxc
 app-admin/keepassxc:keeshare - Enable KeeShare sharing integration
 app-admin/keepassxc:network - Enable network support
 app-admin/keepassxc:yubikey - Enable database unlocking via YubiKey.
+app-arch/7-zip:asm - Use assembly implementations (currently only amd64, arm64, x86)
 app-emulation/dxvk:d3d10 - Direct3D 10 support
 app-emulation/dxvk:d3d11 - Direct3D 11 support
 app-emulation/dxvk:d3d9 - Direct3D 9 support
