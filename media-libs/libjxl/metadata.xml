@@ -9,6 +9,6 @@
 		<flag name="apng">APNG support</flag>
 		<flag name="doc">Doxygen API documentation</flag>
 		<flag name="jpeg">Conversion from/to JPEG, including "reconstructed JPEG" files. If disabled, some JPEG XL files will not be decodable!</flag>
-		<flag name="viewers">Viewer programs</flag>
+		<flag name="qt5">Viewer programs</flag>
 	</use>
 </pkgmetadata>
