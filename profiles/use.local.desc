@@ -58,7 +58,7 @@ mail-client/astroid:terminal - Embedded terminal
 media-libs/libjxl:apng - APNG support
 media-libs/libjxl:doc - Doxygen API documentation
 media-libs/libjxl:jpeg - Conversion from/to JPEG, including "reconstructed JPEG" files. If disabled, some JPEG XL files will not be decodable!
-media-libs/libjxl:viewers - Viewer programs
+media-libs/libjxl:qt5 - Viewer programs
 media-video/ffmpeg:amr - Enables Adaptive Multi-Rate Audio support
 media-video/ffmpeg:amrenc - Enables Adaptive Multi-Rate Audio encoding support with media-libs/vo-amrwbenc.
 media-video/ffmpeg:appkit - Enables Apple AppKit framework

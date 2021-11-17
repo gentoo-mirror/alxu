@@ -8,5 +8,5 @@ KEYWORDS=~amd64 ~x86
 LICENSE=LGPL-2.1
 RDEPEND=sys-libs/zlib dwarfgen? ( virtual/libelf )
 SLOT=0
-SRC_URI=https://www.prevanders.net/libdwarf-0.2.0.tar.xz
+SRC_URI=https://www.prevanders.net/libdwarf-0.3.0.tar.xz
 _md5_=8735c3a7d4a8d591b2d35feeabe5bdfb
