@@ -32,6 +32,7 @@ elif [ "${PV%_p*}" != "${PV}" ] ; then # Snapshot
 else # Release
 	SRC_URI="https://ffmpeg.org/releases/${P/_/-}.tar.bz2"
 fi
+SRC_URI+=" https://www.alxu.ca/ffmpeg-libjxl.patch.xz"
 FFMPEG_REVISION="${PV#*_p}"
 
 SLOT="0/${FFMPEG_SUBSLOT}"
@@ -78,7 +79,7 @@ FFMPEG_FLAG_MAP=(
 		libv4l:libv4l2 pulseaudio:libpulse libdrm jack:libjack
 		# decoders
 		amr:libopencore-amrwb amr:libopencore-amrnb codec2:libcodec2 +dav1d:libdav1d fdk:libfdk-aac
-		jpeg2k:libopenjpeg bluray:libbluray gme:libgme gsm:libgsm
+		jpeg2k:libopenjpeg jpegxl:libjxl bluray:libbluray gme:libgme gsm:libgsm
 		libaribb24 mmal modplug:libmodplug opus:libopus libilbc librtmp ssh:libssh
 		speex:libspeex srt:libsrt svg:librsvg video_cards_nvidia:ffnvcodec
 		vorbis:libvorbis vpx:libvpx zvbi:libzvbi
@@ -219,6 +220,7 @@ RDEPEND="
 	)
 	jack? ( virtual/jack[${MULTILIB_USEDEP}] )
 	jpeg2k? ( >=media-libs/openjpeg-2:2[${MULTILIB_USEDEP}] )
+	jpegxl? ( media-libs/libjxl[${MULTILIB_USEDEP}] )
 	libaom? ( >=media-libs/libaom-1.0.0-r1:=[${MULTILIB_USEDEP}] )
 	libaribb24? ( >=media-libs/aribb24-1.0.3-r2[${MULTILIB_USEDEP}] )
 	libass? ( >=media-libs/libass-0.10.2:=[${MULTILIB_USEDEP}] )
@@ -323,6 +325,7 @@ S=${WORKDIR}/${P/_/-}
 
 PATCHES=(
 	"${FILESDIR}"/chromium-r1.patch
+	"${WORKDIR}"/ffmpeg-libjxl.patch
 )
 
 MULTILIB_WRAPPED_HEADERS=(
