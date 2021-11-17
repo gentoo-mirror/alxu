@@ -24,9 +24,9 @@ fi
 LICENSE="Apache-2.0"
 SLOT="0"
 if [[ ${PV} != 9999 ]]; then
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~sparc ~x86 ~amd64-linux ~x86-linux"
 fi
-IUSE="apng doc gif java +jpeg +man openexr static-libs test viewers"
+IUSE="apng doc gif java +jpeg +man openexr qt5 static-libs test"
 
 RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 	dev-cpp/highway[${MULTILIB_USEDEP}]
@@ -39,7 +39,7 @@ RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 	java? ( >=virtual/jre-1.8:* )
 	jpeg? ( virtual/jpeg[${MULTILIB_USEDEP}] )
 	openexr? ( media-libs/openexr:=[${MULTILIB_USEDEP}] )
-	viewers? (
+	qt5? (
 		dev-qt/qtwidgets
 		dev-qt/qtx11extras
 	)
@@ -47,7 +47,7 @@ RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 BDEPEND="
 	doc? ( app-doc/doxygen )
 	man? ( app-text/asciidoc )
-	viewers? ( kde-frameworks/extra-cmake-modules )
+	qt5? ( kde-frameworks/extra-cmake-modules )
 "
 DEPEND="${RDEPEND}
 	test? ( dev-cpp/gtest[${MULTILIB_USEDEP}] )
@@ -82,7 +82,7 @@ multilib_src_configure() {
 		-DJPEGXL_ENABLE_SJPEG=OFF
 		-DJPEGXL_ENABLE_SKCMS=OFF
 		-DJPEGXL_ENABLE_TCMALLOC=OFF
-		-DJPEGXL_ENABLE_VIEWERS=$(multilib_native_usex viewers ON OFF)
+		-DJPEGXL_ENABLE_VIEWERS=$(multilib_native_usex qt5 ON OFF)
 		-DJPEGXL_FORCE_SYSTEM_BROTLI=ON
 		-DJPEGXL_FORCE_SYSTEM_GTEST=ON
 		-DJPEGXL_FORCE_SYSTEM_HWY=ON
