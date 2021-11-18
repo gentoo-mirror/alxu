@@ -23,6 +23,7 @@
 	<flag name="gpl">Build GPL code. Should be enabled unless you require LGPL binaries.</flag>
 	<flag name="hardcoded-tables">Use pre-calculated tables rather than calculating them on the fly.</flag>
 	<flag name="iec61883"> Support for FireWire DV/HDV input device using <pkg>media-libs/libiec61883</pkg>.</flag>
+	<flag name="jpegxl">Enables JPEG XL decoding via <pkg>media-libs/libjxl</pkg>.</flag>
 	<flag name="kvazaar">Enables <pkg>media-libs/kvazaar</pkg> based HEVC encoder.</flag>
 	<flag name="libaom">Enables <pkg>media-libs/libaom</pkg> based AV1 codec support.</flag>
 	<flag name="libaribb24">Enables ARIB text and caption decoding via <pkg>media-libs/aribb24</pkg>.</flag>
