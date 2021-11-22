@@ -4,7 +4,7 @@
 EAPI=7
 
 CMAKE_ECLASS=cmake
-inherit cmake-multilib java-pkg-opt-2
+inherit cmake-multilib java-pkg-opt-2 xdg-utils
 
 DESCRIPTION="JPEG XL image format reference implementation"
 HOMEPAGE="https://github.com/libjxl/libjxl"
@@ -12,12 +12,14 @@ HOMEPAGE="https://github.com/libjxl/libjxl"
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/libjxl/libjxl.git"
-	EGIT_SUBMODULES=(third_party/lodepng)
+	EGIT_SUBMODULES=(third_party/lodepng third_party/skcms)
 else
 	LODEPNG_COMMIT="8c6a9e30576f07bf470ad6f09458a2dcd7a6a84a"
+	SKCMS_COMMIT="64374756e03700d649f897dbd98c95e78c30c7da"
 	SRC_URI="
 		https://github.com/libjxl/libjxl/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 		https://github.com/lvandeve/lodepng/archive/${LODEPNG_COMMIT}.tar.gz -> lodepng-${LODEPNG_COMMIT}.tar.gz
+		https://skia.googlesource.com/skcms/+archive/${SKCMS_COMMIT}.tar.gz
 	"
 fi
 
@@ -26,7 +28,7 @@ SLOT="0/7"
 if [[ ${PV} != 9999 ]]; then
 	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~sparc ~x86 ~amd64-linux ~x86-linux"
 fi
-IUSE="apng doc gif java +jpeg +man openexr qt5 static-libs test"
+IUSE="apng doc gdk-pixbuf gif gimp java +jpeg +man openexr qt5 static-libs test"
 
 RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 	dev-cpp/highway[${MULTILIB_USEDEP}]
@@ -35,7 +37,9 @@ RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 		media-libs/libpng[${MULTILIB_USEDEP}]
 		sys-libs/zlib[${MULTILIB_USEDEP}]
 	)
+	gdk-pixbuf? ( x11-libs/gdk-pixbuf )
 	gif? ( media-libs/giflib[${MULTILIB_USEDEP}] )
+	gimp? ( media-gfx/gimp )
 	java? ( >=virtual/jre-1.8:* )
 	jpeg? ( virtual/jpeg[${MULTILIB_USEDEP}] )
 	openexr? ( media-libs/openexr:=[${MULTILIB_USEDEP}] )
@@ -59,6 +63,8 @@ src_prepare() {
 		rmdir third_party/lodepng
 		ln -sv ../../lodepng-${LODEPNG_COMMIT} third_party/lodepng || die
 	fi
+	use gdk-pixbuf || sed -i -e '/(gdk-pixbuf)/s/^/#/' plugins/CMakeLists.txt || die
+	use gimp || sed -i -e '/(gimp)/s/^/#/' plugins/CMakeLists.txt || die
 	cmake_src_prepare
 	java-pkg-opt-2_src_prepare
 }
@@ -73,16 +79,14 @@ multilib_src_configure() {
 		-DJPEGXL_ENABLE_JNI=$(multilib_native_usex java ON OFF)
 		-DJPEGXL_ENABLE_MANPAGES=$(multilib_native_usex man ON OFF)
 		-DJPEGXL_ENABLE_OPENEXR=$(usex openexr ON OFF)
-		-DJPEGXL_ENABLE_PLUGINS=OFF
+		-DJPEGXL_ENABLE_PLUGINS=ON # USE=gdk-pixbuf, USE=gimp handled in src_prepare
 		-DJPEGXL_ENABLE_SJPEG=OFF
-		-DJPEGXL_ENABLE_SKCMS=OFF
+		-DJPEGXL_ENABLE_SKCMS=ON
 		-DJPEGXL_ENABLE_TCMALLOC=OFF
 		-DJPEGXL_ENABLE_VIEWERS=$(multilib_native_usex qt5 ON OFF)
 		-DJPEGXL_FORCE_SYSTEM_BROTLI=ON
 		-DJPEGXL_FORCE_SYSTEM_GTEST=ON
 		-DJPEGXL_FORCE_SYSTEM_HWY=ON
-		-DJPEGXL_FORCE_SYSTEM_LCMS=ON
-		-DJPEGXL_WARNINGS_AS_ERRORS=OFF
 
 		$(cmake_use_find_package apng PNG)
 		$(cmake_use_find_package apng ZLIB)
@@ -102,4 +106,8 @@ multilib_src_install() {
 	if use java && multilib_is_native_abi; then
 		java-pkg_doso tools/libjxl_jni.so
 	fi
+}
+
+pkg_postinst() {
+	xdg_mimeinfo_database_update
 }
