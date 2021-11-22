@@ -55,6 +55,8 @@ gui-apps/gammastep:geoclue - Enable geolocation support.
 mail-client/astroid:embedded-editor - Embedded editor
 mail-client/astroid:plugins - Plugins
 mail-client/astroid:terminal - Embedded terminal
+media-gfx/gimp:heif - Enable support for ISO/IEC 23008-12:2017 HEIF files
+media-gfx/gimp:vector-icons - Enable support for vector icons (experimental)
 media-gfx/imagemagick:corefonts - Use media-fonts/corefonts which is required by some commands
 media-gfx/imagemagick:fpx - Enable media-libs/libfpx support
 media-gfx/imagemagick:hdri - Enable High Dynamic Range Images formats
@@ -67,6 +69,7 @@ media-gfx/imagemagick:q32 - Set quantum depth value to 32
 media-gfx/imagemagick:q8 - Set quantum depth value to 8
 media-libs/libjxl:apng - APNG support
 media-libs/libjxl:doc - Doxygen API documentation
+media-libs/libjxl:gdk-pixbuf - gdk-pixbuf plugin
 media-libs/libjxl:jpeg - Conversion from/to JPEG, including "reconstructed JPEG" files. If disabled, some JPEG XL files will not be decodable!
 media-libs/libjxl:qt5 - Viewer programs
 media-video/ffmpeg:amr - Enables Adaptive Multi-Rate Audio support
