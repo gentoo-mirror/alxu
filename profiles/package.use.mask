@@ -11,3 +11,6 @@ dev-java/openj9-openjdk jbootstrap
 
 # not implemented yet
 dev-java/openj9-openjdk javafx
+
+# dep errors on alpha/ia64/sparc, can't do profiles/arch mask in overlay
+media-libs/libjxl viewers

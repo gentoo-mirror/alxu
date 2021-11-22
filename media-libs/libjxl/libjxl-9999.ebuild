@@ -19,7 +19,7 @@ else
 	SRC_URI="
 		https://github.com/libjxl/libjxl/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 		https://github.com/lvandeve/lodepng/archive/${LODEPNG_COMMIT}.tar.gz -> lodepng-${LODEPNG_COMMIT}.tar.gz
-		https://skia.googlesource.com/skcms/+archive/${SKCMS_COMMIT}.tar.gz
+		https://skia.googlesource.com/skcms/+archive/${SKCMS_COMMIT}.tar.gz -> skcms-${SKCMS_COMMIT}.tar.gz
 	"
 fi
 
@@ -28,7 +28,7 @@ SLOT="0/7"
 if [[ ${PV} != 9999 ]]; then
 	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~sparc ~x86 ~amd64-linux ~x86-linux"
 fi
-IUSE="apng doc gdk-pixbuf gif gimp java +jpeg +man openexr qt5 static-libs test +tools"
+IUSE="apng doc gdk-pixbuf gif gimp java +jpeg +man openexr static-libs test +tools viewers"
 
 RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 	dev-cpp/highway[${MULTILIB_USEDEP}]
@@ -42,7 +42,7 @@ RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 	java? ( >=virtual/jre-1.8:* )
 	jpeg? ( virtual/jpeg[${MULTILIB_USEDEP}] )
 	openexr? ( media-libs/openexr:= )
-	qt5? (
+	viewers? (
 		dev-qt/qtwidgets
 		dev-qt/qtx11extras
 	)
@@ -50,7 +50,7 @@ RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 BDEPEND="
 	doc? ( app-doc/doxygen )
 	man? ( app-text/asciidoc )
-	qt5? ( kde-frameworks/extra-cmake-modules )
+	viewers? ( kde-frameworks/extra-cmake-modules )
 "
 DEPEND="${RDEPEND}
 	test? ( dev-cpp/gtest[${MULTILIB_USEDEP}] )
@@ -83,7 +83,7 @@ multilib_src_configure() {
 		-DJPEGXL_ENABLE_SJPEG=OFF
 		-DJPEGXL_ENABLE_SKCMS=ON
 		-DJPEGXL_ENABLE_TCMALLOC=OFF
-		-DJPEGXL_ENABLE_VIEWERS=$(multilib_native_usex qt5)
+		-DJPEGXL_ENABLE_VIEWERS=$(multilib_native_usex viewers)
 
 		-DCMAKE_DISABLE_FIND_PACKAGE_PNG=$(multilib_native_usex apng OFF ON)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=$(multilib_native_usex doc OFF ON)
