@@ -39,7 +39,7 @@ RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 	)
 	gdk-pixbuf? ( x11-libs/gdk-pixbuf )
 	gif? ( media-libs/giflib[${MULTILIB_USEDEP}] )
-	gimp? ( media-gfx/gimp )
+	gimp? ( media-gfx/gimp:0/2 )
 	java? ( >=virtual/jre-1.8:* )
 	jpeg? ( virtual/jpeg[${MULTILIB_USEDEP}] )
 	openexr? ( media-libs/openexr:=[${MULTILIB_USEDEP}] )
