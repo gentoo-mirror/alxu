@@ -85,7 +85,7 @@ multilib_src_configure() {
 		-DJPEGXL_ENABLE_TCMALLOC=OFF
 		-DJPEGXL_ENABLE_VIEWERS=$(multilib_native_usex qt5)
 
-		-DCMAKE_DISABLE_FIND_PACKAGE_PNG=$(multilib_native_usex png OFF ON)
+		-DCMAKE_DISABLE_FIND_PACKAGE_PNG=$(multilib_native_usex apng OFF ON)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=$(multilib_native_usex doc OFF ON)
 		-DCMAKE_DISABLE_FIND_PACKAGE_GIF=$(multilib_native_usex gif OFF ON)
 		-DCMAKE_DISABLE_FIND_PACKAGE_JPEG=$(multilib_native_usex jpeg OFF ON)
