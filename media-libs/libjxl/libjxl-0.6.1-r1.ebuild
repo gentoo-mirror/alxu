@@ -14,12 +14,12 @@ if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/libjxl/libjxl.git"
 	EGIT_SUBMODULES=(third_party/lodepng third_party/skcms)
 else
-	LODEPNG_COMMIT="8c6a9e30576f07bf470ad6f09458a2dcd7a6a84a"
+	LODEPNG_COMMIT="48e5364ef48ec2408f44c727657ac1b6703185f8"
 	SKCMS_COMMIT="64374756e03700d649f897dbd98c95e78c30c7da"
 	SRC_URI="
 		https://github.com/libjxl/libjxl/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 		https://github.com/lvandeve/lodepng/archive/${LODEPNG_COMMIT}.tar.gz -> lodepng-${LODEPNG_COMMIT}.tar.gz
-		https://skia.googlesource.com/skcms/+archive/${SKCMS_COMMIT}.tar.gz
+		https://skia.googlesource.com/skcms/+archive/${SKCMS_COMMIT}.tar.gz -> skcms-${LODEPNG_COMMIT}.tar.gz
 	"
 fi
 
@@ -28,7 +28,7 @@ SLOT="0/7"
 if [[ ${PV} != 9999 ]]; then
 	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~sparc ~x86 ~amd64-linux ~x86-linux"
 fi
-IUSE="apng doc gdk-pixbuf gif gimp java +jpeg +man openexr qt5 static-libs test +tools"
+IUSE="apng doc gdk-pixbuf gif gimp java +jpeg +man openexr static-libs test +tools viewers"
 
 RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 	dev-cpp/highway[${MULTILIB_USEDEP}]
@@ -42,7 +42,7 @@ RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 	java? ( >=virtual/jre-1.8:* )
 	jpeg? ( virtual/jpeg[${MULTILIB_USEDEP}] )
 	openexr? ( media-libs/openexr:= )
-	qt5? (
+	viewers? (
 		dev-qt/qtwidgets
 		dev-qt/qtx11extras
 	)
@@ -50,7 +50,7 @@ RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 BDEPEND="
 	doc? ( app-doc/doxygen )
 	man? ( app-text/asciidoc )
-	qt5? ( kde-frameworks/extra-cmake-modules )
+	viewers? ( kde-frameworks/extra-cmake-modules )
 "
 DEPEND="${RDEPEND}
 	test? ( dev-cpp/gtest[${MULTILIB_USEDEP}] )
@@ -87,7 +87,7 @@ multilib_src_configure() {
 		-DJPEGXL_ENABLE_SJPEG=OFF
 		-DJPEGXL_ENABLE_SKCMS=ON
 		-DJPEGXL_ENABLE_TCMALLOC=OFF
-		-DJPEGXL_ENABLE_VIEWERS=$(multilib_native_usex qt5)
+		-DJPEGXL_ENABLE_VIEWERS=$(multilib_native_usex viewers)
 
 		-DCMAKE_DISABLE_FIND_PACKAGE_PNG=$(multilib_native_usex apng OFF ON)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=$(multilib_native_usex doc OFF ON)

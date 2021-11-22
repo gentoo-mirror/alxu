@@ -10,6 +10,7 @@
 		<flag name="doc">Doxygen API documentation</flag>
 		<flag name="gdk-pixbuf">gdk-pixbuf plugin</flag>
 		<flag name="jpeg">JPEG v1 support in tools. Note that reconstructed JPEG files are supported regardless of this option.</flag>
-		<flag name="qt5">Viewer programs</flag>
+		<flag name="tools">Tool programs (cjxl, djxl)</flag>
+		<flag name="viewers">Viewer programs</flag>
 	</use>
 </pkgmetadata>
