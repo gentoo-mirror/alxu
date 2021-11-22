@@ -14,7 +14,7 @@ if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/libjxl/libjxl.git"
 	EGIT_SUBMODULES=(third_party/lodepng)
 else
-	LODEPNG_COMMIT="48e5364ef48ec2408f44c727657ac1b6703185f8"
+	LODEPNG_COMMIT="8c6a9e30576f07bf470ad6f09458a2dcd7a6a84a"
 	SRC_URI="
 		https://github.com/libjxl/libjxl/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 		https://github.com/lvandeve/lodepng/archive/${LODEPNG_COMMIT}.tar.gz -> lodepng-${LODEPNG_COMMIT}.tar.gz
@@ -53,10 +53,6 @@ DEPEND="${RDEPEND}
 	test? ( dev-cpp/gtest[${MULTILIB_USEDEP}] )
 	java? ( >=virtual/jdk-1.8:* )
 "
-
-PATCHES=(
-	"${FILESDIR}/system-lcms.patch"
-)
 
 src_prepare() {
 	if [[ ${PV} != 9999 ]]; then
