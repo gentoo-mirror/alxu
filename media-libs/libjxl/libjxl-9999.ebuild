@@ -28,11 +28,10 @@ SLOT="0/7"
 if [[ ${PV} != 9999 ]]; then
 	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~sparc ~x86 ~amd64-linux ~x86-linux"
 fi
-IUSE="apng doc gdk-pixbuf gif gimp java +jpeg +man openexr qt5 static-libs test"
+IUSE="apng doc gdk-pixbuf gif gimp java +jpeg +man openexr qt5 static-libs test +tools"
 
 RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 	dev-cpp/highway[${MULTILIB_USEDEP}]
-	media-libs/lcms[${MULTILIB_USEDEP}]
 	apng? (
 		media-libs/libpng[${MULTILIB_USEDEP}]
 		sys-libs/zlib[${MULTILIB_USEDEP}]
@@ -42,7 +41,7 @@ RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 	gimp? ( media-gfx/gimp:0/2 )
 	java? ( >=virtual/jre-1.8:* )
 	jpeg? ( virtual/jpeg[${MULTILIB_USEDEP}] )
-	openexr? ( media-libs/openexr:=[${MULTILIB_USEDEP}] )
+	openexr? ( media-libs/openexr:= )
 	qt5? (
 		dev-qt/qtwidgets
 		dev-qt/qtx11extras
@@ -76,23 +75,20 @@ multilib_src_configure() {
 		-DJPEGXL_ENABLE_COVERAGE=OFF
 		-DJPEGXL_ENABLE_EXAMPLES=OFF
 		-DJPEGXL_ENABLE_FUZZERS=OFF
-		-DJPEGXL_ENABLE_JNI=$(multilib_native_usex java ON OFF)
-		-DJPEGXL_ENABLE_MANPAGES=$(multilib_native_usex man ON OFF)
-		-DJPEGXL_ENABLE_OPENEXR=$(usex openexr ON OFF)
-		-DJPEGXL_ENABLE_PLUGINS=ON # USE=gdk-pixbuf, USE=gimp handled in src_prepare
+		-DJPEGXL_ENABLE_TOOLS=$(multilib_native_usex tools)
+		-DJPEGXL_ENABLE_JNI=$(multilib_native_usex java)
+		-DJPEGXL_ENABLE_MANPAGES=$(multilib_native_usex man)
+		-DJPEGXL_ENABLE_OPENEXR=$(multilib_native_usex openexr)
+		-DJPEGXL_ENABLE_PLUGINS=$(multilib_is_native_abi && echo ON || echo OFF) # USE=gdk-pixbuf, USE=gimp handled in src_prepare
 		-DJPEGXL_ENABLE_SJPEG=OFF
 		-DJPEGXL_ENABLE_SKCMS=ON
 		-DJPEGXL_ENABLE_TCMALLOC=OFF
-		-DJPEGXL_ENABLE_VIEWERS=$(multilib_native_usex qt5 ON OFF)
-		-DJPEGXL_FORCE_SYSTEM_BROTLI=ON
-		-DJPEGXL_FORCE_SYSTEM_GTEST=ON
-		-DJPEGXL_FORCE_SYSTEM_HWY=ON
+		-DJPEGXL_ENABLE_VIEWERS=$(multilib_native_usex qt5)
 
-		$(cmake_use_find_package apng PNG)
-		$(cmake_use_find_package apng ZLIB)
+		-DCMAKE_DISABLE_FIND_PACKAGE_PNG=$(multilib_native_usex png OFF ON)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=$(multilib_native_usex doc OFF ON)
-		$(cmake_use_find_package gif GIF)
-		$(cmake_use_find_package jpeg JPEG)
+		-DCMAKE_DISABLE_FIND_PACKAGE_GIF=$(multilib_native_usex gif OFF ON)
+		-DCMAKE_DISABLE_FIND_PACKAGE_JPEG=$(multilib_native_usex jpeg OFF ON)
 	)
 
 	cmake_src_configure
@@ -101,7 +97,7 @@ multilib_src_configure() {
 multilib_src_install() {
 	cmake_src_install
 	if ! use static-libs; then
-		rm "${ED}"/usr/$(get_libdir)/libjxl{,_dec}.a || die
+		rm "${ED}"/usr/lib*/*.a || die
 	fi
 	if use java && multilib_is_native_abi; then
 		java-pkg_doso tools/libjxl_jni.so
