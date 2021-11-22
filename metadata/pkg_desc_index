@@ -27,7 +27,7 @@ gui-apps/wshowkeys 9999: Displays keys being pressed on a Wayland session
 mail-client/astroid 9999: lightweight graphical threads-with-tags style email client for notmuch
 media-gfx/gimp 2.99.8 9999: GNU Image Manipulation Program
 media-gfx/imagemagick 7.1.0.13 7.1.0.14 9999: A collection of tools and libraries for many image formats
-media-libs/libjxl 0.6.1 9999: JPEG XL image format reference implementation
+media-libs/libjxl 0.6.1-r1 9999: JPEG XL image format reference implementation
 media-libs/svt-av1 0.8.7 9999: Scalable Video Technology for AV1 (SVT-AV1 Encoder and Decoder)
 media-video/ffmpeg 4.4.1-r2 9999: Complete solution to record/convert/stream audio and video. Includes libavcodec
 media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
