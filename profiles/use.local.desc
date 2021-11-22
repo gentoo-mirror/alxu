@@ -56,6 +56,7 @@ mail-client/astroid:embedded-editor - Embedded editor
 mail-client/astroid:plugins - Plugins
 mail-client/astroid:terminal - Embedded terminal
 media-gfx/gimp:heif - Enable support for ISO/IEC 23008-12:2017 HEIF files
+media-gfx/gimp:jpegxl - Enable support for JPEG XL files
 media-gfx/gimp:vector-icons - Enable support for vector icons (experimental)
 media-gfx/imagemagick:corefonts - Use media-fonts/corefonts which is required by some commands
 media-gfx/imagemagick:fpx - Enable media-libs/libfpx support
@@ -71,7 +72,8 @@ media-libs/libjxl:apng - APNG support
 media-libs/libjxl:doc - Doxygen API documentation
 media-libs/libjxl:gdk-pixbuf - gdk-pixbuf plugin
 media-libs/libjxl:jpeg - JPEG v1 support in tools. Note that reconstructed JPEG files are supported regardless of this option.
-media-libs/libjxl:qt5 - Viewer programs
+media-libs/libjxl:tools - Tool programs (cjxl, djxl)
+media-libs/libjxl:viewers - Viewer programs
 media-video/ffmpeg:amr - Enables Adaptive Multi-Rate Audio support
 media-video/ffmpeg:amrenc - Enables Adaptive Multi-Rate Audio encoding support with media-libs/vo-amrwbenc.
 media-video/ffmpeg:appkit - Enables Apple AppKit framework
