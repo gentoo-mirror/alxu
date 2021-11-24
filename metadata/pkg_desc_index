@@ -32,7 +32,7 @@ media-libs/svt-av1 0.8.7 9999: Scalable Video Technology for AV1 (SVT-AV1 Encode
 media-video/ffmpeg 4.4.1-r2 9999: Complete solution to record/convert/stream audio and video. Includes libavcodec
 media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
-net-mail/notmuch 0.34-r1: Thread-based e-mail indexer, supporting quick search and tagging
+net-mail/notmuch 0.34.1-r1: Thread-based e-mail indexer, supporting quick search and tagging
 sci-calculators/units 2.21-r1: Unit conversion program
 virtual/7z 0: Virtual for /usr/bin/7z
 virtual/jdk 11-r3 16 17-r1: Virtual for Java Development Kit (JDK)
