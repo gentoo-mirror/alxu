@@ -19,8 +19,6 @@ RESTRICT="test"
 
 S="${WORKDIR}/binaryen-version_${PV}"
 
-PATCHES=(${FILESDIR}/binaryen-undo-compile-flag-braindamage.patch)
-
 src_configure() {
 	local mycmakeargs=(
 		-DENABLE_WERROR=no
