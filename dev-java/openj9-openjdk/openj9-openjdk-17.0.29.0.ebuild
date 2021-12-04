@@ -40,8 +40,7 @@ COMMON_DEPEND="
 	systemtap? ( dev-util/systemtap )
 
 	dev-libs/elfutils
-	dev-libs/libdwarf
-	sys-process/numactl
+	ddr? ( dev-libs/libdwarf )
 "
 
 # Many libs are required to build, but not to run, make is possible to remove
