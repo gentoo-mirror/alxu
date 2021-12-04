@@ -28,20 +28,20 @@ SLOT="0/7"
 if [[ ${PV} != 9999 ]]; then
 	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~riscv ~sparc ~x86 ~amd64-linux ~x86-linux"
 fi
-IUSE="apng doc gdk-pixbuf gif gimp java +jpeg +man openexr static-libs test +tools viewers"
+IUSE="doc gdk-pixbuf gif gimp java +jpeg +png +man openexr static-libs test +tools viewers"
 
 RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
 	dev-cpp/highway[${MULTILIB_USEDEP}]
-	apng? (
-		media-libs/libpng[${MULTILIB_USEDEP}]
-		sys-libs/zlib[${MULTILIB_USEDEP}]
-	)
 	gdk-pixbuf? ( x11-libs/gdk-pixbuf )
 	gif? ( media-libs/giflib[${MULTILIB_USEDEP}] )
 	gimp? ( media-gfx/gimp:0/2 )
 	java? ( >=virtual/jre-1.8:* )
 	jpeg? ( virtual/jpeg[${MULTILIB_USEDEP}] )
 	openexr? ( media-libs/openexr:= )
+	png? (
+		media-libs/libpng[${MULTILIB_USEDEP}]
+		sys-libs/zlib[${MULTILIB_USEDEP}]
+	)
 	viewers? (
 		dev-qt/qtwidgets
 		dev-qt/qtx11extras
@@ -85,10 +85,10 @@ multilib_src_configure() {
 		-DJPEGXL_ENABLE_TCMALLOC=OFF
 		-DJPEGXL_ENABLE_VIEWERS=$(multilib_native_usex viewers)
 
-		-DCMAKE_DISABLE_FIND_PACKAGE_PNG=$(multilib_native_usex apng OFF ON)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=$(multilib_native_usex doc OFF ON)
 		-DCMAKE_DISABLE_FIND_PACKAGE_GIF=$(multilib_native_usex gif OFF ON)
 		-DCMAKE_DISABLE_FIND_PACKAGE_JPEG=$(multilib_native_usex jpeg OFF ON)
+		-DCMAKE_DISABLE_FIND_PACKAGE_PNG=$(multilib_native_usex png OFF ON)
 	)
 
 	cmake_src_configure
