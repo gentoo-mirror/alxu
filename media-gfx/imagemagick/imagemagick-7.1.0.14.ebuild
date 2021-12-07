@@ -44,7 +44,7 @@ RDEPEND="
 	jbig? ( >=media-libs/jbigkit-2:= )
 	jpeg? ( virtual/jpeg:0 )
 	jpeg2k? ( >=media-libs/openjpeg-2.1.0:2 )
-	jpegxl? ( media-libs/libjxl )
+	jpegxl? ( media-libs/libjxl:= )
 	lcms? ( media-libs/lcms:2= )
 	lqr? ( media-libs/liblqr )
 	opencl? ( virtual/opencl )
