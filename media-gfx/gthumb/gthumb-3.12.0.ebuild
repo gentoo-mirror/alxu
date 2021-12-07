@@ -10,8 +10,8 @@ HOMEPAGE="https://wiki.gnome.org/Apps/Gthumb"
 
 LICENSE="GPL-2+"
 SLOT="0"
-KEYWORDS="amd64 ~arm ~ppc ~ppc64 x86 ~amd64-linux ~x86-linux ~x86-solaris"
-IUSE="cdr colord exif gnome-keyring gstreamer http lcms raw slideshow svg tiff webp"
+KEYWORDS="~amd64 ~arm ~ppc64 ~x86 ~amd64-linux ~x86-linux ~x86-solaris"
+IUSE="cdr colord exif gnome-keyring gstreamer heif http jpegxl lcms raw slideshow svg tiff test webp"
 
 RDEPEND="
 	>=dev-libs/glib-2.54.0:2
@@ -26,8 +26,7 @@ RDEPEND="
 		media-libs/gst-plugins-base:1.0
 		media-plugins/gst-plugins-gtk:1.0
 	)
-	raw? ( >=media-libs/libraw-0.14:=
-		<media-libs/libraw-0.21 )
+	raw? ( >=media-libs/libraw-0.14:= )
 	http? (
 		>=net-libs/libsoup-2.42.0:2.4
 		>=dev-libs/json-glib-0.15.0
@@ -35,6 +34,8 @@ RDEPEND="
 	)
 	gnome-keyring? ( >=app-crypt/libsecret-0.11 )
 	cdr? ( >=app-cdr/brasero-3.2.0 )
+	jpegxl? ( media-libs/libjxl:= )
+	heif? ( media-libs/libheif:= )
 	svg? ( >=gnome-base/librsvg-2.34:2 )
 	webp? ( >=media-libs/libwebp-0.2.0:= )
 	lcms? ( >=media-libs/lcms-2.6:2 )
@@ -56,7 +57,6 @@ BDEPEND="
 	dev-util/itstool
 	sys-devel/bison
 	sys-devel/flex
-	>=sys-devel/gettext-0.19.8
 	virtual/pkgconfig
 "
 
@@ -70,6 +70,8 @@ src_configure() {
 		$(meson_use colord)
 		$(meson_use tiff libtiff)
 		$(meson_use webp libwebp)
+		$(meson_use jpegxl libjxl)
+		$(meson_use heif libheif)
 		$(meson_use raw libraw)
 		$(meson_use svg librsvg)
 		$(meson_use gnome-keyring libsecret)
