@@ -1,0 +1,13 @@
+BDEPEND=X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+DEFINED_PHASES=install postinst postrm setup
+DESCRIPTION=Google's CJK font family
+EAPI=7
+HOMEPAGE=https://www.google.com/get/noto/ https://github.com/googlefonts/noto-cjk
+INHERIT=font
+IUSE=X
+KEYWORDS=~alpha ~amd64 ~arm ~arm64 ~mips ~ppc ~ppc64 ~riscv ~sparc ~x86
+LICENSE=OFL-1.1
+SLOT=0
+SRC_URI=https://github.com/googlefonts/noto-cjk/raw/9f7f3c38eab63e1d1fddd8d50937fe4f1eacdb1d/Sans/Variable/OTC/NotoSansCJK-VF.otf.ttc https://github.com/googlefonts/noto-cjk/raw/9f7f3c38eab63e1d1fddd8d50937fe4f1eacdb1d/Sans/Variable/OTC/NotoSansMonoCJK-VF.otf.ttc https://github.com/googlefonts/noto-cjk/raw/9f7f3c38eab63e1d1fddd8d50937fe4f1eacdb1d/Serif/Variable/OTC/NotoSerifCJK-VF.otf.ttc
+_eclasses_=font	0667878c2b594871023dd1833d05996f
+_md5_=8f954c9d27a54d8a00e413a471816676
