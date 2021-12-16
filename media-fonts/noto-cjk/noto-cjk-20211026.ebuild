@@ -3,24 +3,28 @@
 
 EAPI=7
 
-COMMIT="9f7f3c38eab63e1d1fddd8d50937fe4f1eacdb1d"
-inherit font
-
 DESCRIPTION="Google's CJK font family"
 HOMEPAGE="https://www.google.com/get/noto/ https://github.com/googlefonts/noto-cjk"
+
+COMMIT="9f7f3c38eab63e1d1fddd8d50937fe4f1eacdb1d"
 SRC_URI="
-	https://github.com/googlefonts/noto-cjk/raw/${COMMIT}/Sans/Variable/OTC/NotoSansCJK-VF.otf.ttc
-	https://github.com/googlefonts/noto-cjk/raw/${COMMIT}/Sans/Variable/OTC/NotoSansMonoCJK-VF.otf.ttc
-	https://github.com/googlefonts/noto-cjk/raw/${COMMIT}/Serif/Variable/OTC/NotoSerifCJK-VF.otf.ttc
+	https://github.com/googlefonts/noto-cjk/raw/${COMMIT}/Sans/Variable/OTC/NotoSansCJK-VF.otf.ttc -> NotoSansCJK-VF-${COMMIT}.otf.ttc
+	https://github.com/googlefonts/noto-cjk/raw/${COMMIT}/Sans/Variable/OTC/NotoSansMonoCJK-VF.otf.ttc -> NotoSansMonoCJK-VF-${COMMIT}.otf.ttc
+	https://github.com/googlefonts/noto-cjk/raw/${COMMIT}/Serif/Variable/OTC/NotoSerifCJK-VF.otf.ttc -> NotoSerifCJK-VF-${COMMIT}.otf.ttc
 "
-S="${WORKDIR}/${PN}-${COMMIT}"
 
 LICENSE="OFL-1.1"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~mips ~ppc ~ppc64 ~riscv ~sparc ~x86"
+KEYWORDS="~*"
 IUSE=""
 
-S=${DISTDIR}
+S="${DISTDIR}"
 
-FONT_CONF=( "${FILESDIR}/70-noto-cjk.conf" ) # From ArchLinux
-FONT_SUFFIX="ttc"
+src_install() {
+	insinto /usr/share/fonts/${PN}
+	newins NotoSansCJK-VF-${COMMIT}.otf.ttc NotoSansCJK-VF.otf.ttc
+	newins NotoSansMonoCJK-VF-${COMMIT}.otf.ttc NotoSansMonoCJK-VF.otf.ttc
+	newins NotoSerifCJK-VF-${COMMIT}.otf.ttc NotoSerifCJK-VF.otf.ttc
+	insinto /etc/fonts/conf.avail
+	doins "${FILESDIR}/70-noto-cjk.conf" # From ArchLinux
+}
