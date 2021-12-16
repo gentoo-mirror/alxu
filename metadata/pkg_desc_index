@@ -26,7 +26,9 @@ gui-apps/gammastep 2.0.7-r1: A screen color temperature adjusting software
 gui-apps/swaybg 1.1 9999: A wallpaper utility for Wayland
 gui-apps/wshowkeys 9999: Displays keys being pressed on a Wayland session
 mail-client/astroid 9999: lightweight graphical threads-with-tags style email client for notmuch
+media-fonts/noto 20211207: Google's font family that aims to support all the world's languages
 media-fonts/noto-cjk 20211026: Google's CJK font family
+media-fonts/noto-emoji 20211101: Google Noto Emoji fonts
 media-gfx/gimp 2.99.8 9999: GNU Image Manipulation Program
 media-gfx/gthumb 3.12.0: Image viewer and browser for Gnome
 media-gfx/imagemagick 7.1.0.13 7.1.0.14 9999: A collection of tools and libraries for many image formats
