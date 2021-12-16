@@ -48,7 +48,6 @@ src_compile() {
 	local myemakeargs=(
 		CC="$(tc-getCC) ${CFLAGS} ${LDFLAGS}"
 		CXX="$(tc-getCXX) ${CXXFLAGS} ${LDFLAGS}"
-		CFLAGS_WARN_WALL="-Wall -Wextra"
 	)
 	if use asm; then
 		myemakeargs+=(USE_ASM=1 MY_ASM=uasm)
