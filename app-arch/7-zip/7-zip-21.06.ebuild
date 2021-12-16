@@ -57,6 +57,8 @@ src_compile() {
 			myemakeargs+=(IS_ARM64=1)
 		elif use x86; then
 			myemakeargs+=(IS_X86=1)
+		else
+			einfo "asm is not supported on this arch, ignoring"
 		fi
 	fi
 	mkdir -p b/g || die
