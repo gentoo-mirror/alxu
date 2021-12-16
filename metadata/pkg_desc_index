@@ -1,6 +1,6 @@
 acct-group/adbusers 0: Android Debug Bridge user group
 app-admin/keepassxc 2.6.6-r1 9999: KeePassXC - KeePass Cross-platform Community Edition
-app-arch/7-zip 21.04_beta-r1: File archiver with a high compression ratio
+app-arch/7-zip 21.06: File archiver with a high compression ratio
 app-arch/precomp-cpp 0.4.7: Precomp, C++ version - further compress already compressed files
 app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-crypt/openpgp-keys-runescape 0: OpenPGP keys used by Jagex to sign RuneScape packages for Ubuntu
