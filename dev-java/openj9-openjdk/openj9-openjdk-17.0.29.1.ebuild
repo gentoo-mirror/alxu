@@ -27,7 +27,7 @@ fi
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa cups custom-optimization ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap +pch selinux source systemtap"
+IUSE="alsa cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap numa +pch selinux source systemtap"
 
 COMMON_DEPEND="
 	media-libs/freetype:2=
@@ -41,6 +41,7 @@ COMMON_DEPEND="
 
 	dev-libs/elfutils
 	ddr? ( dev-libs/libdwarf )
+	numa? ( sys-process/numactl )
 "
 
 # Many libs are required to build, but not to run, make is possible to remove
@@ -189,6 +190,7 @@ src_prepare() {
 	fi
 
 	find openj9/ omr/ -name CMakeLists.txt -exec sed -i -e '/set(OMR_WARNINGS_AS_ERRORS ON/s/ON/OFF/' {} + || die
+	sed -i -e '/^  OPENJ9_CONFIGURE_NUMA$/d' closed/autoconf/custom-hook.m4 || die
 
 	chmod +x configure || die
 }
@@ -196,8 +198,6 @@ src_prepare() {
 src_configure() {
 	# Work around stack alignment issue, bug #647954. in case we ever have x86
 	use x86 && append-flags -mincoming-stack-boundary=2
-
-	use custom-optimization || filter-flags '-O*'
 
 	# Enabling full docs appears to break doc building. If not
 	# explicitly disabled, the flag will get auto-enabled if pandoc and
@@ -267,6 +267,7 @@ src_compile() {
 		"-DJ9JIT_EXTRA_CXXFLAGS='${CXXFLAGS}'"
 		"-DCMAKE_EXE_LINKER_FLAGS='${LDFLAGS}'"
 		-DOMR_WARNINGS_AS_ERRORS=OFF
+		-DOMR_PORT_NUMA_SUPPORT=$(usex numa)
 	)
 	local myemakeargs=(
 		JOBS=$(makeopts_jobs)
