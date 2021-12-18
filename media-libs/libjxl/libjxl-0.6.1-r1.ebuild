@@ -19,7 +19,7 @@ else
 	SRC_URI="
 		https://github.com/libjxl/libjxl/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 		https://github.com/lvandeve/lodepng/archive/${LODEPNG_COMMIT}.tar.gz -> lodepng-${LODEPNG_COMMIT}.tar.gz
-		https://skia.googlesource.com/skcms/+archive/${SKCMS_COMMIT}.tar.gz -> skcms-${LODEPNG_COMMIT}.tar.gz
+		https://skia.googlesource.com/skcms/+archive/${SKCMS_COMMIT}.tar.gz -> skcms-${SKCMS_COMMIT}.tar.gz
 	"
 fi
 
@@ -61,11 +61,19 @@ PATCHES=(
 	"${FILESDIR}/roundtripanimationpatches-ifdef-gif.patch"
 )
 
-src_prepare() {
-	if [[ ${PV} != 9999 ]]; then
-		rmdir third_party/lodepng
-		ln -sv ../../lodepng-${LODEPNG_COMMIT} third_party/lodepng || die
+src_unpack() {
+	if [[ ${PV} == 9999 ]]; then
+		git-r3_src_unpack
+	else
+		tar -xf ${DISTDIR}/${P}.tar.gz || die
+		tar -xf ${DISTDIR}/lodepng-${LODEPNG_COMMIT}.tar.gz || die
+		rmdir ${P}/third_party/lodepng || die
+		mv lodepng-${LODEPNG_COMMIT} ${P}/third_party/lodepng || die
+		tar -C ${P}/third_party/skcms -xf ${DISTDIR}/skcms-${SKCMS_COMMIT}.tar.gz || die
 	fi
+}
+
+src_prepare() {
 	use gdk-pixbuf || sed -i -e '/(gdk-pixbuf)/s/^/#/' plugins/CMakeLists.txt || die
 	use gimp || sed -i -e '/(gimp)/s/^/#/' plugins/CMakeLists.txt || die
 	cmake_src_prepare
