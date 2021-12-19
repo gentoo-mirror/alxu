@@ -6,7 +6,7 @@ app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-crypt/openpgp-keys-runescape 0: OpenPGP keys used by Jagex to sign RuneScape packages for Ubuntu
 app-emulation/dxvk 1.9.2: Vulkan-based implementation of D3D9, D3D10 and D3D11 for Linux / Wine
 app-misc/ca-certificates 20211016.3.72: Common CA Certificates PEM files
-app-text/evince 40.4-r1: Simple document viewer for GNOME
+app-text/evince 41.3-r1: Simple document viewer for GNOME
 app-text/pdfsizeopt 9999: PDF file size optimizer
 app-text/zathura 0.4.8 9999: A highly customizable and functional document viewer
 dev-cpp/highway 0.15.0: Performance-portable, length-agnostic SIMD with runtime dispatch
