@@ -11,7 +11,7 @@ HOMEPAGE="https://wiki.gnome.org/Apps/Evince"
 LICENSE="GPL-2+ CC-BY-SA-3.0"
 # subslot = evd3.(suffix of libevdocument3)-evv3.(suffix of libevview3)
 SLOT="0/evd3.4-evv3.3"
-IUSE="cups djvu dvi gstreamer gnome gnome-keyring gtk-doc +introspection nautilus nsplugin postscript spell t1lib tiff xps"
+IUSE="cups djvu dvi gstreamer gnome gnome-keyring gtk-doc +introspection nautilus postscript spell t1lib tiff xps"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~mips ~ppc ~ppc64 ~riscv ~sparc ~x86 ~amd64-linux ~x86-linux ~x64-solaris"
 
 # atk used in libview
@@ -63,10 +63,6 @@ BDEPEND="
 	virtual/pkgconfig
 "
 
-PATCHES=(
-	"${FILESDIR}"/40.0-internal-synctex.patch
-)
-
 src_prepare() {
 	xdg_src_prepare
 
@@ -77,12 +73,12 @@ src_prepare() {
 
 src_configure() {
 	local emesonargs=(
+		-Ddevelopment=false
 		-Dplatform=gnome
 
 		-Dviewer=true
 		-Dpreviewer=true
 		-Dthumbnailer=true
-		$(meson_use nsplugin browser_plugin)
 		$(meson_use nautilus)
 
 		-Dcomics=enabled
@@ -103,11 +99,10 @@ src_configure() {
 		$(meson_feature gstreamer multimedia)
 		$(meson_feature spell gspell)
 
+		-Dinternal_synctex=true
 		$(meson_feature t1lib)
 
-		-Dbrowser_plugin_dir="${EPREFIX}/usr/$(get_libdir)/nsbrowser/plugins"
 		-Dsystemduserunitdir="$(systemd_get_userunitdir)"
-
 	)
 	meson_src_configure
 }
