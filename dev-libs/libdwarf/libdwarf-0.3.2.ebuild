@@ -4,8 +4,8 @@
 EAPI=7
 
 DESCRIPTION="The DWARF Debugging Information Format"
-HOMEPAGE="https://www.prevanders.net/dwarf.html"
-SRC_URI="https://www.prevanders.net/${P}.tar.xz"
+HOMEPAGE="https://github.com/davea42/libdwarf-code"
+SRC_URI="https://github.com/davea42/libdwarf-code/releases/download/${P}/${P}.tar.xz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -28,4 +28,9 @@ src_configure() {
 		$(use_enable static-libs static)
 	)
 	econf "${myeconfargs[@]}"
+}
+
+src_install() {
+	default
+	find "${ED}" -name '*.la' -delete || die
 }
