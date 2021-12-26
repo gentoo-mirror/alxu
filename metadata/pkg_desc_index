@@ -31,13 +31,13 @@ media-fonts/noto-cjk 20211026: Google's CJK font family
 media-fonts/noto-emoji 20211101: Google Noto Emoji fonts
 media-gfx/gimp 2.99.8 9999: GNU Image Manipulation Program
 media-gfx/gthumb 3.12.0: Image viewer and browser for Gnome
-media-gfx/imagemagick 7.1.0.13 7.1.0.14 9999: A collection of tools and libraries for many image formats
+media-gfx/imagemagick 7.1.0.19 9999: A collection of tools and libraries for many image formats
 media-libs/libjxl 0.6.1-r1 9999: JPEG XL image format reference implementation
 media-libs/svt-av1 0.8.7 9999: Scalable Video Technology for AV1 (SVT-AV1 Encoder and Decoder)
 media-video/ffmpeg 4.4.1-r2 9999: Complete solution to record/convert/stream audio and video. Includes libavcodec
 media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
-net-mail/notmuch 0.34.1-r1: Thread-based e-mail indexer, supporting quick search and tagging
+net-mail/notmuch 0.34.2-r1: Thread-based e-mail indexer, supporting quick search and tagging
 sci-calculators/units 2.21-r1: Unit conversion program
 virtual/7z 0: Virtual for /usr/bin/7z
 virtual/jdk 11-r3 16 17-r1: Virtual for Java Development Kit (JDK)
