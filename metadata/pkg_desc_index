@@ -14,7 +14,7 @@ dev-java/openj9-openjdk 11.0.29.0 17.0.29.1: Extensions for OpenJDK for Eclipse 
 dev-java/openj9-openjdk-bin 11.0.13.8.0.29.0 17.0.1.12.0.29.1: Prebuilt IBM Semeru JDK binaries provided by IBM
 dev-java/openj9-openjdk-jre-bin 11.0.13.8.0.29.0 17.0.1.12.0.29.1: Prebuilt IBM Semeru JRE binaries provided by IBM
 dev-lang/uasm 2.52_p20210402: free MASM-compatible assembler based on JWasm
-dev-libs/libdwarf 0.3.1: The DWARF Debugging Information Format
+dev-libs/libdwarf 0.3.2: The DWARF Debugging Information Format
 dev-libs/openssl 3.0.0-r1: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
 dev-qt/qtgui 5.15.2-r15: The GUI module and platform plugins for the Qt5 framework
 dev-util/android-udev-rules 20210501-r1: Comprehensive list of udev rules to connect to android devices
