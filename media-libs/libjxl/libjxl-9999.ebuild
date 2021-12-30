@@ -28,7 +28,9 @@ if [[ ${PV} != 9999 ]]; then
 fi
 IUSE="doc gdk-pixbuf gif gimp java +jpeg +png +man openexr static-libs test +tools viewers"
 
+# gflags: https://github.com/libjxl/libjxl/issues/1062
 RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
+	dev-cpp/gflags[${MULTILIB_USEDEP}]
 	dev-cpp/highway[${MULTILIB_USEDEP}]
 	gdk-pixbuf? ( x11-libs/gdk-pixbuf )
 	gif? ( media-libs/giflib[${MULTILIB_USEDEP}] )
