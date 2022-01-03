@@ -10,7 +10,7 @@ MY_PV=${MY_PV//./}
 
 DESCRIPTION="File archiver with a high compression ratio"
 HOMEPAGE="https://7-zip.org/"
-SRC_URI="https://7-zip.org/a/7z${MY_PV}-src.7z"
+SRC_URI="https://7-zip.org/a/7z${MY_PV}-src.tar.xz"
 
 LICENSE="LGPL-2.1+"
 SLOT="0"
@@ -18,30 +18,13 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+asm"
 
 BDEPEND="
-	|| ( virtual/7z app-arch/libarchive app-arch/unar )
-	asm? (
-		amd64? ( dev-lang/uasm )
-		arm64? ( dev-lang/uasm )
-		x86? ( dev-lang/uasm )
-	)
+	asm? ( dev-lang/jwasm )
 "
+RDEPEND="!app-arch/p7zip"
 
-S=${WORKDIR}/7z${MY_PV}-src
+S=${WORKDIR}
 
 PATCHES=( ${FILESDIR}/7-zip-flags.patch )
-
-src_unpack() {
-	if command -v 7z >/dev/null 2>&1; then
-		7z x "${DISTDIR}/7z${MY_PV}-src.7z" -o"$S" || die
-	elif command -v bsdtar >/dev/null 2>&1; then
-		mkdir "$S" || die
-		bsdtar -C "$S" -xf "${DISTDIR}/7z${MY_PV}-src.7z" || die
-	elif command -v unar >/dev/null 2>&1; then
-		unar -d "$S" "${DISTDIR}/7z${MY_PV}-src.7z" || die
-	else
-		die "no 7z unpacker found"
-	fi
-}
 
 src_compile() {
 	cd CPP/7zip/Bundles/Alone2 || die
@@ -50,7 +33,7 @@ src_compile() {
 		CXX="$(tc-getCXX) ${CXXFLAGS} ${LDFLAGS}"
 	)
 	if use asm; then
-		myemakeargs+=(USE_ASM=1 MY_ASM=uasm)
+		myemakeargs+=(USE_ASM=1 USE_JWASM=1)
 		if use amd64; then
 			myemakeargs+=(IS_X64=1)
 		elif use arm64; then
