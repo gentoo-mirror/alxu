@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="7"
@@ -22,7 +22,7 @@ fi
 LICENSE="Apache-2.0"
 SLOT="0/3" # .so version of libssl/libcrypto
 
-IUSE="+asm cpu_flags_x86_sse2 elibc_musl ktls rfc3779 sctp static-libs test tls-compression vanilla"
+IUSE="+asm cpu_flags_x86_sse2 fips ktls rfc3779 sctp static-libs test tls-compression vanilla"
 RESTRICT="!test? ( test )"
 
 COMMON_DEPEND="
@@ -168,9 +168,10 @@ multilib_src_configure() {
 		enable-sm2
 		enable-srp
 		$(use elibc_musl && echo "no-async")
-		$(use amd64 && echo enable-ec_nistp_64_gcc_128)
+		$(use amd64 && echo "enable-ec_nistp_64_gcc_128")
 		enable-idea
 		enable-mdc2
+		$(use fips && echo "enable-fips")
 		$(use_ssl asm)
 		$(use_ssl ktls)
 		$(use_ssl rfc3779)
