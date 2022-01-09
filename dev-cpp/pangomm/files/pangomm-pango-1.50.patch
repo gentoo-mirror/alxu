@@ -1,0 +1,10 @@
+--- a/pango/pangomm/attributes.h
++++ b/pango/pangomm/attributes.h
+@@ -30,6 +30,9 @@
+ #include <pangomm/color.h>
+ #include <pangomm/fontdescription.h>
+ #include <pango/pango-attributes.h>
++#if __has_include(<pango/pango-markup.h>)
++#include <pango/pango-markup.h>
++#endif
+ #include <glibmm/slisthandle.h>
