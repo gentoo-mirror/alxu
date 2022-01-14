@@ -36,6 +36,7 @@ media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 net-mail/notmuch 0.34.2-r1: Thread-based e-mail indexer, supporting quick search and tagging
 sci-calculators/units 2.21-r1: Unit conversion program
+sys-fs/ncdu 2.0.1: NCurses Disk Usage
 virtual/7z 0: Virtual for /usr/bin/7z
 virtual/jdk 11-r3 16 17-r1: Virtual for Java Development Kit (JDK)
 virtual/jre 11-r2 16 17: Virtual for Java Runtime Environment (JRE)
