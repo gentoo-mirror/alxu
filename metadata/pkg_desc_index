@@ -18,9 +18,6 @@ dev-libs/libdwarf 0.3.2: The DWARF Debugging Information Format
 dev-libs/openssl 3.0.1-r1: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
 dev-qt/qtgui 5.15.2-r15: The GUI module and platform plugins for the Qt5 framework
 dev-util/android-udev-rules 20220102: Comprehensive list of udev rules to connect to android devices
-dev-util/binaryen 104: Compiler and toolchain infrastructure library for WebAssembly
-dev-util/pmbootstrap 1.35.0: Sophisticated chroot/build/flash tool to develop and install postmarketOS
-dev-util/wabt 1.0.24: The WebAssembly Binary Toolkit
 games-rpg/runescape-launcher 2.2.9-r3: Official RuneScape NXT client launcher
 gui-apps/gammastep 2.0.7-r1: A screen color temperature adjusting software
 gui-apps/swaybg 1.1 9999: A wallpaper utility for Wayland
