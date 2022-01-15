@@ -3,3 +3,6 @@ app-text/pdfsizeopt
 
 # jagex keeps changing checksum without version bump, not sure how to handle
 games-rpg/runescape-launcher
+
+# package works fine but program is buggy
+sys-fs/ncdu
