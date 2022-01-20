@@ -66,8 +66,6 @@ src_unpack() {
 }
 
 src_prepare() {
-	use gdk-pixbuf || sed -i -e '/(gdk-pixbuf)/s/^/#/' plugins/CMakeLists.txt || die
-	use gimp || sed -i -e '/(gimp)/s/^/#/' plugins/CMakeLists.txt || die
 	cmake_src_prepare
 	java-pkg-opt-2_src_prepare
 }
@@ -83,7 +81,10 @@ multilib_src_configure() {
 		-DJPEGXL_ENABLE_JNI=$(multilib_native_usex java)
 		-DJPEGXL_ENABLE_MANPAGES=$(multilib_native_usex man)
 		-DJPEGXL_ENABLE_OPENEXR=$(multilib_native_usex openexr)
-		-DJPEGXL_ENABLE_PLUGINS=$(multilib_is_native_abi && echo ON || echo OFF) # USE=gdk-pixbuf, USE=gimp handled in src_prepare
+		-DJPEGXL_ENABLE_PLUGINS=$(multilib_is_native_abi && echo ON || echo OFF)
+		-DJPEGXL_ENABLE_PLUGIN_GDKPIXBUF=$(multilib_native_usex gdk-pixbuf)
+		-DJPEGXL_ENABLE_PLUGIN_GIMP210=$(multilib_native_usex gimp)
+		-DJPEGXL_ENABLE_PLUGIN_MIME=ON
 		-DJPEGXL_ENABLE_SJPEG=OFF
 		-DJPEGXL_ENABLE_SKCMS=ON
 		-DJPEGXL_ENABLE_TCMALLOC=OFF
