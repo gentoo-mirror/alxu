@@ -32,7 +32,7 @@ media-gfx/gthumb 3.12.0: Image viewer and browser for Gnome
 media-gfx/imagemagick 7.1.0.19 9999: A collection of tools and libraries for many image formats
 media-libs/libjxl 0.6.1-r1 9999: JPEG XL image format reference implementation
 media-libs/svt-av1 0.8.7 9999: Scalable Video Technology for AV1 (SVT-AV1 Encoder and Decoder)
-media-video/ffmpeg 4.4.1-r2 9999: Complete solution to record/convert/stream audio and video. Includes libavcodec
+media-video/ffmpeg 5.0: Complete solution to record/convert/stream audio and video. Includes libavcodec
 media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 net-mail/notmuch 0.34.2-r1: Thread-based e-mail indexer, supporting quick search and tagging
