@@ -14,6 +14,7 @@ dev-cpp/pangomm 2.42.2-r2: C++ interface for pango
 dev-java/openj9-openjdk 11.0.29.0 17.0.29.1: Extensions for OpenJDK for Eclipse OpenJ9
 dev-java/openj9-openjdk-bin 11.0.13.8.0.29.0 17.0.1.12.0.29.1: Prebuilt IBM Semeru JDK binaries provided by IBM
 dev-java/openj9-openjdk-jre-bin 11.0.13.8.0.29.0 17.0.1.12.0.29.1: Prebuilt IBM Semeru JRE binaries provided by IBM
+dev-lang/zig 0.9.0: A robust, optimal, and maintainable programming language
 dev-libs/libdwarf 0.3.2: The DWARF Debugging Information Format
 dev-libs/openssl 3.0.1-r1: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
 dev-libs/openssl-compat 1.1.1m: full-strength general purpose cryptography library (including SSL and TLS)
@@ -32,6 +33,7 @@ media-gfx/gthumb 3.12.0: Image viewer and browser for Gnome
 media-gfx/imagemagick 7.1.0.19 9999: A collection of tools and libraries for many image formats
 media-libs/libjxl 0.6.1-r1 9999: JPEG XL image format reference implementation
 media-libs/svt-av1 0.8.7 9999: Scalable Video Technology for AV1 (SVT-AV1 Encoder and Decoder)
+media-sound/pamixer 1.4: Pulseaudio command line mixer.
 media-video/ffmpeg 5.0: Complete solution to record/convert/stream audio and video. Includes libavcodec
 media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
