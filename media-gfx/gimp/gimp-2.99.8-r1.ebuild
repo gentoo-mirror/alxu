@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -30,6 +30,7 @@ RESTRICT="!test? ( test )"
 COMMON_DEPEND="
 	>=app-text/poppler-0.90.1[cairo]
 	>=app-text/poppler-data-0.4.9
+	>=dev-libs/appstream-glib-0.7.16
 	>=dev-libs/atk-2.34.1
 	>=dev-libs/glib-2.68.0:2
 	>=dev-libs/json-glib-1.4.4
@@ -93,11 +94,9 @@ RDEPEND="
 DEPEND="
 	${COMMON_DEPEND}
 	>=dev-lang/perl-5.30.3
-	>=dev-libs/appstream-glib-0.7.16
 	dev-util/gdbus-codegen
 	dev-util/gtk-update-icon-cache
 	>=dev-util/intltool-0.51.0
-	sys-apps/findutils
 	>=sys-devel/autoconf-2.54
 	>=sys-devel/automake-1.11
 	>=sys-devel/gettext-0.21
