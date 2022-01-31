@@ -27,7 +27,7 @@ fi
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa cups ddr debug doc examples gentoo-vm headless-awt javafx +jbootstrap numa +pch selinux source systemtap"
+IUSE="alsa cups ddr debug doc gentoo-vm headless-awt javafx +jbootstrap numa selinux source systemtap"
 
 COMMON_DEPEND="
 	media-libs/freetype:2=
@@ -85,8 +85,6 @@ DEPEND="
 		dev-java/openjdk:${SLOT}
 	)
 "
-
-REQUIRED_USE="javafx? ( alsa !headless-awt )"
 
 S="${WORKDIR}/openj9-openjdk-jdk${SLOT}-${OPENJ9_PV}-release"
 
@@ -205,6 +203,7 @@ src_configure() {
 
 	local myconf=(
 		--disable-ccache
+		--disable-precompiled-headers
 		--disable-warnings-as-errors{,-omr,-openj9}
 		--enable-full-docs=no
 		--with-boot-jdk="${JDK_HOME}"
@@ -225,7 +224,6 @@ src_configure() {
 		--with-vendor-vm-bug-url="https://bugs.openjdk.java.net"
 		--with-vendor-version-string="${PVR}"
 		--with-version-pre=""
-		--with-version-opt=""
 		--with-zlib=system
 		--enable-dtrace=$(usex systemtap yes no)
 		--enable-headless-only=$(usex headless-awt yes no)
@@ -242,13 +240,6 @@ src_configure() {
 		else
 			die "${zip} not found or not readable"
 		fi
-	fi
-
-	# PaX breaks pch, bug #601016
-	if use pch && ! host-is-pax; then
-		myconf+=( --enable-precompiled-headers )
-	else
-		myconf+=( --disable-precompiled-headers )
 	fi
 
 	(
@@ -295,10 +286,6 @@ src_install() {
 	# libasound.so.2 but OpenJDK only has libjsound.so. Weird.
 	if ! use alsa ; then
 		rm -v lib/libjsound.* || die
-	fi
-
-	if ! use examples ; then
-		rm -vr demo/ || die
 	fi
 
 	if ! use source ; then

@@ -7,7 +7,6 @@
 	</maintainer>
 	<use>
 		<flag name="ddr">Enable Direct Dump Reader</flag>
-		<flag name="custom-optimization">Override OpenJDK and OpenJ9 per-module optimization flags</flag>
 		<flag name="headless-awt">Don't install the X backend for AWT, needed by some GUIs</flag>
 		<flag name="gentoo-vm">Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)</flag>
 		<flag name="javafx">Import OpenJFX modules at build time, via <pkg>dev-java/openjfx</pkg></flag>
