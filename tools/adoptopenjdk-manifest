@@ -10,14 +10,16 @@ import httpx
 import portage
 
 async def do_manifest(client, filename, size, url):
-    resp = await client.get(f'{url}.sha256.txt')
+    resp = await client.get(f'{url}.sha256.txt', follow_redirects=True)
+    resp.raise_for_status()
     sha256 = resp.text.split(' ')[0]
     return (filename, size, sha256)
 
 async def do_api(client, ghauth, tagl):
     owner, repo, tag = tagl
     apiurl = f'https://api.github.com/repos/{owner}/{repo}/releases/tags/{tag}'
-    resp = await client.get(apiurl, auth=ghauth)
+    resp = await client.get(apiurl, auth=ghauth, follow_redirects=True)
+    resp.raise_for_status()
     return {asset['browser_download_url']: asset['size']
             for asset in resp.json()['assets']}
 
