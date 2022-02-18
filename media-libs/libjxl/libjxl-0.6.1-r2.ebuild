@@ -31,7 +31,7 @@ fi
 IUSE="apng doc gdk-pixbuf gif gimp java +jpeg +man openexr static-libs test +tools viewers"
 
 RDEPEND="app-arch/brotli[${MULTILIB_USEDEP}]
-	dev-cpp/highway[${MULTILIB_USEDEP}]
+	<dev-cpp/highway-0.16.0[${MULTILIB_USEDEP}]
 	apng? (
 		media-libs/libpng[${MULTILIB_USEDEP}]
 		sys-libs/zlib[${MULTILIB_USEDEP}]
