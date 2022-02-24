@@ -32,7 +32,6 @@ media-gfx/gimp 2.99.8-r1: GNU Image Manipulation Program
 media-gfx/gthumb 3.12.0: Image viewer and browser for Gnome
 media-gfx/imagemagick 7.1.0.20 9999: A collection of tools and libraries for many image formats
 media-libs/libjxl 0.6.1-r2 9999: JPEG XL image format reference implementation
-media-libs/svt-av1 0.8.7 9999: Scalable Video Technology for AV1 (SVT-AV1 Encoder and Decoder)
 media-sound/pamixer 1.4: Pulseaudio command line mixer.
 media-video/ffmpeg 5.0: Complete solution to record/convert/stream audio and video. Includes libavcodec
 media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
