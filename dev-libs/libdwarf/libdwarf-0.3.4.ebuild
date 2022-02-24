@@ -5,7 +5,7 @@ EAPI=7
 
 DESCRIPTION="The DWARF Debugging Information Format"
 HOMEPAGE="https://github.com/davea42/libdwarf-code"
-SRC_URI="https://github.com/davea42/libdwarf-code/releases/download/${P}/${P}.tar.xz"
+SRC_URI="https://github.com/davea42/libdwarf-code/releases/download/v${PV}/${P}.tar.xz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
