@@ -12,10 +12,10 @@ DESCRIPTION="File archiver with a high compression ratio"
 HOMEPAGE="https://7-zip.org/"
 SRC_URI="https://7-zip.org/a/7z${MY_PV}-src.tar.xz"
 
-LICENSE="LGPL-2.1+"
+LICENSE="LGPL-2.1+ BSD rar? ( unRAR )"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+asm"
+IUSE="+asm rar"
 
 BDEPEND="
 	asm? ( dev-lang/jwasm )
@@ -44,6 +44,7 @@ src_compile() {
 			einfo "asm is not supported on this arch, ignoring"
 		fi
 	fi
+	use rar || myemakeargs+=(DISABLE_RAR=1)
 	mkdir -p b/g || die
 	emake -f ../../cmpl_gcc.mak "${myemakeargs[@]}"
 }
