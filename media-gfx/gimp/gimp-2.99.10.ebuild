@@ -1,7 +1,7 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 LUA_COMPAT=( luajit )
 PYTHON_COMPAT=( python3_{8..10} )
@@ -38,11 +38,11 @@ COMMON_DEPEND="
 	dev-libs/libxslt
 	>=gnome-base/librsvg-2.40.21:2
 	>=media-gfx/mypaint-brushes-2.0.2:=
-	>=media-libs/babl-0.1.86[introspection,lcms,vala?]
+	>=media-libs/babl-0.1.90[introspection,lcms,vala?]
 	>=media-libs/fontconfig-2.12.6
 	>=media-libs/freetype-2.10.2
-	>=media-libs/gegl-0.4.32:0.4[cairo,introspection,lcms,vala?]
-	>=media-libs/gexiv2-0.10.10
+	>=media-libs/gegl-0.4.36:0.4[cairo,introspection,lcms,vala?]
+	>=media-libs/gexiv2-0.12.2
 	>=media-libs/harfbuzz-2.6.5:=
 	>=media-libs/lcms-2.9:2
 	>=media-libs/libmypaint-1.6.1:=
@@ -101,19 +101,14 @@ DEPEND="
 	>=sys-devel/automake-1.11
 	>=sys-devel/gettext-0.21
 	>=sys-devel/libtool-2.4.6
-	doc? (
-		app-text/yelp-tools
-		dev-libs/gobject-introspection[doctool]
-		>=dev-util/gtk-doc-1.32
-		dev-util/gtk-doc-am
-	)
+	doc? ( dev-util/gi-docgen )
 	vala? ( $(vala_depend) )
 "
 
 # TODO: there are probably more atoms in DEPEND which should be in BDEPEND now
 BDEPEND="virtual/pkgconfig"
 
-DOCS=( "AUTHORS" "HACKING" "NEWS" "README" "README.i18n" )
+DOCS=( "AUTHORS" "devel-docs/CODING_STYLE.md" "devel-docs/HACKING.md" "NEWS" "README" "README.i18n" )
 
 # Bugs 685210 (and duplicate 691070)
 PATCHES=(
@@ -135,8 +130,6 @@ src_prepare() {
 	sed 's:-DGIMP_DISABLE_DEPRECATED:-DGIMP_protect_DISABLE_DEPRECATED:g' -i configure.ac || die #615144
 
 	gnome2_src_prepare  # calls eautoreconf
-
-	use vala && vala_src_prepare
 
 	sed 's:-DGIMP_protect_DISABLE_DEPRECATED:-DGIMP_DISABLE_DEPRECATED:g' -i configure || die #615144
 	fgrep -q GIMP_DISABLE_DEPRECATED configure || die #615144, self-test
@@ -161,6 +154,8 @@ _adjust_sandbox() {
 src_configure() {
 	_adjust_sandbox
 
+	use vala && vala_setup
+
 	local myconf=(
 		GEGL="${EPREFIX}"/usr/bin/gegl-0.4
 		GDBUS_CODEGEN="${EPREFIX}"/usr/bin/gdbus-codegen
@@ -178,8 +173,7 @@ src_configure() {
 		$(use_enable cpu_flags_ppc_altivec altivec)
 		$(use_enable cpu_flags_x86_mmx mmx)
 		$(use_enable cpu_flags_x86_sse sse)
-		$(use_enable doc gtk_doc)
-		$(use_enable doc g-ir-doc)
+		$(use_enable doc gi-docgen)
 		$(use_enable vector-icons)
 		$(use_with aalib aa)
 		$(use_with alsa)
@@ -248,11 +242,6 @@ src_install() {
 	mv "${ED}"/usr/share/man/man1/gimp-console{-*,}.1 || die
 
 	_rename_plugins || die
-
-	if use doc; then
-		mkdir "${ED}/usr/share/gtk-doc/html/gimp3_g-ir-docs" || die
-		cp -r "${S}/devel-docs/g-ir-docs/html/"{gjs,python} "${ED}/usr/share/gtk-doc/html/gimp3_g-ir-docs/" || die
-	fi
 }
 
 pkg_postinst() {
