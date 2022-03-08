@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit flag-o-matic
+inherit toolchain-funcs
 
 MY_PV=${PV%%_*}
 MY_PV=${MY_PV//./}

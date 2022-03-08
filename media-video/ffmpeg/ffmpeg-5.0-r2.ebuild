@@ -32,7 +32,7 @@ elif [ "${PV%_p*}" != "${PV}" ] ; then # Snapshot
 else # Release
 	SRC_URI="https://ffmpeg.org/releases/${P/_/-}.tar.bz2"
 fi
-SRC_URI+=" https://www.alxu.ca/ffmpeg-5.0-r1-libjxl.patch.xz"
+SRC_URI+=" https://www.alxu.ca/ffmpeg-5.0-r2-libjxl.patch.xz"
 FFMPEG_REVISION="${PV#*_p}"
 
 SLOT="0/${FFMPEG_SUBSLOT}"
@@ -324,7 +324,7 @@ S=${WORKDIR}/${P/_/-}
 
 PATCHES=(
 	"${FILESDIR}"/chromium-r1.patch
-	"${WORKDIR}"/ffmpeg-5.0-r1-libjxl.patch
+	"${WORKDIR}"/ffmpeg-5.0-r2-libjxl.patch
 )
 
 MULTILIB_WRAPPED_HEADERS=(
