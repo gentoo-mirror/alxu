@@ -4,7 +4,7 @@ app-arch/7-zip 21.07-r1: File archiver with a high compression ratio
 app-arch/precomp-cpp 0.4.7: Precomp, C++ version - further compress already compressed files
 app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-crypt/openpgp-keys-runescape 0: OpenPGP keys used by Jagex to sign RuneScape packages for Ubuntu
-app-emulation/dxvk 1.9.4: Vulkan-based implementation of D3D9, D3D10 and D3D11 for Linux / Wine
+app-emulation/dxvk 1.10: Vulkan-based implementation of D3D9, D3D10 and D3D11 for Linux / Wine
 app-misc/ca-certificates 20211016.3.72: Common CA Certificates PEM files
 app-text/evince 41.3-r1: Simple document viewer for GNOME
 app-text/pdfsizeopt 9999: PDF file size optimizer
@@ -34,7 +34,7 @@ media-gfx/gthumb 3.12.0: Image viewer and browser for Gnome
 media-gfx/imagemagick 7.1.0.20 9999: A collection of tools and libraries for many image formats
 media-libs/libjxl 0.6.1-r2 9999: JPEG XL image format reference implementation
 media-sound/pamixer 1.4: Pulseaudio command line mixer.
-media-video/ffmpeg 5.0-r1: Complete solution to record/convert/stream audio and video. Includes libavcodec
+media-video/ffmpeg 5.0-r2: Complete solution to record/convert/stream audio and video. Includes libavcodec
 media-video/rav1e 0.5.0_beta-r1: The fastest and safest AV1 encoder
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 net-mail/notmuch 0.34.2-r1: Thread-based e-mail indexer, supporting quick search and tagging
