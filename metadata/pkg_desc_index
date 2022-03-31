@@ -7,7 +7,7 @@ app-emulation/dxvk 1.10.1: Vulkan-based implementation of D3D9, D3D10 and D3D11 
 app-misc/ca-certificates 20211016.3.72: Common CA Certificates PEM files
 app-text/evince 41.3-r1: Simple document viewer for GNOME
 app-text/pdfsizeopt 9999: PDF file size optimizer
-app-text/zathura 0.4.8 9999: A highly customizable and functional document viewer
+app-text/zathura 0.4.9-r1: A highly customizable and functional document viewer
 dev-cpp/highway 0.15.0 0.16.0: Performance-portable, length-agnostic SIMD with runtime dispatch
 dev-dotnet/dotnet-runtime-bin 3.1.22 6.0.2: .NET is a free, cross-platform, open-source developer platform
 dev-java/openj9-openjdk 11.0.30.1 17.0.30.0: Extensions for OpenJDK for Eclipse OpenJ9
@@ -15,9 +15,9 @@ dev-java/openj9-openjdk-bin 11.0.14.9.0.30.0 17.0.2.8.0.30.0: Prebuilt IBM Semer
 dev-java/openj9-openjdk-jre-bin 11.0.14.9.0.30.0 17.0.2.8.0.30.0: Prebuilt IBM Semeru JRE binaries provided by IBM
 dev-lang/zig 0.9.0: A robust, optimal, and maintainable programming language
 dev-libs/libdwarf 0.3.4: The DWARF Debugging Information Format
-dev-libs/openssl 3.0.1-r1: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
+dev-libs/openssl 3.0.2-r1: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
 dev-libs/openssl-compat 1.1.1m: full-strength general purpose cryptography library (including SSL and TLS)
-dev-qt/qtgui 5.15.2-r15 5.15.2-r16: The GUI module and platform plugins for the Qt5 framework
+dev-qt/qtgui 5.15.3: The GUI module and platform plugins for the Qt5 framework
 dev-util/android-udev-rules 20220102: Comprehensive list of udev rules to connect to android devices
 games-rpg/runescape-launcher 2.2.9-r3: Official RuneScape NXT client launcher
 gui-apps/gammastep 2.0.7-r1: A screen color temperature adjusting software
@@ -39,6 +39,6 @@ net-mail/notmuch 0.34.2-r1: Thread-based e-mail indexer, supporting quick search
 sci-calculators/units 2.21-r1: Unit conversion program
 sys-fs/ncdu 2.0.1: NCurses Disk Usage
 virtual/7z 0: Virtual for /usr/bin/7z
-virtual/jdk 11-r3 16 17-r1: Virtual for Java Development Kit (JDK)
-virtual/jre 11-r2 16 17: Virtual for Java Runtime Environment (JRE)
+virtual/jdk 11-r3 17-r1: Virtual for Java Development Kit (JDK)
+virtual/jre 11-r2 17: Virtual for Java Runtime Environment (JRE)
 x11-apps/sx 2.1.7 9999: Start an xorg server
