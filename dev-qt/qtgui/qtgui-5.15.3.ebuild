@@ -3,7 +3,7 @@
 
 EAPI=8
 
-KDE_ORG_COMMIT=38ad2f39daec09168728033969265834b6a2d924
+QT5_KDEPATCHSET_REV=1
 QT5_MODULE="qtbase"
 inherit qt5-build
 
@@ -17,7 +17,6 @@ fi
 IUSE="accessibility dbus egl eglfs evdev +gif gles2-only ibus jpeg
 	+libinput linuxfb +png tslib tuio +udev vnc vulkan wayland +X"
 REQUIRED_USE="
-	|| ( eglfs linuxfb vnc wayland X )
 	accessibility? ( dbus X )
 	eglfs? ( egl )
 	ibus? ( dbus )
@@ -129,7 +128,6 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 
 PATCHES=(
 	"${FILESDIR}/qt-5.12-gcc-avx2.patch" # bug 672946
-	"${FILESDIR}/${PN}-5.14.1-cmake-macro-backward-compat.patch" # bug 703306
 )
 
 src_prepare() {
