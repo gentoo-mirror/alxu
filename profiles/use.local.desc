@@ -66,12 +66,6 @@ media-gfx/imagemagick:opencl - Enable OpenCL support
 media-gfx/imagemagick:pango - Enable Pango support using x11-libs/pango
 media-gfx/imagemagick:q32 - Set quantum depth value to 32
 media-gfx/imagemagick:q8 - Set quantum depth value to 8
-media-libs/libjxl:apng - APNG support
-media-libs/libjxl:doc - Doxygen API documentation
-media-libs/libjxl:gdk-pixbuf - gdk-pixbuf plugin
-media-libs/libjxl:jpeg - JPEG v1 support in tools. Note that reconstructed JPEG files are supported regardless of this option.
-media-libs/libjxl:tools - Tool programs (cjxl, djxl)
-media-libs/libjxl:viewers - Viewer programs
 media-video/ffmpeg:amr - Enables Adaptive Multi-Rate Audio support
 media-video/ffmpeg:amrenc - Enables Adaptive Multi-Rate Audio encoding support with media-libs/vo-amrwbenc.
 media-video/ffmpeg:appkit - Enables Apple AppKit framework
