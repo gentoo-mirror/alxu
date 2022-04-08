@@ -25,8 +25,6 @@ fi
 IUSE="+d3d9 +d3d10 +d3d11 debug +dxgi test"
 
 DEPEND="
-	abi_x86_32? ( cross-i686-w64-mingw32/gcc )
-	abi_x86_64? ( cross-x86_64-w64-mingw32/gcc )
 	dev-util/vulkan-headers
 	dev-util/glslang
 "
