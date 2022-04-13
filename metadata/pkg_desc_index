@@ -18,7 +18,7 @@ dev-libs/openssl 3.0.2-r1: Robust, full-featured Open Source Toolkit for the Tra
 dev-libs/openssl-compat 1.1.1m: full-strength general purpose cryptography library (including SSL and TLS)
 dev-qt/qtgui 5.15.3: The GUI module and platform plugins for the Qt5 framework
 dev-util/android-udev-rules 20220102: Comprehensive list of udev rules to connect to android devices
-games-rpg/runescape-launcher 2.2.9-r3: Official RuneScape NXT client launcher
+games-rpg/runescape-launcher-launcher 1.2: Launcher for official RuneScape NXT client launcher
 gui-apps/gammastep 2.0.7-r1: A screen color temperature adjusting software
 gui-apps/swaybg 1.1 9999: A wallpaper utility for Wayland
 gui-apps/wshowkeys 9999: Displays keys being pressed on a Wayland session
