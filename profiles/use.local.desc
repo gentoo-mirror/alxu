@@ -52,10 +52,6 @@ mail-client/astroid:terminal - Embedded terminal
 media-gfx/gimp:heif - Enable support for ISO/IEC 23008-12:2017 HEIF files
 media-gfx/gimp:jpegxl - Enable support for JPEG XL files
 media-gfx/gimp:vector-icons - Enable support for vector icons (experimental)
-media-gfx/gthumb:heif - Enable HEIF support through media-libs/libheif
-media-gfx/gthumb:http - Enable webservice integration through net-libs/webkit-gtk
-media-gfx/gthumb:jpegxl - Enable JPEG XL support through media-libs/libjxl
-media-gfx/gthumb:slideshow - Enable slideshow plugin
 media-gfx/imagemagick:corefonts - Use media-fonts/corefonts which is required by some commands
 media-gfx/imagemagick:fpx - Enable media-libs/libfpx support
 media-gfx/imagemagick:hdri - Enable High Dynamic Range Images formats
