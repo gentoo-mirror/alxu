@@ -28,11 +28,26 @@ HOMEPAGE="https://ffmpeg.org/"
 if [ "${PV#9999}" != "${PV}" ] ; then
 	SRC_URI=""
 elif [ "${PV%_p*}" != "${PV}" ] ; then # Snapshot
-	SRC_URI="mirror://gentoo/${P}.tar.bz2"
+	SRC_URI="mirror://gentoo/${P}.tar.xz"
 else # Release
-	SRC_URI="https://ffmpeg.org/releases/${P/_/-}.tar.bz2"
+	VERIFY_SIG_OPENPGP_KEY_PATH="${BROOT}"/usr/share/openpgp-keys/ffmpeg.asc
+	inherit verify-sig
+	SRC_URI="https://ffmpeg.org/releases/${P/_/-}.tar.xz"
+	SRC_URI+=" verify-sig? ( https://ffmpeg.org/releases/${P/_/-}.tar.xz.asc )"
+
+	BDEPEND=" verify-sig? ( sec-keys/openpgp-keys-ffmpeg )"
 fi
-SRC_URI+=" https://www.alxu.ca/ffmpeg-5.0-r4-libjxl.patch.xz"
+JPEGXL_PATCHES=(
+667b1a36939a69619b58d413ebf9d12d987d1d0d.patch
+79658a2e9d821783a951a5d08ae6abac7bf24a40.patch
+4f4dc78d2870ddd4d5e321e65b5de289a31258cf.patch
+eadde927756bda5d0bcd5b198d020d5f78ddb132.patch
+)
+SRC_URI+="
+	jpegxl? (
+		${JPEGXL_PATCHES[@]/#/https://github.com/thebombzen/FFmpeg/commit/}
+	)
+"
 FFMPEG_REVISION="${PV#*_p}"
 
 SLOT="0/${FFMPEG_SUBSLOT}"
@@ -96,10 +111,10 @@ FFMPEG_FLAG_MAP=(
 
 # Same as above but for encoders, i.e. they do something only with USE=encode.
 FFMPEG_ENCODER_FLAG_MAP=(
-	amrenc:libvo-amrwbenc mp3:libmp3lame
-	kvazaar:libkvazaar libaom
-	openh264:libopenh264 rav1e:librav1e snappy:libsnappy svt-av1:libsvtav1 theora:libtheora twolame:libtwolame
-	webp:libwebp x264:libx264 x265:libx265 xvid:libxvid
+	amf amrenc:libvo-amrwbenc kvazaar:libkvazaar libaom	mp3:libmp3lame
+	openh264:libopenh264 rav1e:librav1e snappy:libsnappy svt-av1:libsvtav1
+	theora:libtheora twolame:libtwolame webp:libwebp x264:libx264
+	x265:libx265 xvid:libxvid
 )
 
 IUSE="
@@ -173,6 +188,7 @@ IUSE="${IUSE} ${FFTOOLS[@]/#/+fftools_}"
 
 RDEPEND="
 	alsa? ( >=media-libs/alsa-lib-1.0.27.2[${MULTILIB_USEDEP}] )
+	amf? ( media-video/amdgpu-pro-amf )
 	amr? ( >=media-libs/opencore-amr-0.1.3-r1[${MULTILIB_USEDEP}] )
 	bluray? ( >=media-libs/libbluray-0.3.0-r1:=[${MULTILIB_USEDEP}] )
 	bs2b? ( >=media-libs/libbs2b-3.1.0-r1[${MULTILIB_USEDEP}] )
@@ -189,8 +205,8 @@ RDEPEND="
 		rav1e? ( >=media-video/rav1e-0.4:=[capi] )
 		snappy? ( >=app-arch/snappy-1.1.2-r1:=[${MULTILIB_USEDEP}] )
 		theora? (
-			>=media-libs/libtheora-1.1.1[encode,${MULTILIB_USEDEP}]
 			>=media-libs/libogg-1.3.0[${MULTILIB_USEDEP}]
+			>=media-libs/libtheora-1.1.1[encode,${MULTILIB_USEDEP}]
 		)
 		twolame? ( >=media-sound/twolame-0.3.13-r1[${MULTILIB_USEDEP}] )
 		webp? ( >=media-libs/libwebp-0.3.0:=[${MULTILIB_USEDEP}] )
@@ -246,15 +262,15 @@ RDEPEND="
 	sndio? ( media-sound/sndio:=[${MULTILIB_USEDEP}] )
 	speex? ( >=media-libs/speex-1.2_rc1-r1[${MULTILIB_USEDEP}] )
 	srt? ( >=net-libs/srt-1.3.0:=[${MULTILIB_USEDEP}] )
-	ssh? ( >=net-libs/libssh-0.5.5[${MULTILIB_USEDEP}] )
+	ssh? ( >=net-libs/libssh-0.5.5:=[sftp,${MULTILIB_USEDEP}] )
 	svg? (
 		gnome-base/librsvg:2=[${MULTILIB_USEDEP}]
 		x11-libs/cairo[${MULTILIB_USEDEP}]
 	)
+	nvenc? ( >=media-libs/nv-codec-headers-9.1.23.1 )
 	svt-av1? ( >=media-libs/svt-av1-0.8.4[${MULTILIB_USEDEP}] )
 	truetype? ( >=media-libs/freetype-2.5.0.1:2[${MULTILIB_USEDEP}] )
 	vaapi? ( >=x11-libs/libva-1.2.1-r1:0=[${MULTILIB_USEDEP}] )
-	nvenc? ( >=media-libs/nv-codec-headers-9.1.23.1[${MULTILIB_USEDEP}] )
 	vdpau? ( >=x11-libs/libvdpau-0.7[${MULTILIB_USEDEP}] )
 	vidstab? ( >=media-libs/vidstab-1.1.0[${MULTILIB_USEDEP}] )
 	vmaf? ( media-libs/libvmaf[${MULTILIB_USEDEP}] )
@@ -270,11 +286,11 @@ RDEPEND="
 		>=x11-libs/libXv-1.0.10[${MULTILIB_USEDEP}]
 		>=x11-libs/libxcb-1.4:=[${MULTILIB_USEDEP}]
 	)
+	postproc? ( !media-libs/libpostproc )
 	zeromq? ( >=net-libs/zeromq-4.1.6 )
 	zimg? ( >=media-libs/zimg-2.7.4:=[${MULTILIB_USEDEP}] )
 	zlib? ( >=sys-libs/zlib-1.2.8-r1[${MULTILIB_USEDEP}] )
 	zvbi? ( >=media-libs/zvbi-0.2.35[${MULTILIB_USEDEP}] )
-	postproc? ( !media-libs/libpostproc )
 "
 
 RDEPEND="${RDEPEND}
@@ -286,9 +302,12 @@ DEPEND="${RDEPEND}
 	ladspa? ( >=media-libs/ladspa-sdk-1.13-r2[${MULTILIB_USEDEP}] )
 	v4l? ( sys-kernel/linux-headers )
 "
-BDEPEND="
+
+# += for verify-sig above
+BDEPEND+="
 	>=sys-devel/make-3.81
 	virtual/pkgconfig
+	amf? ( media-libs/amf-headers )
 	cpu_flags_x86_mmx? ( || ( >=dev-lang/nasm-2.13 >=dev-lang/yasm-1.3 ) )
 	cuda? ( >=sys-devel/clang-7[llvm_targets_NVPTX] )
 	doc? ( sys-apps/texinfo )
@@ -325,8 +344,7 @@ S=${WORKDIR}/${P/_/-}
 
 PATCHES=(
 	"${FILESDIR}"/chromium-r1.patch
-	"${FILESDIR}"/ffmpeg-5.0-backport-ranlib-build-fix.patch
-	"${WORKDIR}"/ffmpeg-5.0-r4-libjxl.patch
+	"${JPEGXL_PATCHES[@]/#/${DISTDIR}/}"
 )
 
 MULTILIB_WRAPPED_HEADERS=(
@@ -342,9 +360,12 @@ src_prepare() {
 		export revision=git-N-${FFMPEG_REVISION}
 	fi
 
-	eapply "${FILESDIR}/vmaf-models-default-path.patch"
-
 	default
+
+	# -fdiagnostics-color=auto gets appended after user flags which
+	# will ignore user's preference.
+	sed -i -e '/check_cflags -fdiagnostics-color=auto/d' configure || die
+
 	echo 'include $(SRC_PATH)/ffbuild/libffmpeg.mak' >> Makefile || die
 }
 
@@ -463,6 +484,7 @@ multilib_src_configure() {
 		$(multilib_native_enable manpages)
 	)
 
+	# Fixed in 5.0.1? Waiting for verification from someone who hit the issue.
 	local extra_libs
 	if use arm || use ppc || use mips || [[ ${CHOST} == *i486* ]] ; then
 		# bug #782811
@@ -565,4 +587,6 @@ multilib_src_install() {
 multilib_src_install_all() {
 	dodoc Changelog README.md CREDITS doc/*.txt doc/APIchanges
 	[ -f "RELEASE_NOTES" ] && dodoc "RELEASE_NOTES"
+
+	use amf && doenvd "${FILESDIR}"/amf-env-vulkan-override
 }
