@@ -37,17 +37,6 @@ else # Release
 
 	BDEPEND=" verify-sig? ( sec-keys/openpgp-keys-ffmpeg )"
 fi
-JPEGXL_PATCHES=(
-667b1a36939a69619b58d413ebf9d12d987d1d0d.patch
-79658a2e9d821783a951a5d08ae6abac7bf24a40.patch
-4f4dc78d2870ddd4d5e321e65b5de289a31258cf.patch
-eadde927756bda5d0bcd5b198d020d5f78ddb132.patch
-)
-SRC_URI+="
-	jpegxl? (
-		${JPEGXL_PATCHES[@]/#/https://github.com/thebombzen/FFmpeg/commit/}
-	)
-"
 FFMPEG_REVISION="${PV#*_p}"
 
 SLOT="0/${FFMPEG_SUBSLOT}"
@@ -344,7 +333,6 @@ S=${WORKDIR}/${P/_/-}
 
 PATCHES=(
 	"${FILESDIR}"/chromium-r1.patch
-	"${JPEGXL_PATCHES[@]/#/${DISTDIR}/}"
 )
 
 MULTILIB_WRAPPED_HEADERS=(
