@@ -25,7 +25,6 @@ mail-client/astroid 9999: lightweight graphical threads-with-tags style email cl
 media-fonts/noto 20211207: Google's font family that aims to support all the world's languages
 media-fonts/noto-cjk 20211026: Google's CJK font family
 media-fonts/noto-emoji 20211101: Google Noto Emoji fonts
-media-gfx/gimp 2.99.10: GNU Image Manipulation Program
 media-gfx/imagemagick 7.1.0.20-r1: A collection of tools and libraries for many image formats
 media-sound/pamixer 1.4: Pulseaudio command line mixer.
 media-video/ffmpeg 9999: Complete solution to record/convert/stream audio and video. Includes libavcodec
