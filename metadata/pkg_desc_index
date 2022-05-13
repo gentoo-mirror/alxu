@@ -1,5 +1,5 @@
 acct-group/adbusers 0: Android Debug Bridge user group
-app-arch/7-zip 21.07-r1: File archiver with a high compression ratio
+app-arch/7-zip 21.07-r2: File archiver with a high compression ratio
 app-arch/precomp-cpp 0.4.7: Precomp, C++ version - further compress already compressed files
 app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-crypt/openpgp-keys-runescape 0: OpenPGP keys used by Jagex to sign RuneScape packages for Ubuntu
@@ -24,7 +24,8 @@ gui-apps/wshowkeys 9999: Displays keys being pressed on a Wayland session
 mail-client/astroid 9999: lightweight graphical threads-with-tags style email client for notmuch
 media-fonts/noto 20211207: Google's font family that aims to support all the world's languages
 media-fonts/noto-cjk 20211026: Google's CJK font family
-media-fonts/noto-emoji 20211101: Google Noto Emoji fonts
+media-fonts/noto-emoji 99999999: Google Noto Emoji fonts
+media-fonts/source-pro 20210115: Adobe's open source typeface family designed for UI environments
 media-gfx/imagemagick 7.1.0.20-r1: A collection of tools and libraries for many image formats
 media-sound/pamixer 1.4: Pulseaudio command line mixer.
 media-video/ffmpeg 9999: Complete solution to record/convert/stream audio and video. Includes libavcodec
