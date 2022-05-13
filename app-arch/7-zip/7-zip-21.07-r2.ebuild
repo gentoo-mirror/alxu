@@ -24,13 +24,16 @@ RDEPEND="!app-arch/p7zip"
 
 S=${WORKDIR}
 
-PATCHES=( ${FILESDIR}/7-zip-flags.patch )
+PATCHES=(
+	"${FILESDIR}/7-zip-flags.patch"
+	"${FILESDIR}/7-zip-less-asm.patch"
+)
 
 src_compile() {
 	cd CPP/7zip/Bundles/Alone2 || die
 	local myemakeargs=(
-		CC="$(tc-getCC) ${CFLAGS} ${LDFLAGS}"
-		CXX="$(tc-getCXX) ${CXXFLAGS} ${LDFLAGS}"
+		CC="$(tc-getCC) ${CFLAGS} -fno-strict-aliasing ${LDFLAGS}"
+		CXX="$(tc-getCXX) ${CXXFLAGS} -fno-strict-aliasing ${LDFLAGS}"
 	)
 	if use asm; then
 		myemakeargs+=(USE_ASM=1 USE_JWASM=1)

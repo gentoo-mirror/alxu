@@ -1,0 +1,41 @@
+--- a/CPP/7zip/7zip_gcc.mak	2021-12-25 09:00:00.000000000 -0500
++++ b/CPP/7zip/7zip_gcc.mak	2022-05-13 12:20:17.539629635 -0400
+@@ -1127,21 +1127,6 @@
+ endif
+ endif
+ 
+-ifdef USE_X86_ASM
+-$O/7zCrcOpt.o: ../../../../Asm/x86/7zCrcOpt.asm
+-	$(MY_ASM) $(AFLAGS) $<
+-$O/XzCrc64Opt.o: ../../../../Asm/x86/XzCrc64Opt.asm
+-	$(MY_ASM) $(AFLAGS) $<
+-$O/Sha1Opt.o: ../../../../Asm/x86/Sha1Opt.asm
+-	$(MY_ASM) $(AFLAGS) $<
+-$O/Sha256Opt.o: ../../../../Asm/x86/Sha256Opt.asm
+-	$(MY_ASM) $(AFLAGS) $<
+-
+-ifndef USE_JWASM
+-USE_X86_ASM_AES=1
+-endif
+-
+-else
+ $O/7zCrcOpt.o: ../../../../C/7zCrcOpt.c
+ 	$(CC) $(CFLAGS) $<
+ $O/XzCrc64Opt.o: ../../../../C/XzCrc64Opt.c
+@@ -1150,16 +1135,10 @@
+ 	$(CC) $(CFLAGS) $<
+ $O/Sha256Opt.o: ../../../../C/Sha256Opt.c
+ 	$(CC) $(CFLAGS) $<
+-endif
+ 
+ 
+-ifdef USE_X86_ASM_AES
+-$O/AesOpt.o: ../../../../Asm/x86/AesOpt.asm
+-	$(MY_ASM) $(AFLAGS) $<
+-else
+ $O/AesOpt.o: ../../../../C/AesOpt.c
+ 	$(CC) $(CFLAGS) $<
+-endif
+ 
+ 
+ ifdef USE_X64_ASM
