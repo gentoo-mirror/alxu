@@ -1,21 +1,25 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="7"
 
-inherit flag-o-matic toolchain-funcs multilib-minimal
+inherit edo flag-o-matic toolchain-funcs multilib-minimal verify-sig
 
 MY_P=openssl-${PV/_/-}
 
 DESCRIPTION="full-strength general purpose cryptography library (including SSL and TLS)"
 HOMEPAGE="https://www.openssl.org/"
-SRC_URI="mirror://openssl/source/${MY_P}.tar.gz"
+SRC_URI="mirror://openssl/source/${MY_P}.tar.gz
+	https://dev.gentoo.org/~sam/distfiles/${CATEGORY}/${PN}/${MY_P}-test-fixes-expiry.patch.xz
+	verify-sig? ( mirror://openssl/source/${MY_P}.tar.gz.asc )"
+VERIFY_SIG_OPENPGP_KEY_PATH=${BROOT}/usr/share/openpgp-keys/openssl.org.asc
 
 LICENSE="openssl"
 SLOT="1.1"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~x64-cygwin ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris ~x86-winnt"
-IUSE="+asm elibc_musl rfc3779 sctp cpu_flags_x86_sse2 sslv3 test tls-compression tls-heartbeat vanilla"
-RESTRICT="test"
+[[ "${PV}" = *_pre* ]] || \
+KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~loong ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~x64-cygwin ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris ~x86-winnt"
+IUSE="+asm rfc3779 sctp cpu_flags_x86_sse2 sslv3 test tls-compression tls-heartbeat vanilla verify-sig weak-ssl-ciphers"
+RESTRICT="!test? ( test )"
 
 RDEPEND=">=app-misc/c_rehash-1.7-r1
 	tls-compression? ( >=sys-libs/zlib-1.2.8-r1[${MULTILIB_USEDEP}] )
@@ -28,7 +32,9 @@ BDEPEND="
 		sys-apps/diffutils
 		sys-devel/bc
 		kernel_linux? ( sys-process/procps )
-	)"
+	)
+	verify-sig? ( sec-keys/openpgp-keys-openssl )"
+PDEPEND="app-misc/ca-certificates"
 
 # Do not install any docs
 DOCS=()
@@ -36,6 +42,7 @@ DOCS=()
 PATCHES=(
 	"${FILESDIR}"/openssl-1.1.0j-parallel_install_fix.patch #671602
 	"${FILESDIR}"/openssl-1.1.1i-riscv32.patch
+	"${WORKDIR}"/${MY_P}-test-fixes-expiry.patch
 )
 
 S="${WORKDIR}/${MY_P}"
@@ -56,6 +63,16 @@ pkg_setup() {
 			die "FEATURES=test with USE=sctp requires net.sctp.auth_enable=1!"
 		fi
 	fi
+}
+
+src_unpack() {
+	# Can delete this once test fix patch is dropped
+	if use verify-sig ; then
+		# Needed for downloaded patch (which is unsigned, which is fine)
+		verify-sig_verify_detached "${DISTDIR}"/${P}.tar.gz{,.asc}
+	fi
+
+	default
 }
 
 src_prepare() {
@@ -102,9 +119,19 @@ src_prepare() {
 	# and 'make depend' uses -Werror for added fun (#417795 again)
 	[[ ${CC} == *clang* ]] && append-flags -Qunused-arguments
 
+	# We really, really need to build OpenSSL w/ strict aliasing disabled.
+	# It's filled with violations and it *will* result in miscompiled
+	# code. This has been in the ebuild for > 10 years but even in 2022,
+	# it's still relevant:
+	# - https://github.com/llvm/llvm-project/issues/55255
+	# - https://github.com/openssl/openssl/issues/18225
+	# Don't remove the no strict aliasing bits below!
+	filter-flags -fstrict-aliasing
 	append-flags -fno-strict-aliasing
-	append-flags $(test-flags-CC -Wa,--noexecstack)
+
 	append-cppflags -DOPENSSL_NO_BUF_FREELISTS
+
+	append-flags $(test-flags-CC -Wa,--noexecstack)
 
 	# Prefixify Configure shebang (#141906)
 	sed \
@@ -146,7 +173,6 @@ multilib_src_configure() {
 	tc-export CC AR RANLIB RC
 
 	use_ssl() { usex $1 "enable-${2:-$1}" "no-${2:-$1}" " ${*:3}" ; }
-	echoit() { echo "$@" ; "$@" ; }
 
 	local krb5=$(has_version app-crypt/mit-krb5 && echo "MIT" || echo "Heimdal")
 
@@ -159,8 +185,7 @@ multilib_src_configure() {
 	# Don't set it without thorough revdeps testing.
 	# Make sure user flags don't get added *yet* to avoid duplicated
 	# flags.
-	CFLAGS= LDFLAGS= echoit \
-	./${config} \
+	CFLAGS= LDFLAGS= edo ./${config} \
 		${sslout} \
 		$(use cpu_flags_x86_sse2 || echo "no-sse2") \
 		enable-camellia \
@@ -178,13 +203,14 @@ multilib_src_configure() {
 		$(use_ssl asm) \
 		$(use_ssl rfc3779) \
 		$(use_ssl sctp) \
+		$(use test || echo "no-tests") \
 		$(use_ssl tls-compression zlib) \
 		$(use_ssl tls-heartbeat heartbeats) \
+		$(use_ssl weak-ssl-ciphers) \
 		--prefix="${EPREFIX}"/usr \
 		--openssldir="${EPREFIX}"${SSL_CNF_DIR} \
 		--libdir=$(get_libdir) \
-		shared threads \
-		|| die
+		shared threads
 
 	# Clean out hardcoded flags that openssl uses
 	local DEFAULT_CFLAGS=$(grep ^CFLAGS= Makefile | LC_ALL=C sed \
