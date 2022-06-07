@@ -11,7 +11,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-BDEPEND="~dev-lang/zig-0.9.0"
+BDEPEND="=dev-lang/zig-0.9*"
 
 DEPEND="sys-libs/ncurses:=[unicode(+)]"
 

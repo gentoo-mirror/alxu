@@ -1,10 +1,10 @@
-# Copyright 2019-2021 Gentoo Authors
+# Copyright 2019-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 LLVM_MAX_SLOT=13
-inherit cmake llvm
+inherit cmake llvm check-reqs
 
 DESCRIPTION="A robust, optimal, and maintainable programming language"
 HOMEPAGE="https://ziglang.org/"
@@ -12,13 +12,16 @@ if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/ziglang/zig.git"
 	inherit git-r3
 else
-	SRC_URI="https://github.com/ziglang/zig/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://ziglang.org/download/${PV}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~arm ~arm64"
 fi
 
 LICENSE="MIT"
 SLOT="0"
+IUSE="test +threads"
 RESTRICT="!test? ( test )"
+
+PATCHES=("${FILESDIR}/${P}-fix-single-threaded.patch")
 
 BUILD_DIR="${S}/build"
 
@@ -31,7 +34,7 @@ ALL_LLVM_TARGETS=(
 ALL_LLVM_TARGETS=( "${ALL_LLVM_TARGETS[@]/#/llvm_targets_}" )
 LLVM_TARGET_USEDEPS="${ALL_LLVM_TARGETS[@]/%/(-)?}"
 
-IUSE="test ${ALL_LLVM_TARGETS[*]}"
+IUSE="test threads ${ALL_LLVM_TARGETS[*]}"
 
 RDEPEND="
 	sys-devel/clang:${LLVM_MAX_SLOT}
@@ -43,6 +46,14 @@ DEPEND="${RDEPEND}"
 
 llvm_check_deps() {
 	has_version "sys-devel/clang:${LLVM_SLOT}"
+}
+
+# see https://github.com/ziglang/zig/wiki/Troubleshooting-Build-Issues#high-memory-requirements
+CHECKREQS_MEMORY="10G"
+
+pkg_setup() {
+	llvm_pkg_setup
+	check-reqs_pkg_setup
 }
 
 src_configure() {
@@ -76,12 +87,14 @@ src_configure() {
 				)
 			done
 			mysedargs+=(
-				-e "/^fn initializeLLVMTarget(/,/^}/ {
+				-e "
+					/^fn initializeLLVMTarget(/,/^}/ {
 						/\.$a => {/,/},$/ {
 							s/=>.*/=> unreachable,/
 							/=>/!d
 						}
-					}"
+					}
+				"
 			)
 		fi
 	done
@@ -90,6 +103,7 @@ src_configure() {
 	local mycmakeargs=(
 		-DZIG_USE_CCACHE=OFF
 		-DZIG_PREFER_CLANG_CPP_DYLIB=ON
+		-DZIG_SINGLE_THREADED="$(usex threads OFF ON)"
 	)
 
 	cmake_src_configure

@@ -1,9 +1,9 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit check-reqs eapi7-ver flag-o-matic java-pkg-2 java-vm-2 multiprocessing pax-utils toolchain-funcs
+inherit check-reqs eapi8-dosym flag-o-matic java-pkg-2 java-vm-2 multiprocessing toolchain-funcs
 
 SLOT="$(ver_cut 1)"
 OPENJ9_PV="$(ver_cut 2-4)"
@@ -27,7 +27,11 @@ fi
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa cups ddr debug doc gentoo-vm headless-awt javafx +jbootstrap numa selinux source systemtap"
+IUSE="alsa cups ddr debug doc +gentoo-vm headless-awt javafx +jbootstrap numa selinux source systemtap"
+
+REQUIRED_USE="
+	javafx? ( alsa !headless-awt )
+"
 
 COMMON_DEPEND="
 	media-libs/freetype:2=
@@ -112,6 +116,8 @@ pkg_setup() {
 	openjdk_check_requirements
 	java-vm-2_pkg_setup
 
+	[[ ${MERGE_TYPE} == "binary" ]] && return
+
 	JAVA_PKG_WANT_BUILD_VM="openj9-openjdk-${SLOT} openj9-openjdk-bin-${SLOT} openjdk-${SLOT} openjdk-bin-${SLOT}"
 	JAVA_PKG_WANT_SOURCE="${SLOT}"
 	JAVA_PKG_WANT_TARGET="${SLOT}"
@@ -132,25 +138,19 @@ pkg_setup() {
 		fi
 	done
 
-	if [[ ${MERGE_TYPE} != binary ]]; then
-		if [[ -z ${JDK_HOME} ]]; then
-			for slot in ${SLOT} $((SLOT-1)); do
-				for variant in openj9- ''; do
-					if has_version --host-root dev-java/${variant}openjdk:${slot}; then
-						JDK_HOME=${EPREFIX}/usr/$(get_libdir)/${variant}openjdk-${slot}
-						break
-					elif has_version --host-root dev-java/${variant}openjdk-bin:${slot}; then
-						JDK_HOME=$(best_version --host-root dev-java/${variant}openjdk-bin:${slot})
-						JDK_HOME=${JDK_HOME#*/}
-						JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
-						break
-					fi
-				done
-			done
+	for variant in openj9- ''; do
+		if has_version dev-java/${variant}openjdk:${SLOT}; then
+			JDK_HOME=${EPREFIX}/usr/$(get_libdir)/${variant}openjdk-${SLOT}
+			break
+		elif has_version dev-java/${variant}openjdk-bin:${SLOT}; then
+			JDK_HOME=$(best_version dev-java/${variant}openjdk-bin:${SLOT})
+			JDK_HOME=${JDK_HOME#*/}
+			JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
+			break
 		fi
-		[[ -n ${JDK_HOME} ]] || die "Build VM not found!"
-		export JDK_HOME
-	fi
+	done
+	[[ -n ${JDK_HOME} ]] || die "Build VM not found!"
+	export JDK_HOME
 }
 
 src_unpack() {
@@ -234,7 +234,7 @@ src_configure() {
 	)
 
 	if use javafx; then
-		local zip="${EPREFIX%/}/usr/$(get_libdir)/openjfx-${SLOT}/javafx-exports.zip"
+		local zip="${EPREFIX}/usr/$(get_libdir)/openjfx-${SLOT}/javafx-exports.zip"
 		if [[ -r ${zip} ]]; then
 			myconf+=( --with-import-modules="${zip}" )
 		else
@@ -273,7 +273,7 @@ src_compile() {
 
 src_install() {
 	local dest="/usr/$(get_libdir)/${PN}-${SLOT}"
-	local ddest="${ED}${dest#/}"
+	local ddest="${ED}/${dest#/}"
 
 	cd "${S}"/build/*-release/images/jdk || die
 
@@ -297,7 +297,7 @@ src_install() {
 	dodir "${dest}"
 	cp -pPR * "${ddest}" || die
 
-	dosym ../../../../../etc/ssl/certs/java/cacerts "${dest}"/lib/security/cacerts
+	dosym -r /etc/ssl/certs/java/cacerts "${dest}"/lib/security/cacerts
 
 	# must be done before running itself
 	java-vm_set-pax-markings "${ddest}"

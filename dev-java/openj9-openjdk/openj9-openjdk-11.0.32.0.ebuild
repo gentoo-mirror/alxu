@@ -1,9 +1,9 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit check-reqs eapi7-ver flag-o-matic java-pkg-2 java-vm-2 multiprocessing pax-utils toolchain-funcs
+inherit check-reqs eapi8-dosym flag-o-matic java-pkg-2 java-vm-2 multiprocessing toolchain-funcs
 
 SLOT="$(ver_cut 1)"
 OPENJ9_PV="$(ver_cut 2-4)"
@@ -27,7 +27,11 @@ fi
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa cups custom-optimization ddr debug doc gentoo-vm headless-awt javafx +jbootstrap selinux source systemtap"
+IUSE="alsa cups ddr debug doc headless-awt javafx +jbootstrap numa selinux source systemtap"
+
+REQUIRED_USE="
+	javafx? ( alsa !headless-awt )
+"
 
 COMMON_DEPEND="
 	media-libs/freetype:2=
@@ -41,6 +45,7 @@ COMMON_DEPEND="
 
 	dev-libs/elfutils
 	ddr? ( dev-libs/libdwarf )
+	numa? ( sys-process/numactl )
 "
 
 # Many libs are required to build, but not to run, make is possible to remove
@@ -78,10 +83,10 @@ DEPEND="
 	x11-libs/libXtst
 	javafx? ( dev-java/openjfx:${SLOT}= )
 	|| (
-		dev-java/openj9-openjdk-bin:${SLOT}
-		dev-java/openj9-openjdk:${SLOT}
-		dev-java/openjdk-bin:${SLOT}
-		dev-java/openjdk:${SLOT}
+		dev-java/openj9-openjdk-bin:${SLOT}[gentoo-vm(+)]
+		dev-java/openj9-openjdk:${SLOT}[gentoo-vm(+)]
+		dev-java/openjdk-bin:${SLOT}[gentoo-vm(+)]
+		dev-java/openjdk:${SLOT}[gentoo-vm(+)]
 	)
 "
 
@@ -111,45 +116,13 @@ pkg_setup() {
 	openjdk_check_requirements
 	java-vm-2_pkg_setup
 
+	[[ ${MERGE_TYPE} == "binary" ]] && return
+
 	JAVA_PKG_WANT_BUILD_VM="openj9-openjdk-${SLOT} openj9-openjdk-bin-${SLOT} openjdk-${SLOT} openjdk-bin-${SLOT}"
 	JAVA_PKG_WANT_SOURCE="${SLOT}"
 	JAVA_PKG_WANT_TARGET="${SLOT}"
 
-	# The nastiness below is necessary while the gentoo-vm USE flag is
-	# masked. First we call java-pkg-2_pkg_setup if it looks like the
-	# flag was unmasked against one of the possible build VMs. If not,
-	# we try finding one of them in their expected locations. This would
-	# have been slightly less messy if openjdk-bin had been installed to
-	# /opt/${PN}-${SLOT} or if there was a mechanism to install a VM env
-	# file but disable it so that it would not normally be selectable.
-
-	local vm
-	for vm in ${JAVA_PKG_WANT_BUILD_VM}; do
-		if [[ -d ${EPREFIX}/usr/lib/jvm/${vm} ]]; then
-			java-pkg-2_pkg_setup
-			return
-		fi
-	done
-
-	if [[ ${MERGE_TYPE} != binary ]]; then
-		if [[ -z ${JDK_HOME} ]]; then
-			for slot in ${SLOT} $((SLOT-1)); do
-				for variant in openj9- ''; do
-					if has_version --host-root dev-java/${variant}openjdk:${slot}; then
-						JDK_HOME=${EPREFIX}/usr/$(get_libdir)/${variant}openjdk-${slot}
-						break
-					elif has_version --host-root dev-java/${variant}openjdk-bin:${slot}; then
-						JDK_HOME=$(best_version --host-root dev-java/${variant}openjdk-bin:${slot})
-						JDK_HOME=${JDK_HOME#*/}
-						JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
-						break
-					fi
-				done
-			done
-		fi
-		[[ -n ${JDK_HOME} ]] || die "Build VM not found!"
-		export JDK_HOME
-	fi
+	java-pkg-2_pkg_setup
 }
 
 src_unpack() {
@@ -187,6 +160,7 @@ src_prepare() {
 	fi
 
 	find openj9/ omr/ -name CMakeLists.txt -exec sed -i -e '/set(OMR_WARNINGS_AS_ERRORS ON/s/ON/OFF/' {} + || die
+	sed -i -e '/^  OPENJ9_CONFIGURE_NUMA$/d' closed/autoconf/custom-hook.m4 || die
 
 	chmod +x configure || die
 }
@@ -194,8 +168,6 @@ src_prepare() {
 src_configure() {
 	# Work around stack alignment issue, bug #647954. in case we ever have x86
 	use x86 && append-flags -mincoming-stack-boundary=2
-
-	use custom-optimization || filter-flags '-O*'
 
 	# Enabling full docs appears to break doc building. If not
 	# explicitly disabled, the flag will get auto-enabled if pandoc and
@@ -234,7 +206,7 @@ src_configure() {
 	)
 
 	if use javafx; then
-		local zip="${EPREFIX%/}/usr/$(get_libdir)/openjfx-${SLOT}/javafx-exports.zip"
+		local zip="${EPREFIX}/usr/$(get_libdir)/openjfx-${SLOT}/javafx-exports.zip"
 		if [[ -r ${zip} ]]; then
 			myconf+=( --with-import-modules="${zip}" )
 		else
@@ -258,6 +230,7 @@ src_compile() {
 		"-DJ9JIT_EXTRA_CXXFLAGS='${CXXFLAGS}'"
 		"-DCMAKE_EXE_LINKER_FLAGS='${LDFLAGS}'"
 		-DOMR_WARNINGS_AS_ERRORS=OFF
+		-DOMR_PORT_NUMA_SUPPORT=$(usex numa)
 	)
 	local myemakeargs=(
 		JOBS=$(makeopts_jobs)
@@ -272,7 +245,7 @@ src_compile() {
 
 src_install() {
 	local dest="/usr/$(get_libdir)/${PN}-${SLOT}"
-	local ddest="${ED}${dest#/}"
+	local ddest="${ED}/${dest#/}"
 
 	cd "${S}"/build/*-release/images/jdk || die
 
@@ -296,12 +269,12 @@ src_install() {
 	dodir "${dest}"
 	cp -pPR * "${ddest}" || die
 
-	dosym ../../../../../etc/ssl/certs/java/cacerts "${dest}"/lib/security/cacerts
+	dosym -r /etc/ssl/certs/java/cacerts "${dest}"/lib/security/cacerts
 
 	# must be done before running itself
 	java-vm_set-pax-markings "${ddest}"
 
-	use gentoo-vm && java-vm_install-env "${FILESDIR}"/${PN}.env.sh
+	java-vm_install-env "${FILESDIR}"/${PN}.env.sh
 	java-vm_revdep-mask
 	java-vm_sandbox-predict /dev/random /proc/self/coredump_filter
 

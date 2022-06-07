@@ -1,9 +1,9 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=8
 
-inherit eapi7-ver java-vm-2 toolchain-funcs
+inherit java-vm-2
 
 abi_uri() {
 	echo "${2-$1}? (
@@ -52,8 +52,13 @@ QA_PREBUILT="*"
 S="${WORKDIR}/jdk-${JDK_PV}-jre"
 
 src_install() {
-	local dest="/opt/${P}"
-	local ddest="${ED%/}/${dest#/}"
+	local dest="/opt/${PN}-${SLOT}"
+	local ddest="${ED}/${dest#/}"
+
+	# Not sure why they bundle this as it's commonly available and they
+	# only do so on x86_64. It's needed by libfontmanager.so. IcedTea
+	# also has an explicit dependency while Oracle seemingly dlopens it.
+	rm -vf lib/libfreetype.so || die
 
 	# Oracle and IcedTea have libjsoundalsa.so depending on
 	# libasound.so.2 but AdoptOpenJDK only has libjsound.so. Weird.
@@ -66,16 +71,17 @@ src_install() {
 	fi
 
 	rm -v lib/security/cacerts || die
-	dosym ../../../../etc/ssl/certs/java/cacerts "${dest}"/lib/security/cacerts
+	dosym -r /etc/ssl/certs/java/cacerts "${dest}"/lib/security/cacerts
 
 	dodir "${dest}"
 	cp -pPR * "${ddest}" || die
 
-	# provide stable symlink
-	dosym "${P}" "/opt/${PN}-${SLOT}"
-
-	use gentoo-vm && java-vm_install-env "${FILESDIR}"/${PN}.env.sh
+	java-vm_install-env "${FILESDIR}"/${PN}.env.sh
 	java-vm_set-pax-markings "${ddest}"
 	java-vm_revdep-mask
 	java-vm_sandbox-predict /dev/random /proc/self/coredump_filter
+}
+
+pkg_postinst() {
+	java-vm-2_pkg_postinst
 }
