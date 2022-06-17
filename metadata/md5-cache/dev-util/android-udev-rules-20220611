@@ -8,6 +8,6 @@ KEYWORDS=~amd64 ~x86
 LICENSE=GPL-3
 RDEPEND=acct-group/adbusers virtual/udev
 SLOT=0
-SRC_URI=https://github.com/M0Rf30/android-udev-rules/archive/20220102.tar.gz -> android-udev-rules-20220102.tar.gz
+SRC_URI=https://github.com/M0Rf30/android-udev-rules/archive/20220611.tar.gz -> android-udev-rules-20220611.tar.gz
 _eclasses_=toolchain-funcs	fd9cde67030b26e479eeadaced488253	multilib	4fbbbc98f236f1b43acd99476bc3cd85	udev	f3a0a3964e2028a140c181f00eea9712
 _md5_=9afe569ffe897b9dc1f86831d6eba3a6
