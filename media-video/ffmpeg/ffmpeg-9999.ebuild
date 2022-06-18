@@ -288,6 +288,7 @@ RDEPEND="${RDEPEND}
 "
 
 DEPEND="${RDEPEND}
+	amf? ( media-libs/amf-headers )
 	ladspa? ( >=media-libs/ladspa-sdk-1.13-r2[${MULTILIB_USEDEP}] )
 	v4l? ( sys-kernel/linux-headers )
 "
@@ -296,7 +297,6 @@ DEPEND="${RDEPEND}
 BDEPEND+="
 	>=sys-devel/make-3.81
 	virtual/pkgconfig
-	amf? ( media-libs/amf-headers )
 	cpu_flags_x86_mmx? ( || ( >=dev-lang/nasm-2.13 >=dev-lang/yasm-1.3 ) )
 	cuda? ( >=sys-devel/clang-7[llvm_targets_NVPTX] )
 	doc? ( sys-apps/texinfo )
@@ -359,6 +359,15 @@ src_prepare() {
 
 multilib_src_configure() {
 	local myconf=( )
+
+	# bug 842201
+	use ia64 && tc-is-gcc && append-flags \
+		-fno-tree-ccp \
+		-fno-tree-dominator-opts \
+		-fno-tree-fre \
+		-fno-code-hoisting \
+		-fno-tree-pre \
+		-fno-tree-vrp
 
 	local ffuse=( "${FFMPEG_FLAG_MAP[@]}" )
 	use openssl && myconf+=( --enable-nonfree )
