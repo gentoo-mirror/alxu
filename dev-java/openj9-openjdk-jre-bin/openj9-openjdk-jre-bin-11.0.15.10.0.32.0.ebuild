@@ -18,14 +18,13 @@ SLOT=$(ver_cut 1)
 SRC_URI="
 	$(abi_uri aarch64 arm64)
 	$(abi_uri ppc64le ppc64)
-	$(abi_uri s390x s390)
 	$(abi_uri x64 amd64)
 "
 
 DESCRIPTION="Prebuilt IBM Semeru JRE binaries provided by IBM"
 HOMEPAGE="https://developer.ibm.com/languages/java/semeru-runtimes/"
 LICENSE="GPL-2-with-classpath-exception"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~s390"
+KEYWORDS="~amd64 ~arm64 ~ppc64"
 IUSE="alsa cups +gentoo-vm headless-awt selinux"
 
 RDEPEND="
