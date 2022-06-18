@@ -7,5 +7,6 @@
 	</maintainer>
 	<use>
 		<flag name="asm">Use assembly implementations (currently only amd64, arm64, x86)</flag>
+		<flag name="rar">RAR archive support, requires accepting unRAR license</flag>
 	</use>
 </pkgmetadata>
