@@ -5,6 +5,8 @@
 app-arch/7-zip:asm - Use assembly implementations (currently only amd64, arm64, x86)
 app-arch/7-zip:rar - RAR archive support, requires accepting unRAR license
 app-text/zathura:synctex - Use libsynctex to get latex codeline from pdf
+dev-dotnet/dotnet-runtime-bin:dotnet-symlink - Install a dotnet symlink that points to dotnet-bin.
+dev-dotnet/dotnet-runtime-bin:lttng - Install support libraries for LTTng with .NET.
 dev-java/openj9-openjdk:ddr - Enable Direct Dump Reader
 dev-java/openj9-openjdk:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
 dev-java/openj9-openjdk:headless-awt - Don't install the X backend for AWT, needed by some GUIs
@@ -25,6 +27,12 @@ dev-libs/openssl:ktls - Enable support for Kernel implementation of TLS (kTLS)
 dev-libs/openssl:rfc3779 - Enable support for RFC 3779 (X.509 Extensions for IP Addresses and AS Identifiers)
 dev-libs/openssl:tls-compression - Enable support for discouraged TLS compression
 dev-libs/openssl:weak-ssl-ciphers - Build support for SSL/TLS ciphers that are considered "weak"
+dev-libs/openssl-compat:asm - Support assembly hand optimized crypto functions (i.e. faster run time)
+dev-libs/openssl-compat:rfc3779 - Enable support for RFC 3779 (X.509 Extensions for IP Addresses and AS Identifiers)
+dev-libs/openssl-compat:sslv3 - Support for the old/insecure SSLv3 protocol -- note: not required for TLS/https
+dev-libs/openssl-compat:tls-compression - Enable support for discouraged TLS compression
+dev-libs/openssl-compat:tls-heartbeat - Enable the Heartbeat Extension in TLS and DTLS
+dev-libs/openssl-compat:weak-ssl-ciphers - Build support for SSL/TLS ciphers that are considered "weak"
 dev-qt/qtgui:X - Build the XCB platform plugin and enable X11 integration
 dev-qt/qtgui:egl - Enable EGL integration
 dev-qt/qtgui:eglfs - Build the EGL Full Screen/Single Surface platform plugin
