@@ -3,12 +3,14 @@
 # * generated automatically using pmaint *
 
 app-arch/7-zip:asm - Use assembly implementations (currently only amd64, arm64, x86)
+app-arch/7-zip:rar - RAR archive support, requires accepting unRAR license
 app-text/zathura:synctex - Use libsynctex to get latex codeline from pdf
 dev-java/openj9-openjdk:ddr - Enable Direct Dump Reader
 dev-java/openj9-openjdk:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
 dev-java/openj9-openjdk:headless-awt - Don't install the X backend for AWT, needed by some GUIs
 dev-java/openj9-openjdk:javafx - Import OpenJFX modules at build time, via dev-java/openjfx
 dev-java/openj9-openjdk:jbootstrap - Build OpenJDK twice, the second time using the result of the first
+dev-java/openj9-openjdk:numa - Enable NUMA support using sys-process/numactl (NUMA kernel support is also required)
 dev-java/openj9-openjdk:systemtap - Enable SystemTAP/DTrace tracing
 dev-java/openj9-openjdk-bin:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
 dev-java/openj9-openjdk-bin:headless-awt - Don't install the X backend for AWT, needed by some GUIs (used to be X flag)
@@ -18,9 +20,11 @@ dev-java/openj9-openjdk-jre-bin:headless-awt - Don't install the X backend for A
 dev-libs/libdwarf:dwarfexample - dwarfexample
 dev-libs/libdwarf:dwarfgen - dwarfgen
 dev-libs/openssl:asm - Support assembly hand optimized crypto functions (i.e. faster run time)
+dev-libs/openssl:fips - Enable FIPS provider
 dev-libs/openssl:ktls - Enable support for Kernel implementation of TLS (kTLS)
 dev-libs/openssl:rfc3779 - Enable support for RFC 3779 (X.509 Extensions for IP Addresses and AS Identifiers)
 dev-libs/openssl:tls-compression - Enable support for discouraged TLS compression
+dev-libs/openssl:weak-ssl-ciphers - Build support for SSL/TLS ciphers that are considered "weak"
 dev-qt/qtgui:X - Build the XCB platform plugin and enable X11 integration
 dev-qt/qtgui:egl - Enable EGL integration
 dev-qt/qtgui:eglfs - Build the EGL Full Screen/Single Surface platform plugin
@@ -48,6 +52,7 @@ media-gfx/imagemagick:opencl - Enable OpenCL support
 media-gfx/imagemagick:pango - Enable Pango support using x11-libs/pango
 media-gfx/imagemagick:q32 - Set quantum depth value to 32
 media-gfx/imagemagick:q8 - Set quantum depth value to 8
+media-video/ffmpeg:amf - Enables support for AMD's Advanced Media Framework (AMF)
 media-video/ffmpeg:amr - Enables Adaptive Multi-Rate Audio support
 media-video/ffmpeg:amrenc - Enables Adaptive Multi-Rate Audio encoding support with media-libs/vo-amrwbenc.
 media-video/ffmpeg:appkit - Enables Apple AppKit framework
@@ -97,9 +102,10 @@ media-video/ffmpeg:snappy - Enable app-arch/snappy support. Required for e.g. Vi
 media-video/ffmpeg:sndio - Enable support for the media-sound/sndio backend
 media-video/ffmpeg:srt - Enable support for Secure Reliable Transport (SRT) via net-libs/srt
 media-video/ffmpeg:ssh - Enable SSH/sftp support via net-libs/libssh.
-media-video/ffmpeg:svt-av1 - Enable support for the SVT-AV1 encoder
+media-video/ffmpeg:svt-av1 - Enables AV1 encoding support via media-libs/svt-av1.
 media-video/ffmpeg:twolame - Enables MP2 encoding via media-sound/twolame as an alternative to the internal encoder.
 media-video/ffmpeg:vidstab - Enables video stabilization filter using vid.stab library (media-libs/vidstab).
+media-video/ffmpeg:vmaf - Enables Netflix's perceptual video quality assessment filter using the library (media-libs/libvmaf).
 media-video/ffmpeg:vpx - Enables VP8 and VP9 codec support using libvpx: Decoding does not require this to be enabled but libvpx can also be used for decoding; encoding requires this useflag to be enabled though.
 media-video/ffmpeg:vulkan - Enables support for the vulkan API for GPU offload.
 media-video/ffmpeg:x265 - Enables HEVC encoding with media-libs/x265.
