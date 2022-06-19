@@ -3,7 +3,7 @@
 
 EAPI=8
 
-QT5_KDEPATCHSET_REV=4
+QT5_KDEPATCHSET_REV=1
 QT5_MODULE="qtbase"
 inherit qt5-build
 
@@ -124,10 +124,6 @@ QT5_GENTOO_CONFIG=(
 
 QT5_GENTOO_PRIVATE_CONFIG=(
 	:gui
-)
-
-PATCHES=(
-	"${FILESDIR}/qt-5.12-gcc-avx2.patch" # bug 672946
 )
 
 src_prepare() {
