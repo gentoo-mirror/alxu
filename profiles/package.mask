@@ -1,6 +1,3 @@
-# https://github.com/pts/pdfsizeopt/issues/139
-app-text/pdfsizeopt
-
 # untested
 dev-lang/zig
 sys-fs/ncdu
