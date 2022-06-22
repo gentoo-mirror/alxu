@@ -1,5 +1,5 @@
 acct-group/adbusers 0: Android Debug Bridge user group
-app-arch/7-zip 21.07-r2: File archiver with a high compression ratio
+app-arch/7-zip 22.00: File archiver with a high compression ratio
 app-arch/precomp-cpp 0.4.7: Precomp, C++ version - further compress already compressed files
 app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-crypt/openpgp-keys-runescape 0: OpenPGP keys used by Jagex to sign RuneScape packages for Ubuntu
