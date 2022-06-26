@@ -46,7 +46,6 @@ dev-qt/qtgui:vulkan - Enable support for Vulkan
 dev-qt/qtgui:wayland - Provide dev-qt/qtwayland to ensure Qt applications can be run as Wayland clients
 gui-apps/gammastep:drm - Enable drm method.
 gui-apps/gammastep:geoclue - Enable geolocation support.
-gui-apps/swaybg:gdk-pixbuf - Support image types other than PNG
 mail-client/astroid:embedded-editor - Embedded editor
 mail-client/astroid:plugins - Plugins
 mail-client/astroid:terminal - Embedded terminal
