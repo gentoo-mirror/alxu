@@ -27,7 +27,6 @@ media-video/ffmpeg 9999: Complete solution to record/convert/stream audio and vi
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 net-mail/notmuch 0.34.2-r1: Thread-based e-mail indexer, supporting quick search and tagging
 sci-calculators/units 2.21-r1: Unit conversion program
-sys-fs/ncdu 2.1.2: NCurses Disk Usage
 virtual/7z 0: Virtual for /usr/bin/7z
 virtual/jdk 11-r3 17-r1: Virtual for Java Development Kit (JDK)
 virtual/jre 11-r2 17: Virtual for Java Runtime Environment (JRE)
