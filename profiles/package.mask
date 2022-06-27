@@ -1,3 +1,2 @@
 # untested
 dev-lang/zig
-sys-fs/ncdu
