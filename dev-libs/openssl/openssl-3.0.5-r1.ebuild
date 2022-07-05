@@ -46,10 +46,12 @@ DEPEND="${COMMON_DEPEND}"
 RDEPEND="${COMMON_DEPEND}"
 PDEPEND="app-misc/ca-certificates"
 
-REQUIRED_USE="test? ( rfc3779 )"
-
 MULTILIB_WRAPPED_HEADERS=(
 	/usr/include/openssl/configuration.h
+)
+
+PATCHES=(
+	"${FILESDIR}"/${P}-test-memcmp.patch
 )
 
 pkg_setup() {
