@@ -9,6 +9,6 @@ KEYWORDS=~amd64 ~x86
 LICENSE=LGPL-2.1+ BSD rar? ( unRAR )
 RDEPEND=!app-arch/p7zip
 SLOT=0
-SRC_URI=https://7-zip.org/a/7z2200-src.tar.xz
+SRC_URI=https://7-zip.org/a/7z2201-src.tar.xz
 _eclasses_=toolchain-funcs	1542e649be915f43f6908a9e93909961	multilib	5ca4e49abed8e3a2f7b56920eadee157
 _md5_=f1132ae78b00f0395289a19d5bffd5d7
