@@ -3,11 +3,11 @@
 
 EAPI="8"
 
-FIREFOX_PATCHSET="firefox-101-patches-08j.tar.xz"
+FIREFOX_PATCHSET="firefox-102-patches-02j.tar.xz"
 
 LLVM_MAX_SLOT=14
 
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{8..11} )
 PYTHON_REQ_USE="ncurses,sqlite,ssl"
 
 WANT_AUTOCONF="2.1"
@@ -122,12 +122,12 @@ BDEPEND="${PYTHON_DEPS}
 "
 
 COMMON_DEPEND="
-	dev-libs/glib:2
 	dev-libs/atk
 	dev-libs/expat
+	dev-libs/glib:2
 	dev-libs/libffi:=
-	>=dev-libs/nss-3.78
-	>=dev-libs/nspr-4.32
+	>=dev-libs/nss-3.79
+	>=dev-libs/nspr-4.34
 	media-libs/alsa-lib
 	media-libs/fontconfig
 	media-libs/freetype
@@ -163,6 +163,7 @@ COMMON_DEPEND="
 	system-png? ( >=media-libs/libpng-1.6.35:0=[apng] )
 	system-webp? ( >=media-libs/libwebp-1.1.0:0= )
 	wayland? (
+		>=media-libs/libepoxy-1.5.10-r1
 		x11-libs/gtk+:3[wayland]
 		x11-libs/libdrm
 		x11-libs/libxkbcommon[wayland]

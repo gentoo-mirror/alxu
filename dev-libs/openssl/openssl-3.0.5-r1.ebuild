@@ -1,8 +1,9 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="7"
+EAPI=7
 
+VERIFY_SIG_OPENPGP_KEY_PATH="${BROOT}"/usr/share/openpgp-keys/openssl.org.asc
 inherit edo flag-o-matic linux-info toolchain-funcs multilib-minimal multiprocessing verify-sig
 
 DESCRIPTION="Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)"
@@ -17,7 +18,6 @@ if [[ ${PV} == 9999 ]] ; then
 else
 	SRC_URI="mirror://openssl/source/${MY_P}.tar.gz
 		verify-sig? ( mirror://openssl/source/${MY_P}.tar.gz.asc )"
-	VERIFY_SIG_OPENPGP_KEY_PATH="${BROOT}"/usr/share/openpgp-keys/openssl.org.asc
 	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~x86-linux"
 fi
 
@@ -51,8 +51,7 @@ MULTILIB_WRAPPED_HEADERS=(
 )
 
 PATCHES=(
-	# General patches which are suitable to always apply
-	# If they're Gentoo specific, add to USE=-vanilla logic in src_prepare!
+	"${FILESDIR}"/${P}-test-memcmp.patch
 )
 
 pkg_setup() {
@@ -79,6 +78,16 @@ pkg_setup() {
 			die "FEATURES=test with USE=sctp requires net.sctp.auth_enable=1!"
 		fi
 	fi
+}
+
+src_unpack() {
+	# Can delete this once test fix patch is dropped
+	if use verify-sig ; then
+		# Needed for downloaded patch (which is unsigned, which is fine)
+		verify-sig_verify_detached "${DISTDIR}"/${P}.tar.gz{,.asc}
+	fi
+
+	default
 }
 
 src_prepare() {
@@ -205,9 +214,7 @@ multilib_src_configure() {
 		threads
 	)
 
-	CFLAGS= LDFLAGS= edo \
-		./${config} \
-		"${myeconfargs[@]}"
+	CFLAGS= LDFLAGS= edo ./${config} "${myeconfargs[@]}"
 
 	# Clean out hardcoded flags that openssl uses
 	local DEFAULT_CFLAGS=$(grep ^CFLAGS= Makefile | LC_ALL=C sed \
@@ -275,7 +282,9 @@ multilib_src_install_all() {
 	cd "${ED}"/usr/share/man || die
 	local m d s
 	for m in $(find . -type f | xargs grep -L '#include') ; do
-		d=${m%/*} ; d=${d#./} ; m=${m##*/}
+		d=${m%/*}
+		d=${d#./}
+		m=${m##*/}
 
 		[[ ${m} == openssl.1* ]] && continue
 
@@ -291,6 +300,7 @@ multilib_src_install_all() {
 		# We assume that any broken links are due to the above renaming
 		for s in $(find -L ${d} -type l) ; do
 			s=${s##*/}
+
 			rm -f ${d}/${s}
 
 			# We don't want to "|| die" here
