@@ -1,11 +1,12 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="8"
+EAPI=8
 
-inherit autotools flag-o-matic libtool perl-functions toolchain-funcs
+QA_PKGCONFIG_VERSION=$(ver_cut 1-3)
+inherit autotools flag-o-matic perl-functions toolchain-funcs
 
-if [[ ${PV} == "9999" ]] ; then
+if [[ ${PV} == 9999 ]] ; then
 	EGIT_REPO_URI="https://github.com/ImageMagick/ImageMagick.git"
 	inherit git-r3
 	MY_P="imagemagick-9999"
@@ -13,14 +14,16 @@ else
 	MY_PV="$(ver_rs 3 '-')"
 	MY_P="ImageMagick-${MY_PV}"
 	SRC_URI="mirror://imagemagick/${MY_P}.tar.xz"
-	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~x64-solaris ~x86-solaris"
+	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~x64-solaris ~x86-solaris"
 fi
+
+S="${WORKDIR}/${MY_P}"
 
 DESCRIPTION="A collection of tools and libraries for many image formats"
 HOMEPAGE="https://www.imagemagick.org/"
 
 LICENSE="imagemagick"
-SLOT="0/7.1.0-0"
+SLOT="0/7.1.0-43"
 IUSE="bzip2 corefonts +cxx djvu fftw fontconfig fpx graphviz hdri heif jbig jpeg jpeg2k jpegxl lcms lqr lzma opencl openexr openmp pango perl +png postscript q32 q8 raw static-libs svg test tiff truetype webp wmf X xml zip zlib"
 
 REQUIRED_USE="corefonts? ( truetype )
@@ -29,10 +32,9 @@ REQUIRED_USE="corefonts? ( truetype )
 
 RESTRICT="!test? ( test )"
 
-BDEPEND="virtual/pkgconfig"
-
 RDEPEND="
-	dev-libs/libltdl:0
+	!media-gfx/graphicsmagick[imagemagick]
+	dev-libs/libltdl
 	bzip2? ( app-arch/bzip2 )
 	corefonts? ( media-fonts/corefonts )
 	djvu? ( app-text/djvu )
@@ -42,7 +44,7 @@ RDEPEND="
 	graphviz? ( media-gfx/graphviz )
 	heif? ( media-libs/libheif:=[x265] )
 	jbig? ( >=media-libs/jbigkit-2:= )
-	jpeg? ( virtual/jpeg:0 )
+	jpeg? ( media-libs/libjpeg-turbo:= )
 	jpeg2k? ( >=media-libs/openjpeg-2.1.0:2 )
 	jpegxl? ( media-libs/libjxl:= )
 	lcms? ( media-libs/lcms:2= )
@@ -50,47 +52,54 @@ RDEPEND="
 	opencl? ( virtual/opencl )
 	openexr? ( media-libs/openexr:0= )
 	pango? ( x11-libs/pango )
-	perl? ( >=dev-lang/perl-5.8.8:0= )
-	png? ( media-libs/libpng:0= )
+	perl? ( >=dev-lang/perl-5.8.8:= )
+	png? ( media-libs/libpng:= )
 	postscript? ( app-text/ghostscript-gpl )
 	raw? ( media-libs/libraw:= )
 	svg? (
 		gnome-base/librsvg
 		media-gfx/potrace
-		)
-	tiff? ( media-libs/tiff:0= )
+	)
+	tiff? ( media-libs/tiff:= )
 	truetype? (
 		media-fonts/urw-fonts
 		>=media-libs/freetype-2
-		)
-	webp? ( media-libs/libwebp:0= )
+	)
+	webp? ( media-libs/libwebp:= )
 	wmf? ( media-libs/libwmf )
 	X? (
 		x11-libs/libICE
 		x11-libs/libSM
 		x11-libs/libXext
 		x11-libs/libXt
-		)
-	xml? ( dev-libs/libxml2:= )
+	)
+	xml? ( dev-libs/libxml2 )
 	lzma? ( app-arch/xz-utils )
 	zip? ( dev-libs/libzip:= )
 	zlib? ( sys-libs/zlib:= )"
-
 DEPEND="${RDEPEND}
-	!media-gfx/graphicsmagick[imagemagick]
 	X? ( x11-base/xorg-proto )"
+BDEPEND="virtual/pkgconfig"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-9999-nocputuning.patch"
 )
 
-S="${WORKDIR}/${MY_P}"
+pkg_pretend() {
+	[[ ${MERGE_TYPE} != binary ]] && use openmp && tc-check-openmp
+}
+
+pkg_setup() {
+	[[ ${MERGE_TYPE} != binary ]] && use openmp && tc-check-openmp
+}
 
 src_prepare() {
 	default
+
+	#elibtoolize # for Darwin modules
 	eautoreconf
 
-	# Apply hardening #664236
+	# Apply hardening, bug #664236
 	cp "${FILESDIR}"/policy-hardening.snippet "${S}" || die
 	sed -i -e '/^<policymap>$/ {
 			r policy-hardening.snippet
@@ -99,8 +108,6 @@ src_prepare() {
 		config/policy.xml || \
 		die "Failed to apply hardening of policy.xml"
 	einfo "policy.xml hardened"
-
-	elibtoolize # for Darwin modules
 
 	# For testsuite, see https://bugs.gentoo.org/show_bug.cgi?id=500580#c3
 	local ati_cards mesa_cards nvidia_cards render_cards
@@ -130,9 +137,6 @@ src_configure() {
 	use q8 && depth=8
 	use q32 && depth=32
 
-	local openmp=disable
-	use openmp && { tc-has-openmp && openmp=enable; }
-
 	use perl && perl_check_env
 
 	[[ ${CHOST} == *-solaris* ]] && append-ldflags -lnsl -lsocket
@@ -141,6 +145,7 @@ src_configure() {
 		$(use_enable static-libs static)
 		$(use_enable hdri)
 		$(use_enable opencl)
+		$(use_enable openmp)
 		--with-threads
 		--with-modules
 		--with-quantum-depth=${depth}
@@ -180,13 +185,13 @@ src_configure() {
 		$(use_with corefonts windows-font-dir "${EPREFIX}"/usr/share/fonts/corefonts)
 		$(use_with wmf)
 		$(use_with xml)
-		--${openmp}-openmp
 	)
-	CONFIG_SHELL=$(type -P bash) econf "${myeconfargs[@]}"
+
+	CONFIG_SHELL="${BROOT}"/bin/bash econf "${myeconfargs[@]}"
 }
 
 src_test() {
-	# Install default (unrestricted) policy in $HOME for test suite #664238
+	# Install default (unrestricted) policy in $HOME for test suite, bug #664238
 	local _im_local_config_home="${HOME}/.config/ImageMagick"
 	mkdir -p "${_im_local_config_home}" || \
 		die "Failed to create IM config dir in '${_im_local_config_home}'"
@@ -194,7 +199,7 @@ src_test() {
 		die "Failed to install default blank policy.xml in '${_im_local_config_home}'"
 
 	local im_command= IM_COMMANDS=()
-	if [[ ${PV} == "9999" ]] ; then
+	if [[ ${PV} == 9999 ]] ; then
 		IM_COMMANDS+=( "magick -version" ) # Show version we are using -- cannot verify because of live ebuild
 	else
 		IM_COMMANDS+=( "magick -version | grep -q -- \"${MY_PV}\"" ) # Verify that we are using version we just built
@@ -217,7 +222,7 @@ src_install() {
 		install
 
 	rm -f "${ED}"/usr/share/doc/${PF}/html/{ChangeLog,LICENSE,NEWS.txt}
-	dodoc {AUTHORS,README}.txt ChangeLog
+	dodoc {AUTHORS,README}.txt
 
 	if use perl; then
 		find "${ED}" -type f -name perllocal.pod -exec rm -f {} +
