@@ -99,7 +99,8 @@ virtwl() {
 
 	# TODO: don't run addpredict in utility function. WLR_RENDERER=pixman doesn't work
 	addpredict /dev/dri
-	coproc VIRTWL { WLR_BACKENDS=headless exec tinywl -s 'echo $WAYLAND_DISPLAY'; }
+	local VIRTWL VIRTWL_PID
+	coproc VIRTWL { WLR_BACKENDS=headless exec tinywl -s 'echo $WAYLAND_DISPLAY; read _; kill $PPID'; }
 	local -x WAYLAND_DISPLAY
 	read WAYLAND_DISPLAY <&${VIRTWL[0]}
 
@@ -108,7 +109,7 @@ virtwl() {
 	retval=$?
 
 	[[ -n $VIRTWL_PID ]] || die "tinywl exited unexpectedly"
-	kill $VIRTWL_PID
+	exec {VIRTWL[0]}<&- {VIRTWL[1]}>&-
 
 	[[ $retval = 0 ]] || die "Failed to run '$@'"
 }
