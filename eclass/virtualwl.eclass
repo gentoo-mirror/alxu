@@ -56,16 +56,6 @@ esac
 # @DESCRIPTION:
 # Start a new wayland session and run commands in it.
 #
-# IMPORTANT: This command is run nonfatal !!!
-#
-# This means we are checking for the return code and raise an exception if it
-# isn't 0. So you need to make sure that all commands return a proper
-# code and not just die. All eclass function used should support nonfatal
-# calls properly.
-#
-# The rationale behind this is the tear down of the started wayland session. A
-# straight die would leave a running session behind.
-#
 # Example:
 #
 # @CODE
@@ -105,12 +95,9 @@ virtwl() {
 	read WAYLAND_DISPLAY <&${VIRTWL[0]}
 
 	debug-print "${FUNCNAME}: $@"
-	nonfatal "$@"
-	retval=$?
+	"$@"
 
 	[[ -n $VIRTWL_PID ]] || die "tinywl exited unexpectedly"
 	exec {VIRTWL[0]}<&- {VIRTWL[1]}>&-
-
-	[[ $retval = 0 ]] || die "Failed to run '$@'"
 }
 fi
