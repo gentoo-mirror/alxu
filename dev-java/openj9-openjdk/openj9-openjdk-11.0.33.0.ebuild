@@ -40,7 +40,7 @@ COMMON_DEPEND="
 	media-libs/libpng:0=
 	media-libs/lcms:2=
 	sys-libs/zlib
-	virtual/jpeg:0=
+	media-libs/libjpeg-turbo:0=
 	systemtap? ( dev-util/systemtap )
 
 	dev-libs/elfutils
@@ -147,9 +147,9 @@ src_prepare() {
 
 	default
 
+	eapply -- "${FILESDIR}/openj9-openjdk-override-version.patch"
 	eapply -d openj9 -- "${FILESDIR}/openj9-no-o3.patch"
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
-	eapply -d omr -- "${FILESDIR}/omr-fam.patch"
 
 	if [[ ${OPENJ9_PV} != 9999 ]]; then
 		sed -i -e '/^OPENJDK_SHA :=/s/:=.*/:= __OPENJDK_SHA__/' \
@@ -239,6 +239,10 @@ src_compile() {
 		$(usex jbootstrap bootcycle-images product-images)
 
 		EXTRA_CMAKE_ARGS="${mycmakeargsx[*]}"
+		OPENJDK_SHA=$(ver_cut 1-3)
+		OPENJ9_SHA=${OPENJ9_P}
+		OPENJ9_TAG=${OPENJ9_P}
+		OPENJ9OMR_SHA=${OPENJ9_P}
 	)
 	emake "${myemakeargs[@]}" -j1 #nowarn
 }
@@ -269,7 +273,7 @@ src_install() {
 	dodir "${dest}"
 	cp -pPR * "${ddest}" || die
 
-	dosym -r /etc/ssl/certs/java/cacerts "${dest}"/lib/security/cacerts
+	dosym8 -r /etc/ssl/certs/java/cacerts "${dest}"/lib/security/cacerts
 
 	# must be done before running itself
 	java-vm_set-pax-markings "${ddest}"

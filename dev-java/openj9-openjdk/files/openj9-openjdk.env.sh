@@ -1,6 +1,3 @@
-# Copyright 1999-2018 Gentoo Authors
-# Distributed under the terms of the GNU General Public License v2
-
 VERSION="OpenJDK ${SLOT} with OpenJ9 ${OPENJ9_PV}"
 JAVA_HOME="${EPREFIX}/usr/$(get_libdir)/${PN}-${SLOT}"
 JDK_HOME="${EPREFIX}/usr/$(get_libdir)/${PN}-${SLOT}"
