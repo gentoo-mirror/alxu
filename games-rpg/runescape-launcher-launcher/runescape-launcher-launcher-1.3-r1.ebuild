@@ -21,7 +21,7 @@ RDEPEND="
 	x11-libs/libSM
 	x11-libs/libX11
 	x11-libs/libXxf86vm
-	dev-libs/openssl-compat:1.1
+	dev-libs/openssl-compat:1.1.1
 	x11-libs/pango
 	media-libs/libsdl2
 "
