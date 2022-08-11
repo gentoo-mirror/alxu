@@ -27,7 +27,7 @@ fi
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa cups ddr debug doc +gentoo-vm headless-awt javafx +jbootstrap numa selinux source systemtap"
+IUSE="alsa cups ddr debug doc +gentoo-vm headless-awt javafx +jbootstrap jitserver numa selinux source systemtap"
 
 REQUIRED_USE="
 	javafx? ( alsa !headless-awt )
@@ -40,7 +40,7 @@ COMMON_DEPEND="
 	media-libs/libpng:0=
 	media-libs/lcms:2=
 	sys-libs/zlib
-	virtual/jpeg:0=
+	media-libs/libjpeg-turbo:0=
 	systemtap? ( dev-util/systemtap )
 
 	dev-libs/elfutils
@@ -109,6 +109,10 @@ pkg_pretend() {
 	openjdk_check_requirements
 	if [[ ${MERGE_TYPE} != binary ]]; then
 		has ccache ${FEATURES} && die "FEATURES=ccache doesn't work with ${PN}, bug #677876"
+
+		if use jitserver && tc-is-clang; then
+			die "jitserver does not compile with clang"
+		fi
 	fi
 }
 
@@ -132,25 +136,11 @@ pkg_setup() {
 
 	local vm
 	for vm in ${JAVA_PKG_WANT_BUILD_VM}; do
-		if [[ -d ${EPREFIX}/usr/lib/jvm/${vm} ]]; then
+		if [[ -d ${BROOT}/usr/lib/jvm/${vm} ]]; then
 			java-pkg-2_pkg_setup
 			return
 		fi
 	done
-
-	for variant in openj9- ''; do
-		if has_version dev-java/${variant}openjdk:${SLOT}; then
-			JDK_HOME=${EPREFIX}/usr/$(get_libdir)/${variant}openjdk-${SLOT}
-			break
-		elif has_version dev-java/${variant}openjdk-bin:${SLOT}; then
-			JDK_HOME=$(best_version dev-java/${variant}openjdk-bin:${SLOT})
-			JDK_HOME=${JDK_HOME#*/}
-			JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
-			break
-		fi
-	done
-	[[ -n ${JDK_HOME} ]] || die "Build VM not found!"
-	export JDK_HOME
 }
 
 src_unpack() {
@@ -175,17 +165,9 @@ src_prepare() {
 
 	default
 
+	eapply -- "${FILESDIR}/openj9-openjdk-override-version.patch"
 	eapply -d openj9 -- "${FILESDIR}/openj9-no-o3.patch"
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
-	eapply -d omr -- "${FILESDIR}/omr-fam.patch"
-
-	if [[ ${OPENJ9_PV} != 9999 ]]; then
-		sed -i -e '/^OPENJDK_SHA :=/s/:=.*/:= __OPENJDK_SHA__/' \
-			   -e '/^OPENJ9_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
-			   -e '/^OPENJ9_TAG :=/s/:=.*/:= '${OPENJ9_P}/ \
-			   -e '/^OPENJ9OMR_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
-			   closed/OpenJ9.gmk || die
-	fi
 
 	find openj9/ omr/ -name CMakeLists.txt -exec sed -i -e '/set(OMR_WARNINGS_AS_ERRORS ON/s/ON/OFF/' {} + || die
 	sed -i -e '/^  OPENJ9_CONFIGURE_NUMA$/d' closed/autoconf/custom-hook.m4 || die
@@ -194,6 +176,20 @@ src_prepare() {
 }
 
 src_configure() {
+	for variant in openj9- ''; do
+		if has_version dev-java/${variant}openjdk:${SLOT}; then
+			JDK_HOME=${EPREFIX}/usr/$(get_libdir)/${variant}openjdk-${SLOT}
+			break
+		elif has_version dev-java/${variant}openjdk-bin:${SLOT}; then
+			JDK_HOME=$(best_version dev-java/${variant}openjdk-bin:${SLOT})
+			JDK_HOME=${JDK_HOME#*/}
+			JDK_HOME=${EPREFIX}/opt/${JDK_HOME%-r*}
+			break
+		fi
+	done
+	[[ -n ${JDK_HOME} ]] || die "Build VM not found!"
+	export JDK_HOME
+
 	# Work around stack alignment issue, bug #647954. in case we ever have x86
 	use x86 && append-flags -mincoming-stack-boundary=2
 
@@ -231,6 +227,7 @@ src_configure() {
 
 		--with-cmake
 		$(use_enable ddr)
+		$(use_enable jitserver)
 	)
 
 	if use javafx; then
@@ -267,6 +264,10 @@ src_compile() {
 		$(usex jbootstrap bootcycle-images product-images)
 
 		EXTRA_CMAKE_ARGS="${mycmakeargsx[*]}"
+		OPENJDK_SHA=$(ver_cut 1-3)
+		OPENJ9_SHA=${OPENJ9_P}
+		OPENJ9_TAG=${OPENJ9_P}
+		OPENJ9OMR_SHA=${OPENJ9_P}
 	)
 	emake "${myemakeargs[@]}" -j1 #nowarn
 }
@@ -297,7 +298,7 @@ src_install() {
 	dodir "${dest}"
 	cp -pPR * "${ddest}" || die
 
-	dosym -r /etc/ssl/certs/java/cacerts "${dest}"/lib/security/cacerts
+	dosym8 -r /etc/ssl/certs/java/cacerts "${dest}"/lib/security/cacerts
 
 	# must be done before running itself
 	java-vm_set-pax-markings "${ddest}"

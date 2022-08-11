@@ -13,6 +13,10 @@ SLOT="0"
 KEYWORDS="~*"
 IUSE=""
 
+BDEPEND="
+	app-arch/unzip
+"
+
 S="${WORKDIR}"
 
 src_install() {
