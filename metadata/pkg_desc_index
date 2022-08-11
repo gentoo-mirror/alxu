@@ -4,7 +4,7 @@ app-arch/precomp-cpp 0.4.7: Precomp, C++ version - further compress already comp
 app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-text/zathura 0.4.9-r1: A highly customizable and functional document viewer
 dev-dotnet/dotnet-runtime-bin 3.1.25 6.0.5: .NET is a free, cross-platform, open-source developer platform
-dev-java/openj9-openjdk 11.0.32.0 17.0.32.0: Extensions for OpenJDK for Eclipse OpenJ9
+dev-java/openj9-openjdk 11.0.33.0 17.0.33.0: Extensions for OpenJDK for Eclipse OpenJ9
 dev-java/openj9-openjdk-bin 11.0.16.8.0.33.0 17.0.4.8.0.33.0: Prebuilt IBM Semeru JDK binaries provided by IBM
 dev-java/openj9-openjdk-jre-bin 11.0.16.8.0.33.0 17.0.4.8.0.33.0: Prebuilt IBM Semeru JRE binaries provided by IBM
 dev-lang/zig 0.9.1: A robust, optimal, and maintainable programming language

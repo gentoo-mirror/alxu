@@ -1,3 +1,4 @@
+BDEPEND=app-arch/unzip
 DEFINED_PHASES=install
 DESCRIPTION=Google Noto Emoji fonts
 EAPI=7
@@ -6,4 +7,4 @@ KEYWORDS=~*
 LICENSE=OFL-1.1
 SLOT=0
 SRC_URI=https://fonts.google.com/download?family=Noto%20Emoji -> Noto_Emoji.zip
-_md5_=a8847b670efb346fb7f96629d55b8e4a
+_md5_=9efa08389d8122deb3db8dafe6165c41
