@@ -12,6 +12,7 @@ dev-java/openj9-openjdk:gentoo-vm - Allow this JDK to be recognised by Gentoo (p
 dev-java/openj9-openjdk:headless-awt - Don't install the X backend for AWT, needed by some GUIs
 dev-java/openj9-openjdk:javafx - Import OpenJFX modules at build time, via dev-java/openjfx
 dev-java/openj9-openjdk:jbootstrap - Build OpenJDK twice, the second time using the result of the first
+dev-java/openj9-openjdk:jitserver - OpenJ9 JITServer support
 dev-java/openj9-openjdk:numa - Enable NUMA support using sys-process/numactl (NUMA kernel support is also required)
 dev-java/openj9-openjdk:systemtap - Enable SystemTAP/DTrace tracing
 dev-java/openj9-openjdk-bin:gentoo-vm - Allow this JDK to be recognised by Gentoo (package manager, eselect, java-config, EXPERIMENTAL!)
