@@ -17,7 +17,7 @@ esac
 if [[ ! ${_VIRTUALWL_ECLASS} ]]; then
 _VIRTUALWL_ECLASS=1
 
-# @ECLASS-VARIABLE: VIRTUALWL_REQUIRED
+# @ECLASS_VARIABLE: VIRTUALWL_REQUIRED
 # @PRE_INHERIT
 # @DESCRIPTION:
 # Variable specifying the dependency on wayland.
@@ -28,7 +28,7 @@ _VIRTUALWL_ECLASS=1
 # into "kde? ( )" and add kde into IUSE.
 : ${VIRTUALWL_REQUIRED:=test}
 
-# @ECLASS-VARIABLE: VIRTUALWL_DEPEND
+# @ECLASS_VARIABLE: VIRTUALWL_DEPEND
 # @OUTPUT_VARIABLE
 # @DESCRIPTION:
 # Standard dependencies string that is automatically added to BDEPEND

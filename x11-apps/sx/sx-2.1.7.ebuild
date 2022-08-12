@@ -9,7 +9,6 @@ HOMEPAGE="https://github.com/Earnestly/sx"
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/Earnestly/sx.git"
-	KEYWORDS=""
 else
 	SRC_URI="https://github.com/Earnestly/sx/archive/${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~x86"
