@@ -5,7 +5,7 @@ EAPI=7
 
 : "${CMAKE_MAKEFILE_GENERATOR:=ninja}"
 
-inherit cmake git-r3 virtualx
+inherit cmake git-r3 optfeature virtualx
 
 DESCRIPTION="lightweight graphical threads-with-tags style email client for notmuch"
 HOMEPAGE="https://github.com/astroidmail/astroid"
