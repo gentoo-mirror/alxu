@@ -126,6 +126,12 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 	:gui
 )
 
+# https://bugs.kde.org/show_bug.cgi?id=449196
+# https://bugreports.qt.io/browse/QTBUG-91396
+PATCHES=( # kde/5.15 branch
+	"${FILESDIR}/${P}"-xcb-update-_NET_SUPPORTED-when-WM-changes-it.patch
+)
+
 src_prepare() {
 	# don't add -O3 to CXXFLAGS, bug 549140
 	sed -i -e '/CONFIG\s*+=/s/optimize_full//' src/gui/gui.pro || die
