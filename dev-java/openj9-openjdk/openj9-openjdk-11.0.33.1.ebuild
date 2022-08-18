@@ -27,7 +27,7 @@ fi
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa cups ddr debug doc headless-awt javafx +jbootstrap numa selinux source systemtap"
+IUSE="alsa cups ddr debug doc +gentoo-vm headless-awt javafx +jbootstrap jitserver numa selinux source systemtap"
 
 REQUIRED_USE="
 	javafx? ( alsa !headless-awt )
@@ -109,6 +109,10 @@ pkg_pretend() {
 	openjdk_check_requirements
 	if [[ ${MERGE_TYPE} != binary ]]; then
 		has ccache ${FEATURES} && die "FEATURES=ccache doesn't work with ${PN}, bug #677876"
+
+		if use jitserver && tc-is-clang; then
+			die "jitserver does not compile with clang"
+		fi
 	fi
 }
 
@@ -150,14 +154,6 @@ src_prepare() {
 	eapply -- "${FILESDIR}/openj9-openjdk-override-version.patch"
 	eapply -d openj9 -- "${FILESDIR}/openj9-no-o3.patch"
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
-
-	if [[ ${OPENJ9_PV} != 9999 ]]; then
-		sed -i -e '/^OPENJDK_SHA :=/s/:=.*/:= __OPENJDK_SHA__/' \
-			   -e '/^OPENJ9_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
-			   -e '/^OPENJ9_TAG :=/s/:=.*/:= '${OPENJ9_P}/ \
-			   -e '/^OPENJ9OMR_SHA :=/s/:=.*/:= '${OPENJ9_P}/ \
-			   closed/OpenJ9.gmk || die
-	fi
 
 	find openj9/ omr/ -name CMakeLists.txt -exec sed -i -e '/set(OMR_WARNINGS_AS_ERRORS ON/s/ON/OFF/' {} + || die
 	sed -i -e '/^  OPENJ9_CONFIGURE_NUMA$/d' closed/autoconf/custom-hook.m4 || die
@@ -203,6 +199,7 @@ src_configure() {
 
 		--with-cmake
 		$(use_enable ddr)
+		$(use_enable jitserver)
 	)
 
 	if use javafx; then
