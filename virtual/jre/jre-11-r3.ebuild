@@ -11,4 +11,4 @@ RDEPEND="|| (
 		dev-java/openjdk-jre-bin:${SLOT}[gentoo-vm(+)]
 		dev-java/openj9-openjdk-jre-bin:${SLOT}[gentoo-vm(+)]
 		virtual/jdk:${SLOT}
-	)"
+)"
