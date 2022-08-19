@@ -5,8 +5,8 @@ app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-text/zathura 0.4.9-r1: A highly customizable and functional document viewer
 dev-dotnet/dotnet-runtime-bin 3.1.25 6.0.5: .NET is a free, cross-platform, open-source developer platform
 dev-java/openj9-openjdk 11.0.33.1 17.0.33.1: Extensions for OpenJDK for Eclipse OpenJ9
-dev-java/openj9-openjdk-bin 11.0.16.8.0.33.0 17.0.4.8.0.33.0: Prebuilt IBM Semeru JDK binaries provided by IBM
-dev-java/openj9-openjdk-jre-bin 11.0.16.8.0.33.0 17.0.4.8.0.33.0: Prebuilt IBM Semeru JRE binaries provided by IBM
+dev-java/openj9-openjdk-bin 11.0.16.1_p1 17.0.4.1_p1 18.0.2_p9: Prebuilt IBM Semeru JDK binaries provided by IBM
+dev-java/openj9-openjdk-jre-bin 11.0.16.1_p1 17.0.4.1_p1 18.0.2_p9: Prebuilt IBM Semeru JRE binaries provided by IBM
 dev-lang/zig 0.9.1: A robust, optimal, and maintainable programming language
 dev-libs/libdwarf 0.4.1: The DWARF Debugging Information Format
 dev-libs/openssl 3.0.5-r1: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
@@ -26,7 +26,7 @@ net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 net-mail/notmuch 0.34.2-r1: Thread-based e-mail indexer, supporting quick search and tagging
 sci-calculators/units 2.21-r1: Unit conversion program
 virtual/7z 0: Virtual for /usr/bin/7z
-virtual/jdk 11-r3 17-r1: Virtual for Java Development Kit (JDK)
-virtual/jre 11-r2 17: Virtual for Java Runtime Environment (JRE)
+virtual/jdk 11-r3 17-r1 18-r1: Virtual for Java Development Kit (JDK)
+virtual/jre 11-r3 17-r1 18-r1: Virtual for Java Runtime Environment (JRE)
 www-client/firefox 103.0.2: Firefox Web Browser
 x11-apps/sx 2.1.7 9999: Start an xorg server

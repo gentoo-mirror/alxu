@@ -1,0 +1,7 @@
+DEFINED_PHASES=-
+DESCRIPTION=Virtual for Java Development Kit (JDK)
+EAPI=7
+KEYWORDS=~amd64 ~arm ~arm64 ~ppc64
+RDEPEND=|| ( dev-java/openjdk-bin:18[gentoo-vm(+)] dev-java/openjdk:18[gentoo-vm(+)] dev-java/openj9-openjdk-bin:18[gentoo-vm(+)] dev-java/openj9-openjdk:18[gentoo-vm(+)] )
+SLOT=18
+_md5_=e555fcc526d78e55b1d0f2251aaab297

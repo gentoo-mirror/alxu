@@ -4,4 +4,4 @@ EAPI=7
 KEYWORDS=~amd64 ~arm ~arm64 ~ppc64
 RDEPEND=|| ( dev-java/openjdk-jre-bin:11[gentoo-vm(+)] dev-java/openj9-openjdk-jre-bin:11[gentoo-vm(+)] virtual/jdk:11 )
 SLOT=11
-_md5_=dba042cb7b146aec8aae668b57016b6f
+_md5_=99fc60364bf176e13808651e5539f37e
