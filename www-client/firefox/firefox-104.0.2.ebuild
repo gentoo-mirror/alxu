@@ -80,6 +80,10 @@ REQUIRED_USE="debug? ( !system-av1 )
 REQUIRED_USE+=" || ( X wayland )"
 REQUIRED_USE+=" screencast? ( wayland )"
 
+FF_ONLY_DEPEND="!www-client/firefox:0
+	!www-client/firefox:esr
+	screencast? ( media-video/pipewire:= )
+	selinux? ( sec-policy/selinux-mozilla )"
 BDEPEND="${PYTHON_DEPS}
 	app-arch/unzip
 	app-arch/zip
@@ -121,7 +125,7 @@ BDEPEND="${PYTHON_DEPS}
 	)
 "
 
-COMMON_DEPEND="
+COMMON_DEPEND="${FF_ONLY_DEPEND}
 	dev-libs/atk
 	dev-libs/expat
 	dev-libs/glib:2
