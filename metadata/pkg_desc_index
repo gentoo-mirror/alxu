@@ -29,5 +29,5 @@ sci-calculators/units 2.21-r1: Unit conversion program
 virtual/7z 0: Virtual for /usr/bin/7z
 virtual/jdk 11-r3 17-r1 18-r1: Virtual for Java Development Kit (JDK)
 virtual/jre 11-r3 17-r1 18-r1: Virtual for Java Runtime Environment (JRE)
-www-client/firefox 104.0.1: Firefox Web Browser
+www-client/firefox 104.0.2: Firefox Web Browser
 x11-apps/sx 2.1.7 9999: Start an xorg server
