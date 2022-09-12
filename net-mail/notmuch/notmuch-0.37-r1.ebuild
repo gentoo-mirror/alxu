@@ -1,11 +1,11 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 DISTUTILS_OPTIONAL=1
 NEED_EMACS="24.1"
-PYTHON_COMPAT=( python3_{7..10} pypy3 )
+PYTHON_COMPAT=( python3_{8..11} pypy3 )
 
 inherit bash-completion-r1 desktop distutils-r1 elisp-common flag-o-matic pax-utils toolchain-funcs xdg-utils
 
@@ -36,7 +36,7 @@ BDEPEND="
 		dev-lang/perl
 	)
 	doc? (
-		dev-python/sphinx
+		dev-python/sphinx[${PYTHON_USEDEP}]
 		sys-apps/texinfo
 	)
 	python? (
