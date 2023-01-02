@@ -33,8 +33,7 @@ RDEPEND="
 S=${WORKDIR}
 
 delete() {
-	local x
-	x=$(find . -name "$1" -print -delete) && [ -n "$x" ]
+	test -n "$(find . -name "$1" -print -delete)"
 }
 
 src_compile() {
