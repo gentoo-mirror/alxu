@@ -28,17 +28,6 @@ dev-libs/openssl:ktls - Enable support for Kernel implementation of TLS (kTLS)
 dev-libs/openssl:rfc3779 - Enable support for RFC 3779 (X.509 Extensions for IP Addresses and AS Identifiers)
 dev-libs/openssl:tls-compression - Enable support for discouraged TLS compression
 dev-libs/openssl:weak-ssl-ciphers - Build support for SSL/TLS ciphers that are considered "weak"
-dev-qt/qtgui:X - Build the XCB platform plugin and enable X11 integration
-dev-qt/qtgui:egl - Enable EGL integration
-dev-qt/qtgui:eglfs - Build the EGL Full Screen/Single Surface platform plugin
-dev-qt/qtgui:evdev - Enable support for input devices via evdev
-dev-qt/qtgui:ibus - Build the IBus input method plugin
-dev-qt/qtgui:libinput - Enable support for input devices via dev-libs/libinput
-dev-qt/qtgui:linuxfb - Enable Linux framebuffer support for embedded devices
-dev-qt/qtgui:tslib - Enable support for touchscreen devices via x11-libs/tslib
-dev-qt/qtgui:tuio - Build plugin to receive touch events over the TUIO protocol
-dev-qt/qtgui:vulkan - Enable support for Vulkan
-dev-qt/qtgui:wayland - Provide dev-qt/qtwayland to ensure Qt applications can be run as Wayland clients
 gui-apps/gammastep:drm - Enable drm method.
 gui-apps/gammastep:geoclue - Enable geolocation support.
 mail-client/astroid:embedded-editor - Embedded editor
