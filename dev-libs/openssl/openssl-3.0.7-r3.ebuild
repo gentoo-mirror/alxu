@@ -18,7 +18,8 @@ if [[ ${PV} == 9999 ]] ; then
 else
 	SRC_URI="mirror://openssl/source/${MY_P}.tar.gz
 		verify-sig? ( mirror://openssl/source/${MY_P}.tar.gz.asc )"
-	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~x86-linux"
+	#KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~x86-linux"
+	KEYWORDS="~alpha ~amd64 ~arm64 ~hppa ~ia64 ~loong ~m68k ~mips ~riscv ~s390 ~sparc ~x86"
 fi
 
 S="${WORKDIR}"/${MY_P}
@@ -51,6 +52,7 @@ MULTILIB_WRAPPED_HEADERS=(
 )
 
 PATCHES=(
+	"${FILESDIR}"/${P}-x509-CVE-2022-3996.patch
 )
 
 pkg_setup() {
@@ -61,6 +63,7 @@ pkg_setup() {
 			CONFIG_CHECK="~TLS ~TLS_DEVICE"
 			ERROR_TLS="You will be unable to offload TLS to kernel because CONFIG_TLS is not set!"
 			ERROR_TLS_DEVICE="You will be unable to offload TLS to kernel because CONFIG_TLS_DEVICE is not set!"
+			use test && CONFIG_CHECK+=" ~CRYPTO_USER_API_SKCIPHER"
 
 			linux-info_pkg_setup
 		fi
@@ -91,7 +94,7 @@ src_unpack() {
 
 src_prepare() {
 	# Allow openssl to be cross-compiled
-	cp "${FILESDIR}"/gentoo.config-1.0.2 gentoo.config || die
+	cp "${FILESDIR}"/gentoo.config-1.0.4 gentoo.config || die
 	chmod a+rx gentoo.config || die
 
 	# Keep this in sync with app-misc/c_rehash
@@ -157,9 +160,12 @@ src_prepare() {
 			-i Configure || die
 	fi
 
+	local sslout=$(./gentoo.config)
+	einfo "Using configuration: ${sslout:-(openssl knows best)}"
+
 	# The config script does stupid stuff to prompt the user. Kill it.
 	sed -i '/stty -icanon min 0 time 50; read waste/d' config || die
-	./config --test-sanity || die "I AM NOT SANE"
+	./config ${sslout} --test-sanity || die "I AM NOT SANE"
 
 	multilib_copy_sources
 }
