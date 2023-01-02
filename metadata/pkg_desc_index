@@ -22,7 +22,7 @@ media-fonts/source-pro 20210115: Adobe's open source typeface family designed fo
 media-sound/pamixer 1.4: Pulseaudio command line mixer.
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 net-mail/notmuch 0.37-r1: Thread-based e-mail indexer, supporting quick search and tagging
-sci-calculators/units 2.21-r1: Unit conversion program
+sci-calculators/units 2.21-r2: Unit conversion program
 virtual/7z 0: Virtual for /usr/bin/7z
 virtual/jdk 11-r3 17-r1 18-r1: Virtual for Java Development Kit (JDK)
 virtual/jre 11-r3 17-r1 18-r1: Virtual for Java Runtime Environment (JRE)
