@@ -10,5 +10,5 @@ LICENSE=LGPL-2.1+ BSD rar? ( unRAR )
 RDEPEND=!app-arch/p7zip
 SLOT=0
 SRC_URI=https://7-zip.org/a/7z2201-src.tar.xz
-_eclasses_=toolchain-funcs	37a4612ce5522df5a100359a8dbc8491	multilib	5ca4e49abed8e3a2f7b56920eadee157
+_eclasses_=toolchain-funcs	ec8bbc28394c7305b43ea07164bd8f5f	multilib	5ca4e49abed8e3a2f7b56920eadee157
 _md5_=f1132ae78b00f0395289a19d5bffd5d7
