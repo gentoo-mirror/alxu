@@ -1,7 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
-# Distributed under the terms of the GNU General Public License v2
-
-VERSION="AdoptOpenJDK ${DL_PV}"
+VERSION="IBM Semeru JDK ${DL_PV}"
 JAVA_HOME="${EPREFIX}/opt/${P}"
 JDK_HOME="${EPREFIX}/opt/${P}"
 JAVAC="\${JAVA_HOME}/bin/javac"

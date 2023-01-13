@@ -18,8 +18,8 @@ else
 fi
 
 LICENSE="ZLIB"
-SLOT="0"
-IUSE="doc +magic seccomp sqlite synctex test"
+SLOT="0/$(ver_cut 1-2)"
+IUSE="seccomp sqlite synctex test"
 
 RESTRICT="!test? ( test )"
 
@@ -28,27 +28,27 @@ DEPEND=">=dev-libs/girara-0.3.7
 	>=sys-devel/gettext-0.19.8
 	x11-libs/cairo
 	>=x11-libs/gtk+-3.22:3
-	magic? ( sys-apps/file )
+	sys-apps/file
 	seccomp? ( sys-libs/libseccomp )
 	sqlite? ( >=dev-db/sqlite-3.5.9:3 )
 	synctex? ( app-text/texlive-core )"
 
 RDEPEND="${DEPEND}"
 
-BDEPEND="doc? ( dev-python/docutils )
+BDEPEND="dev-python/docutils
 	test? ( dev-libs/appstream-glib
 		dev-libs/check )
 	virtual/pkgconfig"
 
 PATCHES=(
+	"${FILESDIR}"/zathura-disable-seccomp-tests.patch
 	"${FILESDIR}/zathura-docutils.patch"
 )
 
 src_configure() {
 	local emesonargs=(
 		-Dconvert-icon=disabled
-		-Dmagic=$(usex magic enabled disabled)
-		-Dmanpages=$(usex doc enabled disabled)
+		-Dmanpages=enabled
 		-Dseccomp=$(usex seccomp enabled disabled)
 		-Dsqlite=$(usex sqlite enabled disabled)
 		-Dsynctex=$(usex synctex enabled disabled)
