@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=""
-RDEPEND="!=dev-cpp/tbb-2020.3"
+RDEPEND="!=dev-cpp/tbb-2020.3*"
 S="${WORKDIR}/oneTBB-${MY_PV}"
 
 src_prepare() {
