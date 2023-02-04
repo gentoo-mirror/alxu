@@ -9,7 +9,7 @@ dev-java/openj9-openjdk-bin 11.0.17_p8 17.0.5_p8 18.0.2_p9: Prebuilt IBM Semeru 
 dev-java/openj9-openjdk-jre-bin 11.0.17_p8 17.0.5_p8 18.0.2_p9: Prebuilt IBM Semeru JRE binaries provided by IBM
 dev-lang/zig 0.9.1: A robust, optimal, and maintainable programming language
 dev-libs/libdwarf 0.5.0: The DWARF Debugging Information Format
-dev-libs/openssl 3.0.7-r3: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
+dev-libs/openssl 3.0.7-r5: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
 games-rpg/runescape-launcher-launcher 1.3-r1: Launcher for official RuneScape NXT client launcher
 gui-apps/gammastep 2.0.8: A screen color temperature adjusting software
 gui-apps/wshowkeys 9999: Displays keys being pressed on a Wayland session
