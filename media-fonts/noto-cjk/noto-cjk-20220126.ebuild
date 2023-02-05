@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -6,7 +6,7 @@ EAPI=7
 DESCRIPTION="Google's CJK font family"
 HOMEPAGE="https://www.google.com/get/noto/ https://github.com/googlefonts/noto-cjk"
 
-COMMIT="9f7f3c38eab63e1d1fddd8d50937fe4f1eacdb1d"
+COMMIT="473da44c32fec739db7e5458c81a833513cb4084"
 SRC_URI="
 	https://github.com/googlefonts/noto-cjk/raw/${COMMIT}/Sans/Variable/OTC/NotoSansCJK-VF.otf.ttc -> NotoSansCJK-VF-${COMMIT}.otf.ttc
 	https://github.com/googlefonts/noto-cjk/raw/${COMMIT}/Sans/Variable/OTC/NotoSansMonoCJK-VF.otf.ttc -> NotoSansMonoCJK-VF-${COMMIT}.otf.ttc
