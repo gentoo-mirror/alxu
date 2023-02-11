@@ -165,7 +165,7 @@ multilib_src_configure() {
 		enable-sm2
 		enable-srp
 		$(use elibc_musl && echo "no-async")
-		$(use amd64 && echo "enable-ec_nistp_64_gcc_128")
+		enable-ec_nistp_64_gcc_128
 		enable-idea
 		enable-mdc2
 		$(use fips && echo "enable-fips")
