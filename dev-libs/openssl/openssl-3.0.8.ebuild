@@ -1,7 +1,7 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 VERIFY_SIG_OPENPGP_KEY_PATH="${BROOT}"/usr/share/openpgp-keys/openssl.org.asc
 inherit edo flag-o-matic linux-info toolchain-funcs multilib-minimal multiprocessing verify-sig
@@ -19,7 +19,7 @@ else
 	SRC_URI="mirror://openssl/source/${MY_P}.tar.gz
 		verify-sig? ( mirror://openssl/source/${MY_P}.tar.gz.asc )"
 	#KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~x86-linux"
-	KEYWORDS="~alpha ~amd64 ~arm64 ~hppa ~ia64 ~loong ~m68k ~mips ~riscv ~s390 ~sparc ~x86"
+	KEYWORDS="~alpha ~amd64 ~arm64 ~hppa ~ia64 ~loong ~m68k ~mips ~ppc ~riscv ~s390 ~sparc ~x86"
 fi
 
 S="${WORKDIR}"/${MY_P}
@@ -40,7 +40,7 @@ BDEPEND="
 		sys-devel/bc
 		sys-process/procps
 	)
-	verify-sig? ( >=sec-keys/openpgp-keys-openssl-20221101 )"
+	verify-sig? ( >=sec-keys/openpgp-keys-openssl-20230207 )"
 
 DEPEND="${COMMON_DEPEND}"
 RDEPEND="${COMMON_DEPEND}"
@@ -48,10 +48,6 @@ PDEPEND="app-misc/ca-certificates"
 
 MULTILIB_WRAPPED_HEADERS=(
 	/usr/include/openssl/configuration.h
-)
-
-PATCHES=(
-	"${FILESDIR}"/${P}-x509-CVE-2022-3996.patch
 )
 
 pkg_setup() {
