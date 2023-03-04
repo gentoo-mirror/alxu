@@ -18,7 +18,7 @@ if [[ ${OPENJ9_PV} == 9999 ]]; then
 	OPENJ9_OMR_EGIT_REPO_URI="https://github.com/eclipse/openj9-omr.git"
 else
 	SRC_URI="
-		https://github.com/ibmruntimes/openj9-openjdk-jdk${SLOT}/archive/v${OPENJ9_PV}-release.tar.gz -> openj9-openjdk-jdk${SLOT}-${OPENJ9_P}.tar.gz
+		https://github.com/ibmruntimes/openj9-openjdk-jdk${SLOT}/archive/${OPENJ9_P}.tar.gz -> openj9-openjdk-jdk${SLOT}-${OPENJ9_P}.tar.gz
 		https://github.com/eclipse/openj9/archive/${OPENJ9_P}.tar.gz
 		https://github.com/eclipse/openj9-omr/archive/${OPENJ9_P}.tar.gz -> openj9-omr-${OPENJ9_PV}.tar.gz
 	"
@@ -27,7 +27,7 @@ fi
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa cups ddr debug doc +gentoo-vm headless-awt javafx +jbootstrap jitserver numa selinux source systemtap"
+IUSE="alsa cups ddr debug doc headless-awt javafx +jbootstrap jitserver numa selinux source systemtap"
 
 REQUIRED_USE="
 	javafx? ( alsa !headless-awt )
@@ -83,14 +83,14 @@ DEPEND="
 	x11-libs/libXtst
 	javafx? ( dev-java/openjfx:${SLOT}= )
 	|| (
-		dev-java/openj9-openjdk-bin:${SLOT}[gentoo-vm(+)]
-		dev-java/openj9-openjdk:${SLOT}[gentoo-vm(+)]
-		dev-java/openjdk-bin:${SLOT}[gentoo-vm(+)]
-		dev-java/openjdk:${SLOT}[gentoo-vm(+)]
+		dev-java/openj9-openjdk-bin:${SLOT}
+		dev-java/openj9-openjdk:${SLOT}
+		dev-java/openjdk-bin:${SLOT}
+		dev-java/openjdk:${SLOT}
 	)
 "
 
-S="${WORKDIR}/openj9-openjdk-jdk${SLOT}-${OPENJ9_PV}-release"
+S="${WORKDIR}/${PN}-jdk${SLOT}-${OPENJ9_P}"
 
 # The space required to build varies wildly depending on USE flags,
 # ranging from 3GB to 16GB. This function is certainly not exact but
