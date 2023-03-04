@@ -1,9 +1,6 @@
-DIST ibm-semeru-open-jre_aarch64_linux_11.0.17_8_openj9-0.35.0.tar.gz 45395879 SHA256 ab7f01a961559b49ce9b0a76af20191b7c047c6c1b6e5258e38f6c38de8cdc3f
-DIST ibm-semeru-open-jre_aarch64_linux_17.0.5_8_openj9-0.35.0.tar.gz 45322621 SHA256 8f934ce1745f52a067bdeb56b3b9e9192f51e674ff2956a1e53b33e44ea5ca42
-DIST ibm-semeru-open-jre_aarch64_linux_18.0.2_9_openj9-0.33.1.tar.gz 45244476 SHA256 cf42a289c53e6098223223326cd21a152d7102859030e23c52287d82d6d9560e
-DIST ibm-semeru-open-jre_ppc64le_linux_11.0.17_8_openj9-0.35.0.tar.gz 48098550 SHA256 fba1dd9c25b0cce7efe124151b006624eeb2d2b0764284ca892d0e50ee457a41
-DIST ibm-semeru-open-jre_ppc64le_linux_17.0.5_8_openj9-0.35.0.tar.gz 48355201 SHA256 d54972fb938f655a3665512c7181c2c5813e3bfe742650d6081e2f480388ef2f
-DIST ibm-semeru-open-jre_ppc64le_linux_18.0.2_9_openj9-0.33.1.tar.gz 48263242 SHA256 57726d73c644107de26fe6c252a58f477e691b9aa81de0c23251318f87aa621b
-DIST ibm-semeru-open-jre_x64_linux_11.0.17_8_openj9-0.35.0.tar.gz 47254074 SHA256 b1d31a4165cabcad66771a05acf8ff750f40953558494ba8d88e97fac55af6a9
-DIST ibm-semeru-open-jre_x64_linux_17.0.5_8_openj9-0.35.0.tar.gz 47171747 SHA256 759f9c507e0faf53b260ee9f492bab8fdeb8091bdecad904134861714e4d913b
-DIST ibm-semeru-open-jre_x64_linux_18.0.2_9_openj9-0.33.1.tar.gz 47105731 SHA256 4fb19cedab5967359991b9bcb3be09744fc9ac027d0b773870ee7f7aaf539666
+DIST ibm-semeru-open-jre_aarch64_linux_11.0.18_10_openj9-0.36.1.tar.gz 45498875 SHA256 b7dae99808061eb1774e3af436453c48c30c01213a1613ca53df698276844f65
+DIST ibm-semeru-open-jre_aarch64_linux_17.0.6_10_openj9-0.36.0.tar.gz 45417767 SHA256 492bd87e39fc0eb78218746e98c4c0f6730af9c998b872c1a175c0e907d11510
+DIST ibm-semeru-open-jre_ppc64le_linux_11.0.18_10_openj9-0.36.1.tar.gz 48220887 SHA256 f4eb9f501596a722a4be708361c1bfaa6b760cc7c885519d176cabba7a84d6e8
+DIST ibm-semeru-open-jre_ppc64le_linux_17.0.6_10_openj9-0.36.0.tar.gz 48460778 SHA256 f1342b0a8b472d2de6e882030d2797b9c37e1cd7a90e4cb0c3bd969d4cf8158c
+DIST ibm-semeru-open-jre_x64_linux_11.0.18_10_openj9-0.36.1.tar.gz 47379941 SHA256 509a8c1e533c41896fddab187a8f6712ce1121d19eff71f4f023b58969147c9f
+DIST ibm-semeru-open-jre_x64_linux_17.0.6_10_openj9-0.36.0.tar.gz 47295035 SHA256 69ca1728f9aad7031908bd9a939b5a9a9c5e931d65bb5c72cbe6f599c7d00cc6
