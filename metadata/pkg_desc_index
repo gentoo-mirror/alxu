@@ -4,9 +4,9 @@ app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 app-text/zathura 0.5.2-r3: A highly customizable and functional document viewer
 dev-cpp/tbb-compat 2020.3: High level abstract threading library
 dev-dotnet/dotnet-runtime-bin 3.1.32 6.0.12 7.0.1: .NET is a free, cross-platform, open-source developer platform
-dev-java/openj9-openjdk 11.0.33.1 17.0.33.1: Extensions for OpenJDK for Eclipse OpenJ9
-dev-java/openj9-openjdk-bin 11.0.17_p8 17.0.5_p8 18.0.2_p9: Prebuilt IBM Semeru JDK binaries provided by IBM
-dev-java/openj9-openjdk-jre-bin 11.0.17_p8 17.0.5_p8 18.0.2_p9: Prebuilt IBM Semeru JRE binaries provided by IBM
+dev-java/openj9-openjdk 11.0.36.1 17.0.36.0: Extensions for OpenJDK for Eclipse OpenJ9
+dev-java/openj9-openjdk-bin 11.0.18_p10 17.0.6_p10: Prebuilt IBM Semeru JDK binaries provided by IBM
+dev-java/openj9-openjdk-jre-bin 11.0.18_p10 17.0.6_p10: Prebuilt IBM Semeru JRE binaries provided by IBM
 dev-lang/zig 0.9.1: A robust, optimal, and maintainable programming language
 dev-libs/libdwarf 0.6.0: The DWARF Debugging Information Format
 dev-libs/openssl 3.0.8: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
