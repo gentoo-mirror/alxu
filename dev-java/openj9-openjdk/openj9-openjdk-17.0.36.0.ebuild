@@ -18,7 +18,7 @@ if [[ ${OPENJ9_PV} == 9999 ]]; then
 	OPENJ9_OMR_EGIT_REPO_URI="https://github.com/eclipse/openj9-omr.git"
 else
 	SRC_URI="
-		https://github.com/ibmruntimes/openj9-openjdk-jdk${SLOT}/archive/v${OPENJ9_PV}-release.tar.gz -> openj9-openjdk-jdk${SLOT}-${OPENJ9_P}.tar.gz
+		https://github.com/ibmruntimes/openj9-openjdk-jdk${SLOT}/archive/${OPENJ9_P}.tar.gz -> openj9-openjdk-jdk${SLOT}-${OPENJ9_P}.tar.gz
 		https://github.com/eclipse/openj9/archive/${OPENJ9_P}.tar.gz
 		https://github.com/eclipse/openj9-omr/archive/${OPENJ9_P}.tar.gz -> openj9-omr-${OPENJ9_PV}.tar.gz
 	"
@@ -27,7 +27,7 @@ fi
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
 
-IUSE="alsa cups ddr debug doc +gentoo-vm headless-awt javafx +jbootstrap jitserver numa selinux source systemtap"
+IUSE="alsa cups ddr debug doc headless-awt javafx +jbootstrap jitserver numa selinux source systemtap"
 
 REQUIRED_USE="
 	javafx? ( alsa !headless-awt )
@@ -90,7 +90,7 @@ DEPEND="
 	)
 "
 
-S="${WORKDIR}/openj9-openjdk-jdk${SLOT}-${OPENJ9_PV}-release"
+S="${WORKDIR}/${PN}-jdk${SLOT}-${OPENJ9_P}"
 
 # The space required to build varies wildly depending on USE flags,
 # ranging from 3GB to 16GB. This function is certainly not exact but
@@ -303,7 +303,7 @@ src_install() {
 	# must be done before running itself
 	java-vm_set-pax-markings "${ddest}"
 
-	use gentoo-vm && java-vm_install-env "${FILESDIR}"/${PN}.env.sh
+	java-vm_install-env "${FILESDIR}"/${PN}.env.sh
 	java-vm_revdep-mask
 	java-vm_sandbox-predict /dev/random /proc/self/coredump_filter
 
@@ -312,4 +312,8 @@ src_install() {
 		dodoc -r "${S}"/build/*-release/images/docs/*
 		dosym ../../../usr/share/doc/"${PF}" /usr/share/doc/"${PN}-${SLOT}"
 	fi
+}
+
+pkg_postinst() {
+	java-vm-2_pkg_postinst
 }
