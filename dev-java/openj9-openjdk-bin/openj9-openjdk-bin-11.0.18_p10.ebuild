@@ -28,7 +28,7 @@ DESCRIPTION="Prebuilt IBM Semeru JDK binaries provided by IBM"
 HOMEPAGE="https://developer.ibm.com/languages/java/semeru-runtimes/"
 LICENSE="GPL-2-with-classpath-exception"
 KEYWORDS="~amd64 ~arm64 ~ppc64"
-IUSE="alsa cups debug +gentoo-vm headless-awt selinux source"
+IUSE="alsa cups debug headless-awt selinux source"
 
 RDEPEND="
 	>=sys-apps/baselayout-java-0.1.0-r1
@@ -110,7 +110,7 @@ src_install() {
 	# provide stable symlink
 	dosym "${P}" "/opt/${PN}-${SLOT}"
 
-	use gentoo-vm && java-vm_install-env "${FILESDIR}"/${PN}.env.sh
+	java-vm_install-env "${FILESDIR}"/${PN}.env.sh
 	java-vm_set-pax-markings "${ddest}"
 	java-vm_revdep-mask
 	java-vm_sandbox-predict /dev/random /proc/self/coredump_filter
