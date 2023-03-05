@@ -6,7 +6,7 @@ EAPI=8
 HOMEPAGE=https://developer.ibm.com/languages/java/semeru-runtimes/
 IDEPEND=app-eselect/eselect-java
 INHERIT=java-vm-2 toolchain-funcs
-IUSE=alsa cups debug +gentoo-vm headless-awt selinux source
+IUSE=alsa cups debug headless-awt selinux source
 KEYWORDS=~amd64 ~arm64 ~ppc64
 LICENSE=GPL-2-with-classpath-exception
 RDEPEND=>=sys-apps/baselayout-java-0.1.0-r1 kernel_linux? ( media-libs/fontconfig:1.0 media-libs/freetype:2 media-libs/harfbuzz elibc_glibc? ( >=sys-libs/glibc-2.2.5:* ) elibc_musl? ( sys-libs/musl ) sys-libs/zlib alsa? ( media-libs/alsa-lib ) cups? ( net-print/cups ) selinux? ( sec-policy/selinux-java ) !headless-awt? ( x11-libs/libX11 x11-libs/libXext x11-libs/libXi x11-libs/libXrender x11-libs/libXtst ) ) dev-java/java-config app-eselect/eselect-java
@@ -14,4 +14,4 @@ RESTRICT=preserve-libs splitdebug
 SLOT=11
 SRC_URI=arm64? ( debug? ( https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-11.0.18%2B10_openj9-0.36.1/ibm-semeru-open-debugimage_aarch64_linux_11.0.18_10_openj9-0.36.1.tar.gz ) https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-11.0.18%2B10_openj9-0.36.1/ibm-semeru-open-jdk_aarch64_linux_11.0.18_10_openj9-0.36.1.tar.gz ) ppc64? ( debug? ( https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-11.0.18%2B10_openj9-0.36.1/ibm-semeru-open-debugimage_ppc64le_linux_11.0.18_10_openj9-0.36.1.tar.gz ) https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-11.0.18%2B10_openj9-0.36.1/ibm-semeru-open-jdk_ppc64le_linux_11.0.18_10_openj9-0.36.1.tar.gz ) amd64? ( debug? ( https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-11.0.18%2B10_openj9-0.36.1/ibm-semeru-open-debugimage_x64_linux_11.0.18_10_openj9-0.36.1.tar.gz ) https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-11.0.18%2B10_openj9-0.36.1/ibm-semeru-open-jdk_x64_linux_11.0.18_10_openj9-0.36.1.tar.gz )
 _eclasses_=multilib	5ca4e49abed8e3a2f7b56920eadee157	toolchain-funcs	6001248ef162a5fa2a21ce132a212f6b	pax-utils	91d47e5d20627c717aa878b9167c62a8	prefix	eab3c99d77fe00506c109c8a736186f7	xdg-utils	ac0e315a3688929e34ac75b139e7349a	java-vm-2	5dd4303f0b659986f096e65e566b9701
-_md5_=dd80cda827d854c0bcb23294d1705107
+_md5_=34a294049c39c2a8194fb0e93f960222
