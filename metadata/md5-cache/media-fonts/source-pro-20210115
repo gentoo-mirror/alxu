@@ -11,5 +11,5 @@ RDEPEND=media-libs/fontconfig cjk? ( media-fonts/source-han-sans )
 RESTRICT=binchecks strip
 SLOT=0
 SRC_URI=https://github.com/adobe-fonts/source-sans/archive/3.046R.tar.gz -> source-sans-pro-20210115.tar.gz https://github.com/adobe-fonts/source-serif/archive/4.004R.tar.gz -> source-serif-pro-20210115.tar.gz https://github.com/adobe-fonts/source-code-pro/archive/2.038R-ro/1.058R-it/1.018R-VAR.tar.gz -> source-code-pro-20210115.tar.gz
-_eclasses_=font	5e03cb70902daa9ff8967c61130f0f60
+_eclasses_=font	aa113a3df9cd0a9693a1c1ee7c34a6eb
 _md5_=4db3491bd889332060d45d7e2465241f
