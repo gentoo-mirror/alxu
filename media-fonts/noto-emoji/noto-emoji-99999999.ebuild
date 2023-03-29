@@ -35,10 +35,13 @@ get() {
 
 src_unpack() {
 	get https://fonts.google.com/download?family=Noto%20Emoji > Noto_Emoji.zip || die
-	unzip Noto_Emoji.zip || die
+	get https://fonts.google.com/download?family=Noto%20Color%20Emoji > Noto_Color_Emoji.zip || die
+	unzip Noto_Emoji.zip NotoEmoji-VariableFont_wght.ttf || die
+	unzip Noto_Color_Emoji.zip NotoColorEmoji-Regular.ttf || die
 }
 
 src_install() {
 	insinto /usr/share/fonts/${PN}
 	doins NotoEmoji-VariableFont_wght.ttf
+	doins NotoColorEmoji-Regular.ttf
 }
