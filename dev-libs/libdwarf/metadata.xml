@@ -9,4 +9,7 @@
 		<flag name="dwarfexample">dwarfexample</flag>
 		<flag name="dwarfgen">dwarfgen</flag>
 	</use>
+	<upstream>
+		<remote-id type="github">davea42/libdwarf-code</remote-id>
+	</upstream>
 </pkgmetadata>

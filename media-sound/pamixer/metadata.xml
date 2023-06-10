@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="person">
 		<email>alex_y_xu@yahoo.ca</email>
 		<name>Alex Xu (Hello71)</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">Earnestly/sx</remote-id>
+		<remote-id type="github">cdemoulins/pamixer</remote-id>
 	</upstream>
 </pkgmetadata>
