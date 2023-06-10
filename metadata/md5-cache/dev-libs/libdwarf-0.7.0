@@ -8,5 +8,5 @@ KEYWORDS=~amd64 ~x86
 LICENSE=LGPL-2.1
 RDEPEND=sys-libs/zlib dwarfgen? ( virtual/libelf )
 SLOT=0
-SRC_URI=https://github.com/davea42/libdwarf-code/releases/download/v0.6.0/libdwarf-0.6.0.tar.xz
+SRC_URI=https://github.com/davea42/libdwarf-code/releases/download/v0.7.0/libdwarf-0.7.0.tar.xz
 _md5_=b3f13ace90234c013c44ecd179ba3900
