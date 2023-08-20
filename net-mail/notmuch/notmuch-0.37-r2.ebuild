@@ -1,11 +1,10 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 DISTUTILS_OPTIONAL=1
-NEED_EMACS="24.1"
-PYTHON_COMPAT=( python3_{8..11} pypy3 )
+PYTHON_COMPAT=( python3_{9..12} pypy3 )
 
 inherit bash-completion-r1 desktop distutils-r1 elisp-common flag-o-matic pax-utils toolchain-funcs xdg-utils
 
@@ -18,14 +17,14 @@ LICENSE="GPL-3"
 # Sub-slot corresponds to major wersion of libnotmuch.so.X.Y. Bump of Y is
 # meant to be binary backward compatible.
 SLOT="0/5"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86 ~x64-macos"
+KEYWORDS="~alpha amd64 arm arm64 ~ppc64 ~riscv x86 ~x64-macos"
 REQUIRED_USE="
+	${PYTHON_REQUIRED_USE}
 	apidoc? ( doc )
 	nmbug? ( python )
-	python? ( ${PYTHON_REQUIRED_USE} )
-	test? ( crypt emacs python valgrind )
+	test? ( crypt emacs python )
 "
-IUSE="apidoc crypt doc emacs mutt nmbug python test valgrind"
+IUSE="apidoc crypt doc emacs mutt nmbug python test"
 RESTRICT="!test? ( test )"
 
 BDEPEND="
@@ -58,7 +57,9 @@ COMMON_DEPEND="
 	emacs? ( >=app-editors/emacs-${NEED_EMACS}:* )
 	python? (
 		${PYTHON_DEPS}
-		virtual/python-cffi[${PYTHON_USEDEP}]
+		$(python_gen_cond_dep '
+			dev-python/cffi[${PYTHON_USEDEP}]
+		' 'python*')
 	)
 "
 
@@ -72,7 +73,6 @@ DEPEND="${COMMON_DEPEND}
 			dev-libs/openssl
 		)
 	)
-	valgrind? ( dev-util/valgrind )
 "
 
 RDEPEND="${COMMON_DEPEND}
@@ -95,6 +95,7 @@ SITEFILE="50${PN}-gentoo.el"
 
 PATCHES=(
 	"${FILESDIR}/notmuch-assume-modern-gmime.patch"
+	"${FILESDIR}"/${PN}-0.37-configure-clang16.patch
 )
 
 pkg_setup() {
@@ -239,9 +240,6 @@ src_install() {
 	default
 
 	if use doc; then
-		pushd doc/_build/man/man1 > /dev/null || die
-		ln notmuch.1 notmuch-setup.1 || die
-		popd > /dev/null || die
 		if use apidoc; then
 			# rename overly generic manpage to avoid clashes
 			mv doc/_build/man/man3/deprecated.3 \
@@ -257,8 +255,8 @@ src_install() {
 
 	if use nmbug; then
 		# TODO: those guys need proper deps
-		python_fix_shebang devel/nmbug/{nmbug,notmuch-report}
-		dobin devel/nmbug/{nmbug,notmuch-report}
+		python_fix_shebang devel/nmbug/notmuch-report
+		dobin devel/nmbug/notmuch-report
 	fi
 
 	if use mutt; then
