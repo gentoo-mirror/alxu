@@ -7,25 +7,31 @@ DESCRIPTION=".NET is a free, cross-platform, open-source developer platform"
 HOMEPAGE="https://dotnet.microsoft.com/"
 LICENSE="MIT"
 
+gen_src_uri() {
+	echo "$1? (
+		elibc_glibc? ( https://dotnetcli.azureedge.net/dotnet/Runtime/${PV}/dotnet-runtime-${PV}-linux-${2:-$1}.tar.gz )
+		elibc_musl? ( https://dotnetcli.azureedge.net/dotnet/Runtime/${PV}/dotnet-runtime-${PV}-linux-musl-${2:-$1}.tar.gz )
+	)"
+}
+
 SRC_URI="
-amd64? ( https://dotnetcli.azureedge.net/dotnet/Runtime/${PV}/dotnet-runtime-${PV}-linux-x64.tar.gz )
-arm? ( https://dotnetcli.azureedge.net/dotnet/Runtime/${PV}/dotnet-runtime-${PV}-linux-arm.tar.gz )
-arm64? ( https://dotnetcli.azureedge.net/dotnet/Runtime/${PV}/dotnet-runtime-${PV}-linux-arm64.tar.gz )
+	$(gen_src_uri amd64 x64)
+	$(gen_src_uri arm)
+	$(gen_src_uri arm64)
 "
 
 SLOT="$(ver_cut 1-2)"
 KEYWORDS="~amd64 ~arm ~arm64"
-IUSE="+dotnet-symlink kerberos lttng"
-REQUIRED_USE="elibc_glibc"
+IUSE="dotnet-symlink kerberos lttng"
 QA_PREBUILT="*"
-RESTRICT="splitdebug"
+RESTRICT+=" splitdebug"
 RDEPEND="
 	kerberos? ( app-crypt/mit-krb5:0/0 )
 	lttng? ( dev-util/lttng-ust:0 )
 	sys-libs/zlib:0/1
 	dotnet-symlink? (
 		!dev-dotnet/dotnet-sdk[dotnet-symlink(+)]
-		!dev-dotnet/dotnet-sdk-bin[dotnet-symlink(+)]
+		!dev-dotnet/dotnet-sdk-bin
 		!dev-dotnet/dotnet-runtime[dotnet-symlink(+)]
 	)
 "
