@@ -18,14 +18,14 @@ KEYWORDS="~amd64 ~arm ~arm64"
 IUSE="dotnet-symlink kerberos lttng"
 REQUIRED_USE="elibc_glibc"
 QA_PREBUILT="*"
-RESTRICT="splitdebug"
+RESTRICT+=" splitdebug"
 RDEPEND="
 	kerberos? ( app-crypt/mit-krb5:0/0 )
 	lttng? ( dev-util/lttng-ust:0 )
 	sys-libs/zlib:0/1
 	dotnet-symlink? (
 		!dev-dotnet/dotnet-sdk[dotnet-symlink(+)]
-		!dev-dotnet/dotnet-sdk-bin[dotnet-symlink(+)]
+		!dev-dotnet/dotnet-sdk-bin
 		!dev-dotnet/dotnet-runtime[dotnet-symlink(+)]
 	)
 "
@@ -46,11 +46,11 @@ src_install() {
 	dodir "${dest%/*}"
 
 	{ mv "${S}" "${ED}/${dest}" && mkdir "${S}" && fperms 0755 "/${dest}"; } || die
-	dosym "../../${dest}/dotnet" "/usr/bin/dotnet-bin-${SLOT}"
 
 	if use dotnet-symlink; then
 		dosym "../../${dest}/dotnet" "/usr/bin/dotnet"
 		dosym "../../${dest}/dotnet" "/usr/bin/dotnet-${SLOT}"
+		dosym "../../${dest}/dotnet" "/usr/bin/dotnet-bin-${SLOT}"
 
 		# set an env-variable for 3rd party tools
 		echo "DOTNET_ROOT=/${dest}" > "${T}/90${PN}-${SLOT}" || die
