@@ -15,7 +15,7 @@ abi_uri() {
 }
 
 JDK_PV=${PV//_p/+}
-DL_PV=${JDK_PV}_openj9-0.40.0
+DL_PV=${JDK_PV}_openj9-0.41.0
 SLOT=$(ver_cut 1)
 
 SRC_URI="

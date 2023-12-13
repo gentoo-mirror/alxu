@@ -12,7 +12,7 @@ abi_uri() {
 }
 
 JDK_PV=${PV//_p/+}
-DL_PV=${JDK_PV}_openj9-0.40.0
+DL_PV=${JDK_PV}_openj9-0.41.0
 SLOT=$(ver_cut 1)
 
 SRC_URI="
@@ -30,7 +30,6 @@ IUSE="alsa cups headless-awt selinux"
 RDEPEND="
 	media-libs/fontconfig:1.0
 	media-libs/freetype:2
-	>net-libs/libnet-1.1
 	>=sys-apps/baselayout-java-0.1.0-r1
 	>=sys-libs/glibc-2.2.5:*
 	sys-libs/zlib
