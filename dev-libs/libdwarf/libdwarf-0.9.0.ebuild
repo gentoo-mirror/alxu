@@ -14,7 +14,6 @@ IUSE="dwarfexample dwarfgen static-libs"
 
 DEPEND="
 	sys-libs/zlib
-	dwarfgen? ( virtual/libelf )
 "
 RDEPEND="${DEPEND}"
 
@@ -24,7 +23,6 @@ src_configure() {
 		--enable-shared
 		$(use_enable dwarfexample)
 		$(use_enable dwarfgen)
-		$(use_enable dwarfgen libelf)
 		$(use_enable static-libs static)
 	)
 	econf "${myeconfargs[@]}"
