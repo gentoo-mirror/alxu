@@ -1,6 +1,5 @@
-diff -ru a/units_cur b/units_cur
---- a/units_cur	2018-09-15 16:30:09.000000000 -0400
-+++ b/units_cur	2021-07-11 18:01:29.030260473 -0400
+--- a/units_cur
++++ b/units_cur
 @@ -28,8 +28,12 @@
  #
  #
@@ -15,20 +14,20 @@ diff -ru a/units_cur b/units_cur
  # Version 5.0:
  #
  # Rewrite to support multiple different data sources due to disappearance
-@@ -54,8 +58,11 @@
+@@ -54,9 +58,11 @@
  # Python 2 or Python 3.  Thanks to Ray Hamel for some help with this update.  
  
  # Normal imports
 -import requests
  import codecs
-+import json
+ import json
 +import urllib.error
 +import urllib.parse
 +import urllib.request
  from argparse import ArgumentParser
  from collections import OrderedDict
  from datetime import date
-@@ -288,11 +295,12 @@
+@@ -303,11 +309,12 @@
                                                    currency[code][rate_index]))
  
  def getjson(address,args=None):
@@ -45,15 +44,74 @@ diff -ru a/units_cur b/units_cur
      stderr.write('Error connecting to currency server:\n{}.\n'.format(e))
      exit(1)
          
-@@ -323,9 +331,8 @@
+@@ -337,14 +344,8 @@
+   if verbose and base!='EUR':
      stderr.write('European bank uses euro for base currency.  Specified base {} ignored.\n'.format(base))
    import xml.etree.ElementTree as ET
-   try:
+-  try:
 -    res=requests.get('https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml')
 -    res.raise_for_status()
 -    data = ET.fromstring(res.content)[2][0]
-+    res=urllib.request.urlopen('https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml')
-+    data = ET.fromstring(res.read())[2][0]
-   except requests.exceptions.RequestException as e:
-     stderr.write('Error connecting to currency server:\n{}.\n'.
-                  format(e))
+-  except requests.exceptions.RequestException as e:
+-    stderr.write('Error connecting to currency server:\n{}.\n'.
+-                 format(e))
+-    exit(1)
++  res=urllib.request.urlopen('https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml')
++  data = ET.fromstring(res.read())[2][0]
+   for entry in data.iter():
+     if entry.get('time'):
+       continue
+@@ -596,7 +597,6 @@
+     docpi=True
+   
+ if docpi:
+-  headers = {'Content-type': 'application/json'}
+   yearlist = list(range(date.today().year,1912,-10))
+   if yearlist[-1]>1912:
+     yearlist.append(1912)
+@@ -605,29 +605,18 @@
+   query = {"seriesid": ['CUUR0000SA0']}
+   if cpikey:
+     query["registrationkey"]=cpikey
+-  ########################################################################
+-  # The api.bls.gov site currently (2024-02-15) resolves to an
+-  # IPv4 address which works, and an IPv6 address which does
+-  # not.  The urllib3 package does not currently implement the
+-  # Happy Eyeballs algorithm, nor any other mechanism to re-try
+-  # hung connections with alternative addresses returned by DNS.
+-  # In the interest of expediency, we temporarily force the
+-  # connection to api.bls.gov to only use IPv4; hopefully at
+-  # some future date either urllib3 will gain the necessary
+-  # features and/or the BLS will fix their configuration so
+-  # that all A and AAAA records for api.bls.gov resolve to an
+-  # operational server.  At that time we can remove the three
+-  # references to "requests.packages.urllib3.util.connection.HAS_IPV6"
+-  # in this function.
+-  ########################################################################
+-  save_rpuucH = requests.packages.urllib3.util.connection.HAS_IPV6
+-  requests.packages.urllib3.util.connection.HAS_IPV6 = False
+   for endyear in range(len(yearlist)-1):
+     query["startyear"]=str(yearlist[endyear+1]+1)
+     query["endyear"]=str(yearlist[endyear])
+     data = json.dumps(query)
+-    p = requests.post('https://api.bls.gov/publicAPI/v2/timeseries/data/', data=data, headers=headers)
+-    json_data = json.loads(p.text)
++    p = urllib.request.urlopen(
++            urllib.request.Request(
++                'https://api.bls.gov/publicAPI/v2/timeseries/data/',
++                data=json.dumps(query),
++                headers={'Content-type': 'application/json'}
++            )
++        )
++    json_data = json.load(p)
+     if json_data['status']=="REQUEST_NOT_PROCESSED":
+       docpi=False
+       stderr.write("Unable to update CPI data: Exceeded daily threshold for BLS requests\n")
+@@ -644,7 +633,6 @@
+               lastyear=year
+             firstcpi=value
+             firstyear=year
+-  requests.packages.urllib3.util.connection.HAS_IPV6 = save_rpuucH              
+ if docpi:   # Check again because request may have failed
+   cpi.reverse()
+   cpistr = '\n'.join(cpi)

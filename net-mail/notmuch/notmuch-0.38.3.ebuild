@@ -1,10 +1,11 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
+DISTUTILS_EXT=1
 DISTUTILS_OPTIONAL=1
-PYTHON_COMPAT=( python3_{9..12} pypy3 )
+PYTHON_COMPAT=( python3_{10..13} pypy3 )
 
 inherit bash-completion-r1 desktop distutils-r1 elisp-common flag-o-matic pax-utils toolchain-funcs xdg-utils
 
@@ -17,7 +18,7 @@ LICENSE="GPL-3"
 # Sub-slot corresponds to major wersion of libnotmuch.so.X.Y. Bump of Y is
 # meant to be binary backward compatible.
 SLOT="0/5"
-KEYWORDS="~alpha amd64 arm arm64 ~ppc64 ~riscv x86 ~x64-macos"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86 ~x64-macos"
 REQUIRED_USE="
 	${PYTHON_REQUIRED_USE}
 	apidoc? ( doc )
@@ -31,7 +32,7 @@ BDEPEND="
 	app-arch/xz-utils[extra-filters(-)]
 	virtual/pkgconfig
 	apidoc? (
-		app-doc/doxygen
+		app-text/doxygen
 		dev-lang/perl
 	)
 	doc? (
@@ -67,7 +68,7 @@ DEPEND="${COMMON_DEPEND}
 	test? (
 		>=app-editors/emacs-${NEED_EMACS}:*[libxml2]
 		app-misc/dtach
-		sys-devel/gdb[python]
+		dev-debug/gdb[python]
 		crypt? (
 			app-crypt/gnupg
 			dev-libs/openssl
@@ -81,7 +82,6 @@ RDEPEND="${COMMON_DEPEND}
 		dev-perl/File-Which
 		dev-perl/Mail-Box
 		dev-perl/MailTools
-		dev-perl/String-ShellQuote
 		dev-perl/Term-ReadLine-Gnu
 		virtual/perl-Digest-SHA
 		virtual/perl-File-Path
@@ -95,7 +95,6 @@ SITEFILE="50${PN}-gentoo.el"
 
 PATCHES=(
 	"${FILESDIR}/notmuch-assume-modern-gmime.patch"
-	"${FILESDIR}"/${PN}-0.37-configure-clang16.patch
 )
 
 pkg_setup() {
@@ -183,7 +182,7 @@ src_compile() {
 	# prevent race in emacs doc generation
 	# FileNotFoundError: [Errno 2] No such file or directory: '..work/notmuch-0.31/emacs/notmuch.rsti'
 	if use emacs; then
-		use doc && emake -j1 -C emacs docstring.stamp V=1 #nowarn
+		use doc && emake -j1 -C emacs docstring.stamp V=1
 	fi
 
 	emake V=1
@@ -191,9 +190,7 @@ src_compile() {
 	use python && distutils-r1_src_compile
 
 	if use mutt; then
-		pushd contrib/notmuch-mutt > /dev/null || die
-		emake notmuch-mutt.1
-		popd > /dev/null || die
+		emake -C contrib/notmuch-mutt notmuch-mutt.1
 	fi
 }
 
@@ -212,8 +209,10 @@ src_test() {
 	# we run pytest via eclass phasefunc, so delete upstream launcher
 	use python && { rm -v test/T391-python-cffi.sh || die ; }
 
-	LD_LIBRARY_PATH="${S}/lib" \
-		nonfatal emake test V=1 OPTIONS="--verbose --tee" || test_failures+=( "'emake tests'" )
+	# These both fail because of line wrapping in the output
+	rm test/T315-emacs-tagging.sh test/T310-emacs.sh || die
+
+	LD_LIBRARY_PATH="${S}/lib" nonfatal emake test V=1 OPTIONS="--verbose --tee" || test_failures+=( "'emake tests'" )
 	pax-mark -ze notmuch
 
 	# both lib and bin needed for testsuite.

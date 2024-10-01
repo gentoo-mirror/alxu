@@ -9,8 +9,7 @@ HOMEPAGE="https://fonts.google.com/noto/specimen/Noto+Emoji"
 
 LICENSE="OFL-1.1"
 SLOT="0"
-KEYWORDS="~*"
-IUSE=""
+KEYWORDS="~amd64 ~x86"
 
 COMMIT="d79d23e6822e0f6e5731b114cbfb26b2a4e380da"
 SRC_URI="https://github.com/googlefonts/noto-emoji/raw/${COMMIT}/fonts/Noto-COLRv1.ttf -> Noto-COLRv1-${COMMIT}.ttf"
