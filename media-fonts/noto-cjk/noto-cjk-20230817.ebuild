@@ -15,8 +15,7 @@ SRC_URI="
 
 LICENSE="OFL-1.1"
 SLOT="0"
-KEYWORDS="~*"
-IUSE=""
+KEYWORDS="~amd64 ~x86"
 
 S="${DISTDIR}"
 
