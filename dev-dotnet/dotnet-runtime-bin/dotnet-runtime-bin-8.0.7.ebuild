@@ -21,7 +21,6 @@ SRC_URI="
 "
 
 SLOT="$(ver_cut 1-2)"
-IUSE="kerberos lttng"
 KEYWORDS="-* ~amd64 ~arm ~arm64"
 QA_PREBUILT="*"
 RESTRICT+=" splitdebug"
@@ -34,15 +33,6 @@ IDEPEND="
 "
 
 S=${WORKDIR}
-
-delete() {
-	test -n "$(find . -name "$1" -print -delete)"
-}
-
-src_compile() {
-	use kerberos || delete libSystem.Net.Security.Native.so || die
-	use lttng || delete libcoreclrtraceptprovider.so || die
-}
 
 src_install() {
 	local dest="opt/${PN}-${SLOT}"
