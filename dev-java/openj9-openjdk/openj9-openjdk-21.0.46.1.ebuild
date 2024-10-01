@@ -1,9 +1,9 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit check-reqs eapi8-dosym flag-o-matic java-pkg-2 java-vm-2 multiprocessing toolchain-funcs
+inherit check-reqs flag-o-matic java-pkg-2 java-vm-2 multiprocessing toolchain-funcs
 
 SLOT="$(ver_cut 1)"
 OPENJ9_PV="$(ver_cut 2-4)"
@@ -24,10 +24,10 @@ else
 	"
 fi
 
-LICENSE="GPL-2"
+LICENSE="GPL-2-with-classpath-exception"
 KEYWORDS="~amd64"
 
-IUSE="alsa cups ddr debug doc headless-awt javafx +jbootstrap jitserver numa selinux source systemtap"
+IUSE="alsa cups ddr debug doc headless-awt javafx +jbootstrap jitserver lto numa selinux source systemtap"
 
 REQUIRED_USE="
 	javafx? ( alsa !headless-awt )
@@ -41,7 +41,7 @@ COMMON_DEPEND="
 	media-libs/lcms:2=
 	sys-libs/zlib
 	media-libs/libjpeg-turbo:0=
-	systemtap? ( dev-util/systemtap )
+	systemtap? ( dev-debug/systemtap )
 
 	dev-libs/elfutils
 	ddr? ( dev-libs/libdwarf )
@@ -168,6 +168,7 @@ src_prepare() {
 	eapply -- "${FILESDIR}/openj9-openjdk-override-version.patch"
 	eapply -d openj9 -- "${FILESDIR}/openj9-no-o3.patch"
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
+	eapply -d openj9 -- "${FILESDIR}/openj9.patch"
 
 	find openj9/ omr/ -name CMakeLists.txt -exec sed -i -e '/set(OMR_WARNINGS_AS_ERRORS ON/s/ON/OFF/' {} + || die
 	sed -i -e '/^  OPENJ9_CONFIGURE_NUMA$/d' closed/autoconf/custom-hook.m4 || die
@@ -221,7 +222,7 @@ src_configure() {
 		--with-vendor-version-string="${PVR}"
 		--with-version-pre=""
 		--with-zlib=system
-		--enable-dtrace=$(usex systemtap yes no)
+		--enable-jvm-feature-dtrace=$(usex systemtap yes no)
 		--enable-headless-only=$(usex headless-awt yes no)
 		$(tc-is-clang && echo "--with-toolchain-type=clang")
 
@@ -229,6 +230,8 @@ src_configure() {
 		$(use_enable ddr)
 		$(use_enable jitserver)
 	)
+
+	use lto && myconf+=( --with-jvm-features=link-time-opt )
 
 	if use javafx; then
 		local zip="${EPREFIX}/usr/$(get_libdir)/openjfx-${SLOT}/javafx-exports.zip"
@@ -269,7 +272,7 @@ src_compile() {
 		OPENJ9_TAG=${OPENJ9_P}
 		OPENJ9OMR_SHA=${OPENJ9_P}
 	)
-	emake "${myemakeargs[@]}" -j1 #nowarn
+	emake "${myemakeargs[@]}" -j1
 }
 
 src_install() {
@@ -298,7 +301,7 @@ src_install() {
 	dodir "${dest}"
 	cp -pPR * "${ddest}" || die
 
-	dosym8 -r /etc/ssl/certs/java/cacerts "${dest}"/lib/security/cacerts
+	dosym -r /etc/ssl/certs/java/cacerts "${dest}"/lib/security/cacerts
 
 	# must be done before running itself
 	java-vm_set-pax-markings "${ddest}"

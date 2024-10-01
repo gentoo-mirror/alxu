@@ -1,0 +1,12 @@
+diff --git a/runtime/oti/xhelpers.m4 b/runtime/oti/xhelpers.m4
+index 9d9fe46aba..793bb06901 100644
+--- a/runtime/oti/xhelpers.m4
++++ b/runtime/oti/xhelpers.m4
+@@ -93,7 +93,6 @@ define({SHORT_JMP},{short})
+ 
+ define({FILE_START},{
+ 	.intel_syntax noprefix
+-	.arch pentium4
+ 	.text
+ })
+ 

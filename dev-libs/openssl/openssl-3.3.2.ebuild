@@ -1,13 +1,14 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-VERIFY_SIG_OPENPGP_KEY_PATH="${BROOT}"/usr/share/openpgp-keys/openssl.org.asc
-inherit edo flag-o-matic linux-info toolchain-funcs multilib-minimal multiprocessing verify-sig
+VERIFY_SIG_OPENPGP_KEY_PATH=/usr/share/openpgp-keys/openssl.org.asc
+inherit edo flag-o-matic linux-info toolchain-funcs
+inherit multilib multilib-minimal multiprocessing preserve-libs verify-sig
 
 DESCRIPTION="Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)"
-HOMEPAGE="https://www.openssl.org/"
+HOMEPAGE="https://openssl-library.org/"
 
 MY_P=${P/_/-}
 
@@ -17,17 +18,22 @@ if [[ ${PV} == 9999 ]] ; then
 	inherit git-r3
 else
 	SRC_URI="
-		mirror://openssl/source/${MY_P}.tar.gz
-		verify-sig? ( mirror://openssl/source/${MY_P}.tar.gz.asc )
+		https://github.com/openssl/openssl/releases/download/${P}/${P}.tar.gz
+		verify-sig? (
+			https://github.com/openssl/openssl/releases/download/${P}/${P}.tar.gz.asc
+		)
 	"
-	#KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86"
+
+	if [[ ${PV} != *_alpha* && ${PV} != *_beta* ]] ; then
+		KEYWORDS="~amd64 ~x86"
+	fi
 fi
 
 S="${WORKDIR}"/${MY_P}
 
 LICENSE="Apache-2.0"
 SLOT="0/$(ver_cut 1)" # .so version of libssl/libcrypto
-IUSE="+asm cpu_flags_x86_sse2 fips ktls rfc3779 sctp static-libs test tls-compression vanilla verify-sig weak-ssl-ciphers"
+IUSE="+asm cpu_flags_x86_sse2 fips ktls quic rfc3779 sctp static-libs test tls-compression vanilla verify-sig weak-ssl-ciphers"
 RESTRICT="!test? ( test )"
 
 COMMON_DEPEND="
@@ -39,11 +45,11 @@ BDEPEND="
 	sctp? ( >=net-misc/lksctp-tools-1.0.12 )
 	test? (
 		sys-apps/diffutils
-		sys-devel/bc
+		app-alternatives/bc
 		sys-process/procps
 	)
-	verify-sig? ( >=sec-keys/openpgp-keys-openssl-20230207 )"
-
+	verify-sig? ( >=sec-keys/openpgp-keys-openssl-20240920 )
+"
 DEPEND="${COMMON_DEPEND}"
 RDEPEND="${COMMON_DEPEND}"
 PDEPEND="app-misc/ca-certificates"
@@ -83,7 +89,7 @@ src_unpack() {
 	# Can delete this once test fix patch is dropped
 	if use verify-sig ; then
 		# Needed for downloaded patch (which is unsigned, which is fine)
-		verify-sig_verify_detached "${DISTDIR}"/${P}.tar.gz{,.asc}
+		verify-sig_verify_detached "${DISTDIR}"/${MY_P}.tar.gz{,.asc}
 	fi
 
 	default
@@ -92,7 +98,7 @@ src_unpack() {
 src_prepare() {
 	# Make sure we only ever touch Makefile.org and avoid patching a file
 	# that gets blown away anyways by the Configure script in src_configure
-	rm -f Makefile
+	rm -f Makefile || die
 
 	if ! use vanilla ; then
 		PATCHES+=(
@@ -125,6 +131,7 @@ src_configure() {
 	# code. This has been in the ebuild for > 10 years but even in 2022,
 	# it's still relevant:
 	# - https://github.com/llvm/llvm-project/issues/55255
+	# - https://github.com/openssl/openssl/issues/12247
 	# - https://github.com/openssl/openssl/issues/18225
 	# - https://github.com/openssl/openssl/issues/18663#issuecomment-1181478057
 	# Don't remove the no strict aliasing bits below!
@@ -136,6 +143,11 @@ src_configure() {
 	filter-lto
 
 	append-flags $(test-flags-CC -Wa,--noexecstack)
+
+	# bug #895308 -- check inserts GNU ld-compatible arguments
+	[[ ${CHOST} == *-darwin* ]] || append-atomic-flags
+	# Configure doesn't respect LIBS
+	export LDLIBS="${LIBS}"
 
 	# bug #197996
 	unset APPS
@@ -161,6 +173,7 @@ multilib_src_configure() {
 	local myeconfargs=(
 		${sslout}
 
+		$(multilib_is_native_abi || echo "no-docs")
 		$(use cpu_flags_x86_sse2 || echo "no-sse2")
 		enable-camellia
 		enable-ec
@@ -172,6 +185,7 @@ multilib_src_configure() {
 		enable-idea
 		enable-mdc2
 		$(use fips && echo "enable-fips")
+		$(use quic && echo "enable-quic")
 		$(use_ssl asm)
 		$(use_ssl ktls)
 		$(use_ssl rfc3779)
@@ -193,29 +207,33 @@ multilib_src_configure() {
 
 multilib_src_compile() {
 	emake build_sw
-
-	if multilib_is_native_abi; then
-		emake build_docs
-	fi
 }
 
 multilib_src_test() {
+	# See https://github.com/openssl/openssl/blob/master/test/README.md for options.
+	#
 	# VFP = show subtests verbosely and show failed tests verbosely
 	# Normal V=1 would show everything verbosely but this slows things down.
-	emake HARNESS_JOBS="$(makeopts_jobs)" VFP=1 test
+	#
+	# -j1 here for https://github.com/openssl/openssl/issues/21999, but it
+	# shouldn't matter as tests were already built earlier, and HARNESS_JOBS
+	# controls running the tests.
+	emake -Onone -j1 HARNESS_JOBS="$(makeopts_jobs)" VFP=1 test
 }
 
 multilib_src_install() {
-	emake DESTDIR="${D}" install_sw
+	# Only -j1 is supported for the install targets:
+	# https://github.com/openssl/openssl/issues/21999#issuecomment-1771150305
+	emake DESTDIR="${D}" -j1 install_sw
 	if use fips; then
-		emake DESTDIR="${D}" install_fips
+		emake DESTDIR="${D}" -j1 install_fips
 		# Regen this in pkg_preinst, bug 900625
 		rm "${ED}${SSL_CNF_DIR}"/fipsmodule.cnf || die
 	fi
 
 	if multilib_is_native_abi; then
-		emake DESTDIR="${D}" install_ssldirs
-		emake DESTDIR="${D}" DOCDIR='$(INSTALLTOP)'/share/doc/${PF} install_docs
+		emake DESTDIR="${D}" -j1 install_ssldirs
+		emake DESTDIR="${D}" DOCDIR='$(INSTALLTOP)'/share/doc/${PF} -j1 install_docs
 	fi
 
 	# This is crappy in that the static archives are still built even
@@ -255,10 +273,16 @@ pkg_preinst() {
 			-module "${ED}/usr/$(get_libdir)/ossl-modules/fips.so"
 		eend $?
 	fi
+
+	preserve_old_lib /usr/$(get_libdir)/lib{crypto,ssl}$(get_libname 1) \
+		/usr/$(get_libdir)/lib{crypto,ssl}$(get_libname 1.1)
 }
 
 pkg_postinst() {
 	ebegin "Running 'openssl rehash ${EROOT}${SSL_CNF_DIR}/certs' to rebuild hashes (bug #333069)"
 	openssl rehash "${EROOT}${SSL_CNF_DIR}/certs"
 	eend $?
+
+	preserve_old_lib_notify /usr/$(get_libdir)/lib{crypto,ssl}$(get_libname 1) \
+		/usr/$(get_libdir)/lib{crypto,ssl}$(get_libname 1.1)
 }

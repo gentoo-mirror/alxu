@@ -6,7 +6,7 @@ EAPI=7
 DESCRIPTION="Google's CJK font family"
 HOMEPAGE="https://www.google.com/get/noto/ https://github.com/googlefonts/noto-cjk"
 
-COMMIT="473da44c32fec739db7e5458c81a833513cb4084"
+COMMIT="4efc595762d1f4b4fa504bccfe8e59de91fda063"
 SRC_URI="
 	https://github.com/googlefonts/noto-cjk/raw/${COMMIT}/Sans/Variable/OTC/NotoSansCJK-VF.otf.ttc -> NotoSansCJK-VF-${COMMIT}.otf.ttc
 	https://github.com/googlefonts/noto-cjk/raw/${COMMIT}/Sans/Variable/OTC/NotoSansMonoCJK-VF.otf.ttc -> NotoSansMonoCJK-VF-${COMMIT}.otf.ttc
