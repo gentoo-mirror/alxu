@@ -1,6 +1,4 @@
-app-arch/7-zip 22.01: File archiver with a high compression ratio
 app-arch/precomp-cpp 0.4.7: Precomp, C++ version - further compress already compressed files
-app-arch/unar 1.10.7-r1: Unpacker for various archiving formats, e.g. rar v3
 dev-cpp/tbb-compat 2020.3: High level abstract threading library
 dev-dotnet/dotnet-runtime-bin 6.0.21 8.0.7: .NET is a free, cross-platform, open-source developer platform
 dev-java/openj9-openjdk 11.0.46.1 21.0.46.1: Extensions for OpenJDK for Eclipse OpenJ9
@@ -14,12 +12,11 @@ mail-client/astroid 9999: lightweight graphical threads-with-tags style email cl
 media-fonts/noto 20231001: Google's font family that aims to support all the world's languages
 media-fonts/noto-cjk 20230817: Google's CJK font family
 media-fonts/noto-emoji 20231130: Google Noto Emoji fonts
-media-sound/pamixer 1.4: Pulseaudio command line mixer.
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 net-mail/notmuch 0.38.3: Thread-based e-mail indexer, supporting quick search and tagging
 sci-calculators/units 2.23-r1: Unit conversion program
 sys-boot/limine 8.0.13: Limine is a modern, advanced, and portable BIOS/UEFI multiprotocol bootloader
 virtual/7z 0: Virtual for /usr/bin/7z
-virtual/jdk 11-r3 17-r1: Virtual for Java Development Kit (JDK)
-virtual/jre 11-r3 17-r1: Virtual for Java Runtime Environment (JRE)
+virtual/jdk 11-r3 21-r1: Virtual for Java Development Kit (JDK)
+virtual/jre 11-r3 21-r1: Virtual for Java Runtime Environment (JRE)
 x11-apps/sx 2.1.7 9999: Start an xorg server
