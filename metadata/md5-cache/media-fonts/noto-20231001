@@ -1,0 +1,13 @@
+BDEPEND=X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+DEFINED_PHASES=compile install postinst postrm setup
+DESCRIPTION=Google's font family that aims to support all the world's languages
+EAPI=8
+HOMEPAGE=https://fonts.google.com/noto https://github.com/notofonts/notofonts.github.io
+INHERIT=font
+IUSE=X
+KEYWORDS=~amd64 ~x86
+LICENSE=OFL-1.1
+SLOT=0
+SRC_URI=https://github.com/notofonts/notofonts.github.io/raw/8bcb8b16321f305a4fca87dcbdef453e19dfc987/fonts/NotoSans/googlefonts/variable/NotoSans%5Bwdth%2Cwght%5D.ttf -> NotoSans[wdth,wght]-8bcb8b16321f305a4fca87dcbdef453e19dfc987.ttf https://github.com/notofonts/notofonts.github.io/raw/8bcb8b16321f305a4fca87dcbdef453e19dfc987/fonts/NotoSans/googlefonts/variable/NotoSans-Italic%5Bwdth%2Cwght%5D.ttf -> NotoSans-Italic[wdth,wght]-8bcb8b16321f305a4fca87dcbdef453e19dfc987.ttf https://github.com/notofonts/notofonts.github.io/raw/8bcb8b16321f305a4fca87dcbdef453e19dfc987/fonts/NotoSerif/googlefonts/variable/NotoSerif%5Bwdth%2Cwght%5D.ttf -> NotoSerif[wdth,wght]-8bcb8b16321f305a4fca87dcbdef453e19dfc987.ttf https://github.com/notofonts/notofonts.github.io/raw/8bcb8b16321f305a4fca87dcbdef453e19dfc987/fonts/NotoSerif/googlefonts/variable/NotoSerif-Italic%5Bwdth%2Cwght%5D.ttf -> NotoSerif-Italic[wdth,wght]-8bcb8b16321f305a4fca87dcbdef453e19dfc987.ttf
+_eclasses_=font	aa113a3df9cd0a9693a1c1ee7c34a6eb
+_md5_=fd04fb6cef91447a509cb0a4553d07c1

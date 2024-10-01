@@ -24,8 +24,6 @@ dev-libs/openssl:ktls - Enable support for Kernel implementation of TLS (kTLS)
 dev-libs/openssl:rfc3779 - Enable support for RFC 3779 (X.509 Extensions for IP Addresses and AS Identifiers)
 dev-libs/openssl:tls-compression - Enable support for discouraged TLS compression
 dev-libs/openssl:weak-ssl-ciphers - Build support for SSL/TLS ciphers that are considered "weak"
-gui-apps/wob:man - Install man page
-gui-apps/wob:seccomp - Linux kernel syscall filtering
 mail-client/astroid:embedded-editor - Embedded editor
 mail-client/astroid:plugins - Plugins
 mail-client/astroid:terminal - Embedded terminal
@@ -35,5 +33,8 @@ net-mail/notmuch:doc - Install API documentation
 net-mail/notmuch:emacs - Install Emacs UI (the main one)
 net-mail/notmuch:mutt - Install helper script for Mutt
 net-mail/notmuch:nmbug - Install experimental tag sharing / pseudo-bug-tracking script for Notmuch (see http://notmuchmail.org/nmbug/)
-net-mail/notmuch:valgrind - Depend on dev-util/valgrind for test suite
 sci-calculators/units:units-cur - Install the units_cur python script that updates currencies
+sys-boot/limine:bios - Enable BIOS/MBR boot support.
+sys-boot/limine:bios-cd - Enables BIOS boot support for CDs.
+sys-boot/limine:bios-pxe - Enables BIOS PXE boot support.
+sys-boot/limine:uefi-cd - Enable building cd-efi.bin using sys-fs/mtools. This flag was previously known as eltorito-efi.

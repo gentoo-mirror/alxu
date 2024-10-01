@@ -9,18 +9,16 @@ dev-java/openj9-openjdk-jre-bin 11.0.24_p8 21.0.4_p7: Prebuilt IBM Semeru JRE bi
 dev-libs/libdwarf 0.9.0: The DWARF Debugging Information Format
 dev-libs/openssl 3.3.2: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
 games-rpg/runescape-launcher-launcher 1.3-r1: Launcher for official RuneScape NXT client launcher
-gui-apps/wlsunset 0.3.0: Day/night gamma adjustments for Wayland
-gui-apps/wob 0.14.2: Lightweight overlay volume/backlight/progress/anything bar for Wayland
 gui-apps/wshowkeys 1.0: Displays keys being pressed on a Wayland session
 mail-client/astroid 9999: lightweight graphical threads-with-tags style email client for notmuch
-media-fonts/noto 20231128: Google's font family that aims to support all the world's languages
+media-fonts/noto 20231001: Google's font family that aims to support all the world's languages
 media-fonts/noto-cjk 20230817: Google's CJK font family
 media-fonts/noto-emoji 20231130: Google Noto Emoji fonts
-media-fonts/source-pro 20210115: Adobe's open source typeface family designed for UI environments
 media-sound/pamixer 1.4: Pulseaudio command line mixer.
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
-net-mail/notmuch 0.37-r2: Thread-based e-mail indexer, supporting quick search and tagging
-sci-calculators/units 2.21-r2: Unit conversion program
+net-mail/notmuch 0.38.3: Thread-based e-mail indexer, supporting quick search and tagging
+sci-calculators/units 2.23-r1: Unit conversion program
+sys-boot/limine 8.0.13: Limine is a modern, advanced, and portable BIOS/UEFI multiprotocol bootloader
 virtual/7z 0: Virtual for /usr/bin/7z
 virtual/jdk 11-r3 17-r1: Virtual for Java Development Kit (JDK)
 virtual/jre 11-r3 17-r1: Virtual for Java Runtime Environment (JRE)

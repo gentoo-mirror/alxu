@@ -1,0 +1,12 @@
+BDEPEND=app-alternatives/gzip dev-lang/nasm sys-apps/findutils uefi-cd? ( sys-fs/mtools )
+DEFINED_PHASES=configure
+DESCRIPTION=Limine is a modern, advanced, and portable BIOS/UEFI multiprotocol bootloader
+EAPI=8
+HOMEPAGE=https://limine-bootloader.org/
+IUSE=abi_x86_32 abi_x86_64 bios bios-pxe bios-cd uefi uefi-cd
+KEYWORDS=~amd64
+LICENSE=BSD-2
+REQUIRED_USE=bios? ( || ( amd64 x86 ) ) bios-cd? ( || ( amd64 x86 ) ) bios-pxe? ( || ( amd64 x86 ) )
+SLOT=0
+SRC_URI=https://github.com/limine-bootloader/limine/releases/download/v8.0.13/limine-8.0.13.tar.xz
+_md5_=ed1d5144e1cabe190c4b47378a8e9cab
