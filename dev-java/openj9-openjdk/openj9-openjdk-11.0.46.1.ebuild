@@ -1,9 +1,9 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit check-reqs eapi8-dosym flag-o-matic java-pkg-2 java-vm-2 multiprocessing toolchain-funcs
+inherit check-reqs flag-o-matic java-pkg-2 java-vm-2 multiprocessing toolchain-funcs
 
 SLOT="$(ver_cut 1)"
 OPENJ9_PV="$(ver_cut 2-4)"
@@ -24,7 +24,7 @@ else
 	"
 fi
 
-LICENSE="GPL-2"
+LICENSE="GPL-2-with-classpath-exception"
 KEYWORDS="~amd64"
 
 IUSE="alsa cups ddr debug doc headless-awt javafx +jbootstrap jitserver numa selinux source systemtap"
@@ -41,7 +41,7 @@ COMMON_DEPEND="
 	media-libs/lcms:2=
 	sys-libs/zlib
 	media-libs/libjpeg-turbo:0=
-	systemtap? ( dev-util/systemtap )
+	systemtap? ( dev-debug/systemtap )
 
 	dev-libs/elfutils
 	ddr? ( dev-libs/libdwarf )
@@ -162,8 +162,17 @@ src_prepare() {
 }
 
 src_configure() {
-	# Work around stack alignment issue, bug #647954. in case we ever have x86
+	# Work around stack alignment issue, bug #647954.
 	use x86 && append-flags -mincoming-stack-boundary=2
+
+	# Strip some flags users may set, but should not. #818502
+	filter-flags -fexceptions
+
+	# Strip lto related flags, we rely on USE=lto and --with-jvm-features=link-time-opt
+	# https://bugs.gentoo.org/833097
+	# https://bugs.gentoo.org/833098
+	filter-lto
+	filter-flags -fdevirtualize-at-ltrans
 
 	# Enabling full docs appears to break doc building. If not
 	# explicitly disabled, the flag will get auto-enabled if pandoc and
@@ -202,7 +211,14 @@ src_configure() {
 		$(use_enable jitserver)
 	)
 
+	use lto && myconf+=( --with-jvm-features=link-time-opt )
+
 	if use javafx; then
+		# this is not useful for users, just for upstream developers
+		# build system compares mesa version in md file
+		# https://bugs.gentoo.org/822612
+		export LEGAL_EXCLUDES=mesa3d.md
+
 		local zip="${EPREFIX}/usr/$(get_libdir)/openjfx-${SLOT}/javafx-exports.zip"
 		if [[ -r ${zip} ]]; then
 			myconf+=( --with-import-modules="${zip}" )
@@ -220,6 +236,10 @@ src_configure() {
 }
 
 src_compile() {
+	# Too brittle - gets confused by e.g. -Oline
+	export MAKEOPTS="-j$(makeopts_jobs) -l$(makeopts_loadavg)"
+	unset GNUMAKEFLAGS MAKEFLAGS
+
 	local mycmakeargsx=(
 		"-DCMAKE_C_FLAGS='${CFLAGS}'"
 		"-DJ9JIT_EXTRA_CFLAGS='${CFLAGS}'"
@@ -282,6 +302,10 @@ src_install() {
 	if use doc ; then
 		docinto html
 		dodoc -r "${S}"/build/*-release/images/docs/*
-		dosym ../../../usr/share/doc/"${PF}" /usr/share/doc/"${PN}-${SLOT}"
+		dosym -r /usr/share/doc/"${PF}" /usr/share/doc/"${PN}-${SLOT}"
 	fi
+}
+
+pkg_postinst() {
+	java-vm-2_pkg_postinst
 }
