@@ -1,0 +1,13 @@
+BDEPEND=X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+DEFINED_PHASES=compile install postinst postrm setup
+DESCRIPTION=Google Noto Emoji fonts
+EAPI=8
+HOMEPAGE=https://fonts.google.com/noto/specimen/Noto+Emoji
+INHERIT=font
+IUSE=X
+KEYWORDS=~*
+LICENSE=OFL-1.1
+SLOT=0
+SRC_URI=https://github.com/googlefonts/noto-emoji/raw/d79d23e6822e0f6e5731b114cbfb26b2a4e380da/fonts/Noto-COLRv1.ttf -> Noto-COLRv1-d79d23e6822e0f6e5731b114cbfb26b2a4e380da.ttf
+_eclasses_=font	aa113a3df9cd0a9693a1c1ee7c34a6eb
+_md5_=3c2dc3811784c5ac4f9d6639b4416c51

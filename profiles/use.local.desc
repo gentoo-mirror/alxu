@@ -4,7 +4,6 @@
 
 app-arch/7-zip:asm - Use assembly implementations (currently only amd64, arm64, x86)
 app-arch/7-zip:rar - RAR archive support, requires accepting unRAR license
-app-text/zathura:synctex - Use libsynctex to get latex codeline from pdf
 dev-dotnet/dotnet-runtime-bin:dotnet-symlink - Install a dotnet symlink that points to dotnet-bin.
 dev-dotnet/dotnet-runtime-bin:lttng - Install support libraries for LTTng with .NET.
 dev-java/openj9-openjdk:ddr - Enable Direct Dump Reader

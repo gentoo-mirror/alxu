@@ -1,9 +1,0 @@
-DEFINED_PHASES=install
-DESCRIPTION=Google's font family that aims to support all the world's languages
-EAPI=7
-HOMEPAGE=https://www.google.com/get/noto/ https://github.com/googlefonts/noto-fonts
-KEYWORDS=~*
-LICENSE=OFL-1.1
-SLOT=0
-SRC_URI=https://github.com/notofonts/notofonts.github.io/raw/6bff404f9a23cd603190277422d043a0afd7908e/fonts/NotoSans/googlefonts/variable-ttf/NotoSans%5Bwdth%2Cwght%5D.ttf -> NotoSans[wdth,wght]-6bff404f9a23cd603190277422d043a0afd7908e.ttf https://github.com/notofonts/notofonts.github.io/raw/6bff404f9a23cd603190277422d043a0afd7908e/fonts/NotoSans/googlefonts/variable-ttf/NotoSans-Italic%5Bwdth%2Cwght%5D.ttf -> NotoSans-Italic[wdth,wght]-6bff404f9a23cd603190277422d043a0afd7908e.ttf https://github.com/notofonts/notofonts.github.io/raw/6bff404f9a23cd603190277422d043a0afd7908e/fonts/NotoSerif/googlefonts/variable-ttf/NotoSerif%5Bwdth%2Cwght%5D.ttf -> NotoSerif[wdth,wght]-6bff404f9a23cd603190277422d043a0afd7908e.ttf https://github.com/notofonts/notofonts.github.io/raw/6bff404f9a23cd603190277422d043a0afd7908e/fonts/NotoSerif/googlefonts/variable-ttf/NotoSerif-Italic%5Bwdth%2Cwght%5D.ttf -> NotoSerif-Italic[wdth,wght]-6bff404f9a23cd603190277422d043a0afd7908e.ttf
-_md5_=c12b42a9df2aed2c22b5fdf94bae174e

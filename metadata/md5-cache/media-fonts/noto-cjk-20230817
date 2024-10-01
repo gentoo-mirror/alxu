@@ -1,0 +1,9 @@
+DEFINED_PHASES=install
+DESCRIPTION=Google's CJK font family
+EAPI=7
+HOMEPAGE=https://www.google.com/get/noto/ https://github.com/googlefonts/noto-cjk
+KEYWORDS=~*
+LICENSE=OFL-1.1
+SLOT=0
+SRC_URI=https://github.com/googlefonts/noto-cjk/raw/4efc595762d1f4b4fa504bccfe8e59de91fda063/Sans/Variable/OTC/NotoSansCJK-VF.otf.ttc -> NotoSansCJK-VF-4efc595762d1f4b4fa504bccfe8e59de91fda063.otf.ttc https://github.com/googlefonts/noto-cjk/raw/4efc595762d1f4b4fa504bccfe8e59de91fda063/Sans/Variable/OTC/NotoSansMonoCJK-VF.otf.ttc -> NotoSansMonoCJK-VF-4efc595762d1f4b4fa504bccfe8e59de91fda063.otf.ttc https://github.com/googlefonts/noto-cjk/raw/4efc595762d1f4b4fa504bccfe8e59de91fda063/Serif/Variable/OTC/NotoSerifCJK-VF.otf.ttc -> NotoSerifCJK-VF-4efc595762d1f4b4fa504bccfe8e59de91fda063.otf.ttc
+_md5_=02def5abfbb25b086c6ca962ed8eee5e
