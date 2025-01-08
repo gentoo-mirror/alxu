@@ -34,10 +34,10 @@ RDEPEND="
 	>=dev-cpp/gtkmm-3.10:3.0
 	dev-libs/boost[nls]
 	dev-libs/libsass
-	>=dev-libs/protobuf-3.6.0:=[protobuf]
+	>=dev-libs/protobuf-3.6.0:=[protobuf(+)]
 	|| (
-		>=net-libs/webkit-gtk-2.22.0:4.1=
-		>=net-libs/webkit-gtk-2.22.0:4=
+		>=net-libs/webkit-gtk-2.22.0:4.1
+		>=net-libs/webkit-gtk-2.22.0:4
 	)
 	net-mail/notmuch
 "
