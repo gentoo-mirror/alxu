@@ -2,7 +2,6 @@
 # Please add your descriptions to your package's metadata.xml ONLY.
 # * generated automatically using pmaint *
 
-dev-dotnet/dotnet-runtime-bin:dotnet-symlink - Install a dotnet symlink that points to dotnet-bin.
 dev-dotnet/dotnet-runtime-bin:lttng - Install support libraries for LTTng with .NET.
 dev-java/openj9-openjdk:ddr - Enable Direct Dump Reader
 dev-java/openj9-openjdk:headless-awt - Don't install the X backend for AWT, needed by some GUIs
@@ -31,7 +30,6 @@ net-mail/notmuch:doc - Install API documentation
 net-mail/notmuch:emacs - Install Emacs UI (the main one)
 net-mail/notmuch:mutt - Install helper script for Mutt
 net-mail/notmuch:nmbug - Install experimental tag sharing / pseudo-bug-tracking script for Notmuch (see http://notmuchmail.org/nmbug/)
-sci-calculators/units:units-cur - Install the units_cur python script that updates currencies
 sys-boot/limine:bios - Enable BIOS/MBR boot support.
 sys-boot/limine:bios-cd - Enables BIOS boot support for CDs.
 sys-boot/limine:bios-pxe - Enables BIOS PXE boot support.

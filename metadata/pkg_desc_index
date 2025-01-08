@@ -1,9 +1,9 @@
 app-arch/precomp-cpp 0.4.7: Precomp, C++ version - further compress already compressed files
 dev-cpp/tbb-compat 2020.3: High level abstract threading library
-dev-dotnet/dotnet-runtime-bin 6.0.21 8.0.7: .NET is a free, cross-platform, open-source developer platform
-dev-java/openj9-openjdk 11.0.46.1 21.0.46.1: Extensions for OpenJDK for Eclipse OpenJ9
-dev-java/openj9-openjdk-bin 11.0.24_p8 21.0.4_p7: Prebuilt IBM Semeru JDK binaries provided by IBM
-dev-java/openj9-openjdk-jre-bin 11.0.24_p8 21.0.4_p7: Prebuilt IBM Semeru JRE binaries provided by IBM
+dev-dotnet/dotnet-runtime-bin 6.0.36 8.0.11 9.0.0: .NET is a free, cross-platform, open-source developer platform
+dev-java/openj9-openjdk 11.0.48.0 21.0.48.0: Extensions for OpenJDK for Eclipse OpenJ9
+dev-java/openj9-openjdk-bin 11.0.25_p9 21.0.5_p11: Prebuilt IBM Semeru JDK binaries provided by IBM
+dev-java/openj9-openjdk-jre-bin 11.0.25_p9 21.0.5_p11: Prebuilt IBM Semeru JRE binaries provided by IBM
 dev-libs/libdwarf 0.9.0: The DWARF Debugging Information Format
 dev-libs/openssl 3.3.2: Robust, full-featured Open Source Toolkit for the Transport Layer Security (TLS)
 games-rpg/runescape-launcher-launcher 1.3-r1: Launcher for official RuneScape NXT client launcher
@@ -14,7 +14,6 @@ media-fonts/noto-cjk 20230817: Google's CJK font family
 media-fonts/noto-emoji 20231130: Google Noto Emoji fonts
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
 net-mail/notmuch 0.38.3: Thread-based e-mail indexer, supporting quick search and tagging
-sci-calculators/units 2.23-r1: Unit conversion program
 sys-boot/limine 8.0.13: Limine is a modern, advanced, and portable BIOS/UEFI multiprotocol bootloader
 virtual/7z 0: Virtual for /usr/bin/7z
 virtual/jdk 11-r3 21-r1: Virtual for Java Development Kit (JDK)
