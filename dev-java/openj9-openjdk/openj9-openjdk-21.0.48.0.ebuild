@@ -168,7 +168,6 @@ src_prepare() {
 	eapply -- "${FILESDIR}/openj9-openjdk-override-version.patch"
 	eapply -d openj9 -- "${FILESDIR}/openj9-no-o3.patch"
 	eapply -d omr -- "${FILESDIR}/omr-omrstr-iconv-failure-overflow.patch"
-	eapply -d openj9 -- "${FILESDIR}/openj9.patch"
 
 	find openj9/ omr/ -name CMakeLists.txt -exec sed -i -e '/set(OMR_WARNINGS_AS_ERRORS ON/s/ON/OFF/' {} + || die
 	sed -i -e '/^  OPENJ9_CONFIGURE_NUMA$/d' closed/autoconf/custom-hook.m4 || die
@@ -193,6 +192,12 @@ src_configure() {
 
 	# Work around stack alignment issue, bug #647954. in case we ever have x86
 	use x86 && append-flags -mincoming-stack-boundary=2
+
+	# /tmp/portage/dev-java/openj9-openjdk-21.0.48.0/work/openj9-openjdk-jdk21-openj9-0.48.0/openj9/runtime/codert_vm/thunkcrt.c:95: error: function 'icallVMprJavaSendVirtualL' redeclared as variable
+	#    95 | extern void * icallVMprJavaSendVirtualL;
+	# /tmp/portage/dev-java/openj9-openjdk-21.0.48.0/work/openj9-openjdk-jdk21-openj9-0.48.0/openj9/runtime/compiler/runtime/Runtime.cpp:341:1: note: previously declared here
+	#   341 | JIT_HELPER(icallVMprJavaSendVirtualL);
+	filter-lto
 
 	# Enabling full docs appears to break doc building. If not
 	# explicitly disabled, the flag will get auto-enabled if pandoc and
