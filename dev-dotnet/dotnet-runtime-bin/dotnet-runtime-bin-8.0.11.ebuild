@@ -5,7 +5,6 @@ EAPI=8
 
 DESCRIPTION=".NET is a free, cross-platform, open-source developer platform"
 HOMEPAGE="https://dotnet.microsoft.com/"
-LICENSE="MIT"
 
 gen_src_uri() {
 	echo "$1? (
@@ -14,25 +13,38 @@ gen_src_uri() {
 	)"
 }
 
+LICENSE="MIT"
+SLOT="$(ver_cut 1-2)"
+KEYWORDS="-* ~amd64 ~arm ~arm64"
+IUSE="lttng"
+
 SRC_URI="
 	$(gen_src_uri amd64 x64)
 	$(gen_src_uri arm)
 	$(gen_src_uri arm64)
 "
 
-SLOT="$(ver_cut 1-2)"
-KEYWORDS="-* ~amd64 ~arm ~arm64"
-QA_PREBUILT="*"
-RESTRICT+=" splitdebug"
 RDEPEND="
 	sys-libs/zlib:0/1
 	!dev-dotnet/dotnet-sdk-bin:${SLOT}
+	lttng? ( =dev-util/lttng-ust-2.12* )
 "
 IDEPEND="
 	app-eselect/eselect-dotnet
 "
 
 S=${WORKDIR}
+
+QA_PREBUILT="*"
+RESTRICT+=" splitdebug"
+
+delete() {
+	test -n "$(find . -name "$1" -print -delete)"
+}
+
+src_compile() {
+	use lttng || delete libcoreclrtraceptprovider.so || die
+}
 
 src_install() {
 	local dest="opt/${PN}-${SLOT}"
