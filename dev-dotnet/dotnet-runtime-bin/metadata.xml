@@ -9,9 +9,6 @@
     <doc>https://docs.microsoft.com/en-us/dotnet/</doc>
   </upstream>
   <use>
-    <flag name="dotnet-symlink">
-      Install a dotnet symlink that points to dotnet-bin.
-    </flag>
     <flag name="lttng">
       Install support libraries for LTTng with .NET.
     </flag>
