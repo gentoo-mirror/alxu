@@ -13,8 +13,9 @@ dev-java/openj9-openjdk:systemtap - Enable SystemTAP/DTrace tracing
 dev-java/openj9-openjdk-bin:headless-awt - Don't install the X backend for AWT, needed by some GUIs (used to be X flag)
 dev-java/openj9-openjdk-bin:source - Install JVM sources
 dev-java/openj9-openjdk-jre-bin:headless-awt - Don't install the X backend for AWT, needed by some GUIs (used to be X flag)
-dev-libs/libdwarf:dwarfexample - dwarfexample
-dev-libs/libdwarf:dwarfgen - dwarfgen
+dev-libs/libdwarf:decompression - Enable decompression with zlib/zstd
+dev-libs/libdwarf:dwarfexample - Install dwarfexample bin
+dev-libs/libdwarf:dwarfgen - Install dwarfgen bin
 dev-libs/openssl:asm - Support assembly hand optimized crypto functions (i.e. faster run time)
 dev-libs/openssl:fips - Enable FIPS provider
 dev-libs/openssl:ktls - Enable support for Kernel implementation of TLS (kTLS)
