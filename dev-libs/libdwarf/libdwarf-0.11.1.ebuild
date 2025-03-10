@@ -10,10 +10,13 @@ SRC_URI="https://github.com/davea42/libdwarf-code/releases/download/v${PV}/${P}.
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="dwarfexample dwarfgen static-libs"
+IUSE="+decompression dwarfexample dwarfgen static-libs"
 
 DEPEND="
-	sys-libs/zlib
+	decompression? (
+		app-arch/zstd
+		sys-libs/zlib
+	}
 "
 RDEPEND="${DEPEND}"
 
@@ -21,6 +24,7 @@ src_configure() {
 	local myeconfargs=(
 		--includedir="${EPREFIX}/usr/include/${PN}"
 		--enable-shared
+		$(use_enable decompression)
 		$(use_enable dwarfexample)
 		$(use_enable dwarfgen)
 		$(use_enable static-libs static)

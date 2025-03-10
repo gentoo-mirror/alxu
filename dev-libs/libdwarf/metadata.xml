@@ -6,8 +6,9 @@
 		<name>Alex Xu (Hello71)</name>
 	</maintainer>
 	<use>
-		<flag name="dwarfexample">dwarfexample</flag>
-		<flag name="dwarfgen">dwarfgen</flag>
+		<flag name="decompression">Enable decompression with zlib/zstd</flag>
+		<flag name="dwarfexample">Install dwarfexample bin</flag>
+		<flag name="dwarfgen">Install dwarfgen bin</flag>
 	</use>
 	<upstream>
 		<remote-id type="github">davea42/libdwarf-code</remote-id>
