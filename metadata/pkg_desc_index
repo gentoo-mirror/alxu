@@ -13,7 +13,6 @@ media-fonts/noto 20231001: Google's font family that aims to support all the wor
 media-fonts/noto-cjk 20230817: Google's CJK font family
 media-fonts/noto-emoji 20231130: Google Noto Emoji fonts
 net-dns/libidn-compat 1.33: Internationalized Domain Names (IDN) implementation
-net-mail/notmuch 0.38.3: Thread-based e-mail indexer, supporting quick search and tagging
 sys-boot/limine 8.0.13: Limine is a modern, advanced, and portable BIOS/UEFI multiprotocol bootloader
 virtual/7z 0: Virtual for /usr/bin/7z
 virtual/jdk 11-r3 21-r1: Virtual for Java Development Kit (JDK)
