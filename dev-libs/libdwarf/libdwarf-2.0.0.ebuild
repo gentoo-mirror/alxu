@@ -16,7 +16,7 @@ DEPEND="
 	decompression? (
 		app-arch/zstd
 		sys-libs/zlib
-	}
+	)
 "
 RDEPEND="${DEPEND}"
 
