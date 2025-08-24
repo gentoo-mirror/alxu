@@ -35,3 +35,4 @@ sys-boot/limine:bios - Enable BIOS/MBR boot support.
 sys-boot/limine:bios-cd - Enables BIOS boot support for CDs.
 sys-boot/limine:bios-pxe - Enables BIOS PXE boot support.
 sys-boot/limine:uefi-cd - Enable building cd-efi.bin using sys-fs/mtools. This flag was previously known as eltorito-efi.
+virtual/jdk:headless-awt - Don't install the X backend for AWT, needed by some GUIs

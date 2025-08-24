@@ -1,0 +1,12 @@
+DEFINED_PHASES=configure install
+DEPEND=decompression? ( app-arch/zstd sys-libs/zlib )
+DESCRIPTION=The DWARF Debugging Information Format
+EAPI=7
+HOMEPAGE=https://github.com/davea42/libdwarf-code
+IUSE=+decompression dwarfexample dwarfgen static-libs
+KEYWORDS=~amd64 ~x86
+LICENSE=LGPL-2.1
+RDEPEND=decompression? ( app-arch/zstd sys-libs/zlib )
+SLOT=0
+SRC_URI=https://github.com/davea42/libdwarf-code/releases/download/v2.0.0/libdwarf-2.0.0.tar.xz
+_md5_=09c99355ef26b538b47b8b4df0486933
