@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit multilib-minimal toolchain-funcs
+inherit multilib-minimal toolchain-funcs flag-o-matic
 
 MY_PV="$(ver_cut 1)_U$(ver_cut 2)"
 
@@ -47,6 +47,7 @@ local_src_compile() {
 	esac
 
 	tc-export AS CC CXX
+	append-cxxflags -Wno-error=changes-meaning
 
 	arch=${arch} \
 	CPLUS_FLAGS="${CXXFLAGS}" \

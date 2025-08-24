@@ -1,18 +1,21 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 DISTUTILS_EXT=1
 DISTUTILS_OPTIONAL=1
-PYTHON_COMPAT=( python3_{10..13} pypy3 )
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{11..14} pypy3_11 )
 
 inherit bash-completion-r1 desktop distutils-r1 elisp-common flag-o-matic pax-utils toolchain-funcs xdg-utils
 
 DESCRIPTION="Thread-based e-mail indexer, supporting quick search and tagging"
 HOMEPAGE="https://notmuchmail.org/"
-SRC_URI="https://notmuchmail.org/releases/${P}.tar.xz
-	test? ( https://notmuchmail.org/releases/test-databases/database-v1.tar.xz )"
+SRC_URI="
+	https://notmuchmail.org/releases/${P}.tar.xz
+	test? ( https://notmuchmail.org/releases/test-databases/database-v1.tar.xz )
+"
 
 LICENSE="GPL-3"
 # Sub-slot corresponds to major wersion of libnotmuch.so.X.Y. Bump of Y is
@@ -29,7 +32,7 @@ IUSE="apidoc crypt doc emacs mutt nmbug python test"
 RESTRICT="!test? ( test )"
 
 BDEPEND="
-	app-arch/xz-utils[extra-filters(-)]
+	app-arch/xz-utils[extra-filters(+)]
 	virtual/pkgconfig
 	apidoc? (
 		app-text/doxygen
@@ -40,7 +43,7 @@ BDEPEND="
 		sys-apps/texinfo
 	)
 	python? (
-		dev-python/setuptools[${PYTHON_USEDEP}]
+		${DISTUTILS_DEPS}
 		test? ( dev-python/pytest[${PYTHON_USEDEP}] )
 	)
 	test? (
@@ -63,8 +66,8 @@ COMMON_DEPEND="
 		' 'python*')
 	)
 "
-
-DEPEND="${COMMON_DEPEND}
+DEPEND="
+	${COMMON_DEPEND}
 	test? (
 		>=app-editors/emacs-${NEED_EMACS}:*[libxml2]
 		app-misc/dtach
@@ -76,7 +79,8 @@ DEPEND="${COMMON_DEPEND}
 	)
 "
 
-RDEPEND="${COMMON_DEPEND}
+RDEPEND="
+	${COMMON_DEPEND}
 	crypt? ( app-crypt/gnupg )
 	mutt? (
 		dev-perl/File-Which
@@ -94,6 +98,8 @@ RDEPEND="${COMMON_DEPEND}
 SITEFILE="50${PN}-gentoo.el"
 
 PATCHES=(
+	"${FILESDIR}"/${PN}-0.39-no-compress-man-pages.patch
+	"${FILESDIR}"/${PN}-0.39-test-skip-debug-symbols.patch
 	"${FILESDIR}/notmuch-assume-modern-gmime.patch"
 )
 
@@ -103,6 +109,7 @@ pkg_setup() {
 
 src_unpack() {
 	unpack "${P}".tar.xz
+
 	if use test; then
 		mkdir -p "${S}"/test/test-databases || die
 		cp "${DISTDIR}"/database-v1.tar.xz "${S}"/test/test-databases/ || die
@@ -114,18 +121,11 @@ src_prepare() {
 
 	use python && distutils-r1_src_prepare
 
+	rm bindings/python-cffi/tox.ini || die
 	mv contrib/notmuch-mutt/README contrib/notmuch-mutt/README-mutt || die
-
-	# Override 'install' target, we want to install manpages with doman, but let it install texinfo files.
-	sed -i "s/all install-man install-info/all $(usex doc install-info '')/" "Makefile.local" || die
-
-	use test && append-flags '-g'
 
 	# Non-autoconf configure
 	[[ ${CHOST} == *-solaris* ]] &&	append-ldflags '-lnsl' '-lsocket'
-
-	# sphinx-4 broke everything. https://bugs.gentoo.org/789492
-	echo 'man_make_section_directory = False' >> doc/conf.py || die
 }
 
 src_configure() {
@@ -159,78 +159,49 @@ src_configure() {
 python_compile() {
 	pushd bindings/python-cffi > /dev/null || die
 	distutils-r1_python_compile
-	# copy stuff just in case
-	if use test; then
-		mkdir -p build/stage/tests || die
-		 cp -v tests/*.py build/stage/tests || die
-	fi
 	popd > /dev/null || die
-
-	# TODO: we want to drop those, research revdeps
-	pushd bindings/python > /dev/null || die
-	distutils-r1_python_compile
-	popd > /dev/null || die
-}
-
-python_compile_all() {
-	use doc	&& emake -C bindings/python/docs html
 }
 
 src_compile() {
-	python_setup # For sphinx
-
-	# prevent race in emacs doc generation
-	# FileNotFoundError: [Errno 2] No such file or directory: '..work/notmuch-0.31/emacs/notmuch.rsti'
-	if use emacs; then
-		use doc && emake -j1 -C emacs docstring.stamp V=1
-	fi
-
 	emake V=1
-
 	use python && distutils-r1_src_compile
-
-	if use mutt; then
-		emake -C contrib/notmuch-mutt notmuch-mutt.1
-	fi
+	use mutt && emake -C contrib/notmuch-mutt notmuch-mutt.1
 }
 
 python_test() {
-	# we only have tests for cffi bindings
 	pushd bindings/python-cffi > /dev/null || die
-	rm -f tox.ini || die
-	pytest -vv || die "Tests failed with ${EPYTHON}"
+	rm -rf notmuch2 || die
+	epytest tests || die -n
 	popd > /dev/null || die
 }
 
 src_test() {
 	local test_failures=()
-	pax-mark -m notmuch
 
-	# we run pytest via eclass phasefunc, so delete upstream launcher
-	use python && { rm -v test/T391-python-cffi.sh || die ; }
+	# We run pytest via eclass phasefunc, so delete upstream launcher
+	rm test/T391-python-cffi.sh || die
 
 	# These both fail because of line wrapping in the output
 	rm test/T315-emacs-tagging.sh test/T310-emacs.sh || die
 
-	LD_LIBRARY_PATH="${S}/lib" nonfatal emake test V=1 OPTIONS="--verbose --tee" || test_failures+=( "'emake tests'" )
+	pax-mark -m notmuch
+	LD_LIBRARY_PATH="${S}/lib" nonfatal emake test \
+		V=1 \
+		OPTIONS="--verbose --tee" || test_failures+=( "'emake tests'" )
 	pax-mark -ze notmuch
 
-	# both lib and bin needed for testsuite.
+	# Both lib and bin needed for testsuite
 	if use python; then
 		LD_LIBRARY_PATH="${S}/lib" \
 			PATH="${S}:${PATH}" \
 			nonfatal distutils-r1_src_test || test_failures+=( "'python tests'" )
 	fi
 
-	[[ ${test_failures} ]] && die "Tests failed: ${test_failures[@]}"
+	[[ ${test_failures} ]] && die "Tests failed: ${test_failures[*]}"
 }
 
 python_install() {
 	pushd bindings/python-cffi > /dev/null || die
-	distutils-r1_python_install
-	popd > /dev/null || die
-
-	pushd bindings/python > /dev/null || die
 	distutils-r1_python_install
 	popd > /dev/null || die
 }
@@ -238,13 +209,12 @@ python_install() {
 src_install() {
 	default
 
-	if use doc; then
-		if use apidoc; then
-			# rename overly generic manpage to avoid clashes
-			mv doc/_build/man/man3/deprecated.3 \
-				doc/_build/man/man3/notmuch-deprecated.3 || die
-		fi
-		doman doc/_build/man/man?/*.?
+	use python && distutils-r1_src_install
+
+	if use apidoc; then
+		# Rename overly generic manpage to avoid clashes
+		mv doc/_build/man/man3/deprecated.3 \
+			doc/_build/man/man3/notmuch-deprecated.3 || die
 	fi
 
 	if use emacs; then
@@ -261,7 +231,7 @@ src_install() {
 	if use mutt; then
 		pushd contrib/notmuch-mutt > /dev/null || die
 		dobin notmuch-mutt
-		# this manpage is built by pod2man
+		# This manpage is built by pod2man
 		doman notmuch-mutt.1
 		insinto /etc/mutt
 		doins notmuch-mutt.rc
@@ -271,11 +241,6 @@ src_install() {
 
 	local DOCS=( README{,.rst} INSTALL NEWS )
 	einstalldocs
-
-	if use python; then
-		use doc && local HTML_DOCS=( bindings/python/docs/html/. )
-		distutils-r1_src_install
-	fi
 }
 
 pkg_preinst() {
