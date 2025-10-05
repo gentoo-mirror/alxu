@@ -1,4 +1,4 @@
-BDEPEND=app-alternatives/ninja >=dev-build/cmake-3.20.5 >=dev-vcs/git-1.8.2.1[curl] test? ( x11-base/xorg-server[xvfb] x11-apps/xhost )
+BDEPEND=app-alternatives/ninja >=dev-build/cmake-3.28.5 >=dev-vcs/git-1.8.2.1[curl] test? ( x11-base/xorg-server[xvfb] x11-apps/xhost )
 DEFINED_PHASES=compile configure install postinst prepare test unpack
 DEPEND=plugins? ( dev-libs/gobject-introspection >=dev-libs/libpeas-1.0.0 || ( dev-libs/gmime:3.0[vala] dev-libs/gmime:2.6[vala] ) ) terminal? ( x11-libs/vte:2.91 ) || ( >=dev-libs/gmime-3.0.3:3.0 >=dev-libs/gmime-2.6.21:2.6 ) dev-cpp/glibmm:2 >=dev-cpp/gtkmm-3.10:3.0 dev-libs/boost[nls] dev-libs/libsass >=dev-libs/protobuf-3.6.0:=[protobuf(+)] || ( >=net-libs/webkit-gtk-2.22.0:4.1 >=net-libs/webkit-gtk-2.22.0:4 ) net-mail/notmuch doc? ( || ( app-text/scdoc app-text/ronn-ng ) ) test? ( x11-base/xorg-server[xvfb] x11-apps/xhost app-crypt/gnupg app-text/cmark ) virtual/pkgconfig
 DESCRIPTION=lightweight graphical threads-with-tags style email client for notmuch
@@ -11,5 +11,5 @@ PROPERTIES=live
 RDEPEND=plugins? ( dev-libs/gobject-introspection >=dev-libs/libpeas-1.0.0 || ( dev-libs/gmime:3.0[vala] dev-libs/gmime:2.6[vala] ) ) terminal? ( x11-libs/vte:2.91 ) || ( >=dev-libs/gmime-3.0.3:3.0 >=dev-libs/gmime-2.6.21:2.6 ) dev-cpp/glibmm:2 >=dev-cpp/gtkmm-3.10:3.0 dev-libs/boost[nls] dev-libs/libsass >=dev-libs/protobuf-3.6.0:=[protobuf(+)] || ( >=net-libs/webkit-gtk-2.22.0:4.1 >=net-libs/webkit-gtk-2.22.0:4 ) net-mail/notmuch
 RESTRICT=!test? ( test )
 SLOT=0
-_eclasses_=toolchain-funcs	a0b29008c671a362b505f96fa80ce9c0	flag-o-matic	a7afe42e95fb46ce9691605acfb24672	multiprocessing	1e32df7deee68372153dca65f4a7c21f	ninja-utils	2df4e452cea39a9ec8fb543ce059f8d6	xdg-utils	42869b3c8d86a70ef3cf75165a395e09	cmake	460729dc36f68cf03b044bc1d367e34a	git-r3	875eb471682d3e1f18da124be97dcc81	optfeature	538bce96e5589935b57e178e8635f301	virtualx	9741d451eb64ea8bb9faee90d68a9b68
+_eclasses_=toolchain-funcs	a0b29008c671a362b505f96fa80ce9c0	flag-o-matic	a7afe42e95fb46ce9691605acfb24672	multiprocessing	1e32df7deee68372153dca65f4a7c21f	ninja-utils	2df4e452cea39a9ec8fb543ce059f8d6	xdg-utils	42869b3c8d86a70ef3cf75165a395e09	cmake	cf95ad72ab207889c1668fc0d1bee181	git-r3	875eb471682d3e1f18da124be97dcc81	optfeature	538bce96e5589935b57e178e8635f301	virtualx	9741d451eb64ea8bb9faee90d68a9b68
 _md5_=5ff1a4325506e3df896e1e51278d388f
